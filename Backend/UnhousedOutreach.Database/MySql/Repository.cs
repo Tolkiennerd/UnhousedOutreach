@@ -1,0 +1,50 @@
+using MySql.Data.MySqlClient;
+
+namespace UnhousedOutreach.Database.MySql;
+
+public class Repository(string connectionString)
+{
+    #region Private Fields
+    private readonly string connectionString = connectionString;
+    #endregion
+
+    #region Public Methods
+    public async Task ExecuteNonQuery(string mySqlStatement) => await ExecuteNonQuery(mySqlStatement, []);
+
+    public async Task ExecuteNonQuery(string mySqlStatement, Dictionary<string, object?> parameterNamesAndValues)
+    {
+        var command = GetCommand(mySqlStatement, parameterNamesAndValues);
+        await command.ExecuteNonQueryAsync();
+    }
+
+    public MySqlDataReader ExecuteReader(string mySqlStatement) => ExecuteReader(mySqlStatement, []);
+
+    public MySqlDataReader ExecuteReader(string mySqlStatement, Dictionary<string, object?> parameterNamesAndValues)
+    {
+        var command = GetCommand(mySqlStatement, parameterNamesAndValues);
+        return command.ExecuteReader();
+    }
+    #endregion
+
+    #region Private Methods
+    private MySqlCommand GetCommand(string mySqlStatement, Dictionary<string, object?> parameterNamesAndValues)
+    {
+        // OPEN CONNECTION.
+        MySqlConnection connection = new(connectionString);
+        connection.Open();
+
+        // GET COMMAND.
+        MySqlCommand cmd = new(mySqlStatement, connection);
+
+        // ADD PARAMETERS.
+        foreach (var parameterNameAndValue in parameterNamesAndValues)
+        {
+            var name = parameterNameAndValue.Key;
+            var value = parameterNameAndValue.Value;
+            cmd.Parameters.AddWithValue(name, value ?? DBNull.Value);
+        }
+        return cmd;
+    }
+    #endregion
+
+}
