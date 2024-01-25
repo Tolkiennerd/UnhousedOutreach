@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import HousingInsecureNeighbors from './pages/housing-insecure-neighbors';
 import { LookupsContextType } from './features/lookups';
+import OutreachMap from './pages/outreach-map';
 
 export const LookupsContext = React.createContext<LookupsContextType | null>(null);
 
@@ -45,7 +46,8 @@ function App() {
     <BrowserRouter>
     <LookupsContext.Provider value={lookupsContext}>
       <Routes>
-          <Route path="/" element={<HousingInsecureNeighbors/>} />
+          <Route path="/table" element={<HousingInsecureNeighbors/>} />
+          <Route path="/" element={<OutreachMap/>} />
       </Routes>
       </LookupsContext.Provider>
     </BrowserRouter>

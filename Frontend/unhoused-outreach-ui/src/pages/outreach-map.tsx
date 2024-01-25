@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import {
-    HousingInsecureNeighborsDesktopView,
-    HousingInsecureNeighborsMobileView } from '../features/neighbors/housing-insecure';
+import { OutreachMapDesktopView, OutreachMapMobileView } from '../features/mapping';
 
-function HousingInsecureNeighbors() {
+function OutreachMap() {
     // CHECK FOR MOBILE.
     const [detectedScreenWidthInPixels, setDetectedScreenWidthInPixels] = useState(window.innerWidth);
     window.addEventListener('resize', () => setDetectedScreenWidthInPixels(window.innerWidth));
@@ -13,10 +11,10 @@ function HousingInsecureNeighbors() {
     return (
         <div className="content">
         {isMobile ?
-            <HousingInsecureNeighborsMobileView/> :
-            <HousingInsecureNeighborsDesktopView/>
+            <OutreachMapMobileView/> :
+            <OutreachMapDesktopView/>
         }
         </div>
     );
 }
-export default HousingInsecureNeighbors;
+export default OutreachMap;
