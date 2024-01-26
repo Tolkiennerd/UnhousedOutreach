@@ -1,13 +1,13 @@
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { HousingInsecureNeighbor, housingInsecureNeighborsColumns } from '..';
-import { LookupsContextType } from '../../../lookups';
+import { Lookups } from '../../../lookups';
 import { useContext, useEffect, useState } from 'react';
 import { LookupsContext } from '../../../../App';
 import axios from 'axios';
 
 export function HousingInsecureNeighborsDesktopView() {
     // DEFINE THE TABLE.
-    const lookups = useContext(LookupsContext) as LookupsContextType;
+    const lookups = useContext(LookupsContext) as Lookups;
     const [housingInsecureNeighborsData, setHousingInsecureNeighborsData] = useState([] as HousingInsecureNeighbor[]);
     const table = useReactTable({
         columns: housingInsecureNeighborsColumns(lookups),

@@ -20,6 +20,11 @@ public class LookupsController : ControllerBase
     }
     #endregion
 
+    #region All
+    [HttpGet("all")]
+    public Core.Lookups.Lookups GetLookups() => repository.GetLookups();
+    #endregion
+
     #region Cushion Condition
     [HttpGet("cushion-conditions")]
     public Dictionary<int, string> GetCushionConditionsLookup() => repository.GetCushionConditions();

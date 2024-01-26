@@ -1,10 +1,10 @@
 import { createColumnHelper } from '@tanstack/react-table';
-import { LookupsContextType } from '../../../lookups';
+import { Lookups } from '../../../lookups';
 import { HousingInsecureNeighbor } from '../models/housing-insecure-neighbor';
 import moment from 'moment';
 
 const columnHelper = createColumnHelper<HousingInsecureNeighbor>();
-export const housingInsecureNeighborsColumns = (lookups: LookupsContextType) => [
+export const housingInsecureNeighborsColumns = (lookups: Lookups) => [
   columnHelper.accessor(row => `${row.firstName ?? ''}${row.preferredName ? ` '${row.preferredName}' `: ''}${row.lastName ?? ''}`, {
     id: 'fullName',
     cell: info => info.getValue(),
@@ -27,7 +27,7 @@ export const housingInsecureNeighborsColumns = (lookups: LookupsContextType) => 
     id: 'gender',
     cell: info => {
       const genderId = info.getValue();
-      return genderId ? lookups.gender.lookup[genderId] : 'Unknown';
+      return genderId ? lookups.gender[genderId] : 'Unknown';
     },
     header: () => <span>Gender</span>,
   }),

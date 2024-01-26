@@ -1,3 +1,4 @@
+using MySql.Data.MySqlClient;
 using UnhousedOutreach.Database.MySql;
 
 namespace UnhousedOutreach.Database.Lookups;
@@ -74,7 +75,43 @@ public class LookupsMySqlRepository(string connectionString) : Repository(connec
     {
         return GetLookup(LookupsMySqlQueries.GetTentUsages);
     }
-    #endregion
+    
+    public Core.Lookups.Lookups GetLookups()
+    {
+        // GET CUSHION CONDITIONS.
+        var reader = ExecuteReader(LookupsMySqlQueries.GetLookups);
+        Core.Lookups.Lookups lookups = new();
+        lookups.CushionCondition = GetLookupFromReader(reader);
+        reader.NextResult();
+        lookups.CushionType = GetLookupFromReader(reader);
+        reader.NextResult();
+        lookups.Disability = GetLookupFromReader(reader);
+        reader.NextResult();
+        lookups.Ethnicity = GetLookupFromReader(reader);
+        reader.NextResult();
+        lookups.Gender = GetLookupFromReader(reader);
+        reader.NextResult();
+        lookups.HousingStatus = GetLookupFromReader(reader);
+        reader.NextResult();
+        lookups.LocationType = GetLookupFromReader(reader);
+        reader.NextResult();
+        lookups.PantsSize = GetLookupFromReader(reader);
+        reader.NextResult();
+        lookups.Request = GetLookupFromReader(reader);
+        reader.NextResult();
+        lookups.ShirtSize = GetLookupFromReader(reader);
+        reader.NextResult();
+        lookups.ShoeSize = GetLookupFromReader(reader);
+        reader.NextResult();
+        lookups.SleepingBagCondition = GetLookupFromReader(reader);
+        reader.NextResult();
+        lookups.TentCondition = GetLookupFromReader(reader);
+        reader.NextResult();
+        lookups.TentUsage = GetLookupFromReader(reader);
+        reader.NextResult();
+        return lookups;
+    }
+#endregion
 
     #region Set Methods
     public async Task SetCushionCondition(int? id, string value)
@@ -153,6 +190,11 @@ public class LookupsMySqlRepository(string connectionString) : Repository(connec
     {
         // GET CUSHION CONDITIONS.
         var reader = ExecuteReader(mySqlQuery);
+        return GetLookupFromReader(reader);
+    }
+
+    private Dictionary<int, string> GetLookupFromReader(MySqlDataReader reader)
+    {
         Dictionary<int, string> lookup = [];
         while (reader.Read())
         {

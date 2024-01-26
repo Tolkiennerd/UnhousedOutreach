@@ -1,5 +1,5 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { LookupsContextType } from '../../lookups';
+import { Lookups } from '../../lookups';
 import { LookupsContext } from '../../../App';
 import { useContext } from 'react';
 import tentIcon from "../../../assets/tent.png"
@@ -7,7 +7,7 @@ import { Icon } from 'leaflet'
 
 
 export function OutreachMapDesktopView() {
-    const lookups = useContext(LookupsContext) as LookupsContextType;
+    const lookups = useContext(LookupsContext) as Lookups;
     const tentMarkerIcon = new Icon({iconUrl: tentIcon, iconSize: [40, 50], iconAnchor: [20, 25]});
     return (
         <>

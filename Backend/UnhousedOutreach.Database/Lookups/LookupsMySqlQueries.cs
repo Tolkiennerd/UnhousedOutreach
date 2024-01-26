@@ -16,6 +16,22 @@ internal static class LookupsMySqlQueries
     internal static readonly string GetSleepingBagConditions = "SELECT SleepingBagConditionId, SleepingBagCondition FROM SleepingBagCondition";
     internal static readonly string GetTentConditions = "SELECT TentConditionId, TentCondition FROM TentCondition";
     internal static readonly string GetTentUsages = "SELECT TentUsageId, TentUsage FROM TentUsage";
+    internal static readonly string GetLookups = string.Join(';', [
+        GetCushionConditions,
+        GetCushionTypes,
+        GetDisabilities,
+        GetEthnicities,
+        GetGenders,
+        GetHousingStatuses,
+        GetLocationTypes,
+        GetPantsSizes,
+        GetRequests,
+        GetShirtSizes,
+        GetShoeSizes,
+        GetSleepingBagConditions,
+        GetTentConditions,
+        GetTentUsages
+    ]);
     internal static readonly string SetCushionCondition = @"
 INSERT INTO CushionCondition
 VALUES (@cushion_condition_id, @cushion_condition)
