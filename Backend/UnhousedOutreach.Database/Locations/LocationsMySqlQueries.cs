@@ -13,6 +13,7 @@ SELECT
     State,
     ZipCode,
     IsLegal,
+    ArrivalDate,
     Comments
 FROM Location
 WHERE OutreachTeamId = @OutreachTeamId";
@@ -28,6 +29,7 @@ VALUES (
     @State,
     @ZipCode,
     @IsLegal,
+    @ArrivalDate,
     @Comments,
     @OutreachTeamId
 )
@@ -41,6 +43,7 @@ ON DUPLICATE KEY UPDATE
     State = @State,
     ZipCode = @ZipCode,
     IsLegal = @IsLegal,
+    ArrivalDate = @ArrivalDate,
     Comments = @Comments,
     OutreachTeamId = @OutreachTeamId";
 }

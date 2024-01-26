@@ -1,10 +1,11 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import HousingInsecureNeighbors from './pages/housing-insecure-neighbors';
 import { LookupsContextType } from './features/lookups';
 import OutreachMap from './pages/outreach-map';
+import axios from 'axios';
 
 export const LookupsContext = React.createContext<LookupsContextType | null>(null);
 
@@ -39,15 +40,20 @@ function App() {
     sleepingBagCondition: {lookup: sleepingBagConditionLookup, setLookup: setSleepingBagConditionLookup},
     tentCondition: {lookup: tentConditionLookup, setLookup: setTentConditionLookup},
     tentUsage: {lookup: tentUsageLookup, setLookup: setTentUsageLookup},
-  }
+  };
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_URL}/lookups/genders`)
+      .then(response => setGenderLookup(response.data))
+      .catch(error => console.log(error));
+  }, []);
 
   // GET ROUTES.
   return (
     <BrowserRouter>
     <LookupsContext.Provider value={lookupsContext}>
       <Routes>
-          <Route path="/table" element={<HousingInsecureNeighbors/>} />
-          <Route path="/" element={<OutreachMap/>} />
+          <Route path="/" element={<HousingInsecureNeighbors/>} />
+          <Route path="/map" element={<OutreachMap/>} />
       </Routes>
       </LookupsContext.Provider>
     </BrowserRouter>

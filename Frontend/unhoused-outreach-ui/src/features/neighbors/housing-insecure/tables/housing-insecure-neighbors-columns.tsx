@@ -1,23 +1,27 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { LookupsContextType } from '../../../lookups';
 import { HousingInsecureNeighbor } from '../models/housing-insecure-neighbor';
+import moment from 'moment';
 
 const columnHelper = createColumnHelper<HousingInsecureNeighbor>();
 export const housingInsecureNeighborsColumns = (lookups: LookupsContextType) => [
-  columnHelper.accessor('firstName', {
-    id: 'firstName',
+  columnHelper.accessor(row => `${row.firstName ?? ''}${row.preferredName ? ` '${row.preferredName}' `: ''}${row.lastName ?? ''}`, {
+    id: 'fullName',
     cell: info => info.getValue(),
-    header: () => <span>First Name</span>,
-  }),
-  columnHelper.accessor('lastName', {
-    id: 'lastName',
-    cell: info => info.getValue(),
-    header: () => <span>Last Name</span>,
+    header: () => <span>Name</span>,
   }),
   columnHelper.accessor('dateOfBirth', {
-    id: 'dateOfBirth',
-    cell: info => info.getValue()?.toLocaleDateString(),
-    header: () => <span>DOB</span>,
+    id: 'age',
+    cell: info => {
+      if (!info.getValue()) {
+        return 'Unkown';
+      }
+      const birthDate = moment(info.getValue());
+      const currentDate = moment(new Date());
+      const age = currentDate.diff(birthDate, "years");
+      return age;
+    },
+    header: () => <span>Age</span>,
   }),
   columnHelper.accessor('genderId', {
     id: 'gender',

@@ -25,6 +25,7 @@ public class LocationsMySqlRepository(string connectionString) : Repository(conn
                 State = Parser.GetNullableEnumValue<State>(reader, "State"),
                 ZipCode = Parser.GetNullableValue<string?>(reader, "ZipCode"),
                 IsLegal = Parser.GetNullableBooleanValue(reader, "IsLegal"),
+                ArrivalDate = Parser.GetNullableValue<DateTime?>(reader, "ArrivalDate"),
                 Comments = Parser.GetNullableStringValueFromByteArray(reader, "Comments"),
             });
         }
@@ -46,6 +47,7 @@ public class LocationsMySqlRepository(string connectionString) : Repository(conn
             {"@State", location.State},
             {"@ZipCode", location.ZipCode},
             {"@IsLegal", location.IsLegal},
+            {"@ArrivalDate", location.ArrivalDate},
             {"@Comments", location.Comments},
             {"@OutreachTeamId", outreachTeamId},
         };

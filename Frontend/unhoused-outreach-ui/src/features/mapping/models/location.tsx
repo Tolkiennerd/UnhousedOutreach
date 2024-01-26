@@ -11,5 +11,6 @@ export interface Location
     state: State
     zipCode: string;
     isLegal?: boolean;
+    arrivalDate?: Date;
     comments?: string;
 }
