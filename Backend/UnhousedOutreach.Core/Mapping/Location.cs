@@ -11,5 +11,6 @@ public class Location
     public State? State {get; set;}
     public string? ZipCode {get; set;}
     public bool? IsLegal {get; set;}
+    public DateTime? ArrivalDate {get; set;}
     public string? Comments {get; set;}
 }
