@@ -22,7 +22,7 @@ public class LookupsController : ControllerBase
 
     #region All
     [HttpGet("all")]
-    public Core.Lookups.Lookups GetLookups() => repository.GetLookups();
+    public Core.Lookups.Lookups GetLookups([FromQuery(Name = "otid")]int outreachTeamId) => repository.GetLookups(outreachTeamId);
     #endregion
 
     #region Cushion Condition
@@ -94,7 +94,7 @@ public class LookupsController : ControllerBase
     public Dictionary<int, string> GetRequestsLookup() => repository.GetRequests();
 
     [HttpPost("request")]
-    public async Task SetRequest(int? id, string value) => await repository.SetRequest(id, value);
+    public async Task SetRequest(int? id, string value, int outreachTeamId) => await repository.SetRequest(id, value, outreachTeamId);
     #endregion
 
     #region Shirt Size

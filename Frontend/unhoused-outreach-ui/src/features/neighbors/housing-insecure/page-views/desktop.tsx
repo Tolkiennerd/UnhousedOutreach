@@ -16,7 +16,7 @@ export function HousingInsecureNeighborsDesktopView() {
 
     // GET THE DATA.
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/housing-insecure-neighbors?outreachTeamId=1`)
+        axios.get(`${process.env.REACT_APP_API_URL}/housing-insecure-neighbors?otid=1`)
             .then(response => {
                 setHousingInsecureNeighborsData(response.data)
             })

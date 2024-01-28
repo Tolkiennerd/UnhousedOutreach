@@ -23,9 +23,11 @@ public class LocationsController : ControllerBase
 
     #region Public Methods
     [HttpGet("locations")]
-    public IEnumerable<Location> GetLocations(int outreachTeamId) => repository.GetLocations(outreachTeamId);
+    public IEnumerable<Location> GetLocations([FromQuery(Name = "otid")]int outreachTeamId) =>
+        repository.GetLocations(outreachTeamId);
 
     [HttpPost("location")]
-    public async Task SetLocation(Location location, int outreachTeamId) => await repository.SetLocation(location, outreachTeamId);
+    public async Task SetLocation(Location location, [FromQuery(Name = "otid")]int outreachTeamId) =>
+        await repository.SetLocation(location, outreachTeamId);
     #endregion
 }

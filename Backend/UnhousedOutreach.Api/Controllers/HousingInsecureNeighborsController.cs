@@ -23,31 +23,48 @@ public class HousingInsecureNeighborsController : ControllerBase
 
     #region Public Methods
     [HttpGet("housing-insecure-neighbors")]
-    public IEnumerable<HousingInsecureNeighbor> GetHousingInsecureNeighbors(int outreachTeamId) => 
+    public IEnumerable<HousingInsecureNeighbor> GetHousingInsecureNeighbors(
+        [FromQuery(Name = "otid")]int outreachTeamId) => 
         repository.GetHousingInsecureNeighbors(outreachTeamId);
 
     [HttpPost("housing-insecure-neighbor")]
-    public async Task SetHousingInsecureNeighbor(HousingInsecureNeighbor neighbor, int outreachTeamId) => 
+    public async Task SetHousingInsecureNeighbor(
+        [FromBody]HousingInsecureNeighbor neighbor, 
+        [FromQuery(Name = "otid")]int outreachTeamId) => 
         await repository.SetHousingInsecureNeighbor(neighbor, outreachTeamId);
 
     [HttpPost("housing-insecure-neighbor-disability")]
-    public async Task SetHousingInsecureNeighborDisability(int housingInsecureNeighborId, int disabilityId, int outreachTeamId) => 
+    public async Task SetHousingInsecureNeighborDisability(
+        [FromBody]int housingInsecureNeighborId, 
+        [FromBody]int disabilityId, 
+        [FromQuery(Name = "otid")]int outreachTeamId) => 
         await repository.SetHousingInsecureNeighborDisability(housingInsecureNeighborId, disabilityId, outreachTeamId);
 
     [HttpPost("housing-insecure-neighbor-ethnicity")]
-    public async Task SetHousingInsecureNeighborEthnicity(int housingInsecureNeighborId, int ethnicityId, int outreachTeamId) => 
+    public async Task SetHousingInsecureNeighborEthnicity(
+        [FromBody]int housingInsecureNeighborId, 
+        [FromBody]int ethnicityId,
+        [FromQuery(Name = "otid")]int outreachTeamId) => 
         await repository.SetHousingInsecureNeighborEthnicity(housingInsecureNeighborId, ethnicityId, outreachTeamId);
 
     [HttpPost("housing-insecure-neighbor-family-member")]
-    public async Task SetHousingInsecureNeighborFamilyMember(FamilyMember familyMember, int outreachTeamId) => 
+    public async Task SetHousingInsecureNeighborFamilyMember(
+        [FromBody]FamilyMember familyMember, 
+        [FromQuery(Name = "otid")]int outreachTeamId) => 
         await repository.SetHousingInsecureNeighborFamilyMember(familyMember, outreachTeamId);
 
     [HttpPost("housing-insecure-neighbor-request")]
-    public async Task SetHousingInsecureNeighborRequest(int housingInsecureNeighborId, int requestId, int outreachTeamId) => 
+    public async Task SetHousingInsecureNeighborRequest(
+        [FromBody]int housingInsecureNeighborId, 
+        [FromBody]int requestId, 
+        [FromQuery(Name = "otid")]int outreachTeamId) => 
         await repository.SetHousingInsecureNeighborRequest(housingInsecureNeighborId, requestId, outreachTeamId);
 
     [HttpPost("housing-insecure-neighbor-tent")]
-    public async Task SetHousingInsecureNeighborTent(int housingInsecureNeighborId, int tentId, int outreachTeamId) => 
+    public async Task SetHousingInsecureNeighborTent(
+        [FromBody]int housingInsecureNeighborId, 
+        [FromBody]int tentId, 
+        [FromQuery(Name = "otid")]int outreachTeamId) => 
         await repository.SetHousingInsecureNeighborTent(housingInsecureNeighborId, tentId, outreachTeamId);
     #endregion
 }

@@ -23,9 +23,11 @@ public class TentsController : ControllerBase
 
     #region Public Methods
     [HttpGet("tents")]
-    public IEnumerable<Tent> GetTents(int outreachTeamId) => repository.GetTents(outreachTeamId);
+    public IEnumerable<Tent> GetTents([FromQuery(Name = "otid")]int outreachTeamId) =>
+        repository.GetTents(outreachTeamId);
 
     [HttpPost("tent")]
-    public async Task SetTent(Tent tent, int outreachTeamId) => await repository.SetTent(tent, outreachTeamId);
+    public async Task SetTent(Tent tent, [FromQuery(Name = "otid")]int outreachTeamId) =>
+        await repository.SetTent(tent, outreachTeamId);
     #endregion
 }
