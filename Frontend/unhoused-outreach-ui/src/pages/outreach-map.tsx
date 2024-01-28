@@ -9,7 +9,7 @@ function OutreachMap() {
 
     // CONTENT.
     return (
-        <div className="content">
+        <div>
         {isMobile ?
             <OutreachMapMobileView/> :
             <OutreachMapDesktopView/>

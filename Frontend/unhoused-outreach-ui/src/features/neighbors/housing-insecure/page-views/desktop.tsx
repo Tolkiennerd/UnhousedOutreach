@@ -26,28 +26,28 @@ export function HousingInsecureNeighborsDesktopView() {
     // CONTENT.
     return (
         <>
-            <span style={{fontWeight: 'bold', padding: '1vw'}}>Housing Insecure Neighbors</span>
+            <h3 style={{textAlign: 'center'}}>Housing Insecure Neighbors</h3>
             <table>
-            <thead>
-                <tr>
-                    {table.getFlatHeaders().map(header => (
-                    <th key={header.id}>
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                    </th>
+                <thead>
+                    <tr>
+                        {table.getFlatHeaders().map((header, index) => (
+                        <th key={header.id}>
+                            {flexRender(header.column.columnDef.header, header.getContext())}
+                        </th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {table.getRowModel().rows.map(row => (
+                    <tr key={row.id}>
+                        {row.getVisibleCells().map(cell => (
+                        <td key={cell.id}>
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </td>
+                        ))}
+                    </tr>
                     ))}
-                </tr>
-            </thead>
-            <tbody>
-                {table.getRowModel().rows.map(row => (
-                <tr key={row.id}>
-                    {row.getVisibleCells().map(cell => (
-                    <td key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                    ))}
-                </tr>
-                ))}
-            </tbody>
+                </tbody>
             </table>
         </>
     )

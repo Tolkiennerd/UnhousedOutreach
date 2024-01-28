@@ -11,7 +11,7 @@ function HousingInsecureNeighbors() {
 
     // CONTENT.
     return (
-        <div className="content">
+        <div>
         {isMobile ?
             <HousingInsecureNeighborsMobileView/> :
             <HousingInsecureNeighborsDesktopView/>

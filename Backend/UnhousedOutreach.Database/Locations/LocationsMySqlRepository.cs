@@ -17,12 +17,13 @@ public class LocationsMySqlRepository(string connectionString) : Repository(conn
             locations.Add(new()
             {
                 LocationId = (int)reader["LocationId"],
-                LocationTypeId = Parser.GetNullableValue<int?>(reader, "LocationTypeId"),
+                Name = Parser.GetNullableValue<string?>(reader, "Name"),
+                LocationTypeId = (int)reader["LocationTypeId"],
                 Latitude = Parser.GetNullableValue<decimal?>(reader, "Latitude"),
                 Longitude = Parser.GetNullableValue<decimal?>(reader, "Longitude"),
                 Address = Parser.GetNullableValue<string?>(reader, "Address"),
-                City = Parser.GetNullableValue<string?>(reader, "City"),
-                State = Parser.GetNullableEnumValue<State>(reader, "State"),
+                City = (string)reader["City"],
+                State = Parser.GetEnumValue<State>(reader, "State"),
                 ZipCode = Parser.GetNullableValue<string?>(reader, "ZipCode"),
                 IsLegal = Parser.GetNullableBooleanValue(reader, "IsLegal"),
                 ArrivalDate = Parser.GetNullableValue<DateTime?>(reader, "ArrivalDate"),
@@ -39,6 +40,7 @@ public class LocationsMySqlRepository(string connectionString) : Repository(conn
         Dictionary<string, object?> parameters = new()
         {
             {"@LocationId", location.LocationId},
+            {"@Name", location.Name},
             {"@LocationTypeId", location.LocationTypeId},
             {"@Latitude", location.Latitude},
             {"@Longitude", location.Longitude},

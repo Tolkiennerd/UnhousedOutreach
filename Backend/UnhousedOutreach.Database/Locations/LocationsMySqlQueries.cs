@@ -5,6 +5,7 @@ internal static class LocationsMySqlQueries
     internal static readonly string GetLocations = @"
 SELECT
     LocationId,
+    Name,
     LocationTypeId,
     Latitude,
     Longitude,
@@ -21,6 +22,7 @@ WHERE OutreachTeamId = @OutreachTeamId";
 INSERT INTO Location
 VALUES (
     @LocationId,
+    @Name,
     @LocationTypeId,
     @Latitude,
     @Longitude,
@@ -35,6 +37,7 @@ VALUES (
 )
 ON DUPLICATE KEY UPDATE
     LocationId = @LocationId,
+    Name = @Name,
     LocationTypeId = @LocationTypeId,
     Latitude = @Latitude,
     Longitude = @Longitude,

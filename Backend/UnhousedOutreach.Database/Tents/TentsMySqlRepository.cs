@@ -31,7 +31,7 @@ public class TentsMySqlRepository(string connectionString) : Repository(connecti
                     Longitude = Parser.GetNullableValue<decimal?>(reader, "Longitude"),
                     Address = Parser.GetNullableValue<string?>(reader, "Address"),
                     City = Parser.GetNullableValue<string?>(reader, "City"),
-                    State = Parser.GetNullableEnumValue<State>(reader, "State"),
+                    State = Parser.GetEnumValue<State>(reader, "State"),
                     ZipCode = Parser.GetNullableValue<string?>(reader, "ZipCode"),
                     IsLegal = Parser.GetNullableBooleanValue(reader, "IsLegal"),
                     Comments = Parser.GetNullableStringValueFromByteArray(reader, "LocationComments")

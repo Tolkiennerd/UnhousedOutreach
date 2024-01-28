@@ -19,14 +19,16 @@ function App() {
 
   // GET ROUTES.
   return (
-    <BrowserRouter>
-    <LookupsContext.Provider value={lookups}>
-      <Routes>
-          <Route path="/" element={<HousingInsecureNeighbors/>} />
-          <Route path="/map" element={<OutreachMap/>} />
-      </Routes>
-      </LookupsContext.Provider>
-    </BrowserRouter>
+    <div>
+      <BrowserRouter>
+      <LookupsContext.Provider value={lookups}>
+        <Routes>
+            <Route path="/" element={<HousingInsecureNeighbors/>} />
+            <Route path="/map" element={<OutreachMap/>} />
+        </Routes>
+        </LookupsContext.Provider>
+      </BrowserRouter>
+    </div>
   );
 }
 

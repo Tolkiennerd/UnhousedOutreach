@@ -24,7 +24,7 @@ public static class Parser
             default;
     }
 
-    public static T GetNullableEnumValue<T>(MySqlDataReader reader, string fieldName) where T : struct
+    public static T GetEnumValue<T>(MySqlDataReader reader, string fieldName) where T : struct
     {
         if (reader.IsDBNull(reader.GetOrdinal(fieldName)))
         {
