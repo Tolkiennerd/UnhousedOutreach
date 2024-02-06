@@ -7,11 +7,11 @@ namespace UnhousedOutreach.Database.SupportServiceOrganizations;
 public class SupportServiceOrganizationsMySqlRepository(string connectionString) : Repository(connectionString)
 {
     #region Get Methods
-    public IEnumerable<Organization> GetSupportServiceOrganizations(int outreachTeamId)
+    public async Task<IEnumerable<Organization>> GetSupportServiceOrganizations(int outreachTeamId)
     {
         // GET NEIGHBORS.
         Dictionary<string, object?> parameters = new() {{"@OutreachTeamId", outreachTeamId}};
-        var reader = ExecuteReader(SupportServiceOrganizationsMySqlQueries.GetSupportServiceOrganizations, parameters);
+        var reader = await ExecuteReader(SupportServiceOrganizationsMySqlQueries.GetSupportServiceOrganizations, parameters);
         IList<Organization> organizations = [];
         while (reader.Read())
         {

@@ -7,10 +7,10 @@ namespace UnhousedOutreach.Database.OutreachTeams;
 public class OutreachTeamsMySqlRepository(string connectionString) : Repository(connectionString)
 {
     #region Get Methods
-    public IEnumerable<OutreachTeam> GetOutreachTeams()
+    public async Task<IEnumerable<OutreachTeam>> GetOutreachTeams()
     {
         // GET NEIGHBORS.
-        var reader = ExecuteReader(OutreachTeamsMySqlQueries.GetOutreachTeams);
+        var reader = await ExecuteReader(OutreachTeamsMySqlQueries.GetOutreachTeams);
         IList<OutreachTeam> outreachTeams = [];
         while (reader.Read())
         {

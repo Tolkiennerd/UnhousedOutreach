@@ -1,3 +1,4 @@
+using System.Data.Common;
 using MySql.Data.MySqlClient;
 
 namespace UnhousedOutreach.Database.MySql;
@@ -17,12 +18,12 @@ public class Repository(string connectionString)
         await command.ExecuteNonQueryAsync();
     }
 
-    public MySqlDataReader ExecuteReader(string mySqlStatement) => ExecuteReader(mySqlStatement, []);
+    public async Task<DbDataReader> ExecuteReader(string mySqlStatement) => await ExecuteReader(mySqlStatement, []);
 
-    public MySqlDataReader ExecuteReader(string mySqlStatement, Dictionary<string, object?> parameterNamesAndValues)
+    public async Task<DbDataReader> ExecuteReader(string mySqlStatement, Dictionary<string, object?> parameterNamesAndValues)
     {
         var command = GetCommand(mySqlStatement, parameterNamesAndValues);
-        return command.ExecuteReader();
+        return await command.ExecuteReaderAsync();
     }
     #endregion
 

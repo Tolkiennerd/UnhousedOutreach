@@ -23,11 +23,15 @@ public class CaseManagersController : ControllerBase
 
     #region Public Methods
     [HttpGet("case-managers")]
-    public IEnumerable<CaseManager> GetCaseManagers([FromQuery(Name = "otid")]int outreachTeamId) => 
-        repository.GetCaseManagers(outreachTeamId);
+    public async Task<IEnumerable<CaseManager>> GetCaseManagers([FromQuery(Name = "otid")]int outreachTeamId)
+    {
+        return await repository.GetCaseManagers(outreachTeamId);
+    }
 
     [HttpPost("case-manager")]
-    public async Task SetCaseManager(CaseManager caseManager, [FromQuery(Name = "otid")]int outreachTeamId) => 
+    public async Task SetCaseManager(CaseManager caseManager, [FromQuery(Name = "otid")]int outreachTeamId)
+    {
         await repository.SetCaseManager(caseManager, outreachTeamId);
+    }
     #endregion
 }

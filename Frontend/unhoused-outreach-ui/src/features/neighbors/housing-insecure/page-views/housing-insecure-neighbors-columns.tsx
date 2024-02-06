@@ -25,8 +25,9 @@ export const housingInsecureNeighborsColumns = (lookups: Lookups) => [
       if (!row.location) {
         return 'Unknown';
       }
+      const linkAddress = `/map/${row.location.latitude}/${row.location.longitude}`;
       const linkText = row.location.name ?? lookups.locationType[row.location.locationTypeId];
-      return <Link to="/map">{linkText}</Link>;
+      return <Link to={linkAddress}>{linkText}</Link>;
     }, {
     id: 'location',
     cell: info => info.getValue(),

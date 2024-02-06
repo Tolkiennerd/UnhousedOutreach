@@ -7,11 +7,11 @@ namespace UnhousedOutreach.Database.Tents;
 public class TentsMySqlRepository(string connectionString) : Repository(connectionString)
 {
     #region Get Methods
-    public IEnumerable<Tent> GetTents(int outreachTeamId)
+    public async Task<IEnumerable<Tent>> GetTents(int outreachTeamId)
     {
         // GET TENTS.
         Dictionary<string, object?> parameters = new() {{"@OutreachTeamId", outreachTeamId}};
-        var reader = ExecuteReader(TentsMySqlQueries.GetTents, parameters);
+        var reader = await ExecuteReader(TentsMySqlQueries.GetTents, parameters);
         IList<Tent> tents = [];
         while (reader.Read())
         {
@@ -26,11 +26,11 @@ public class TentsMySqlRepository(string connectionString) : Repository(connecti
                 Location = reader["LocationId"] == DBNull.Value ? null : new()
                 {
                     LocationId = (int)reader["LocationId"],
-                    LocationTypeId = Parser.GetNullableValue<int?>(reader, "LocationTypeId"),
+                    LocationTypeId = (int)reader["LocationTypeId"],
                     Latitude = Parser.GetNullableValue<decimal?>(reader, "Latitude"),
                     Longitude = Parser.GetNullableValue<decimal?>(reader, "Longitude"),
                     Address = Parser.GetNullableValue<string?>(reader, "Address"),
-                    City = Parser.GetNullableValue<string?>(reader, "City"),
+                    City = (string)reader["City"],
                     State = Parser.GetEnumValue<State>(reader, "State"),
                     ZipCode = Parser.GetNullableValue<string?>(reader, "ZipCode"),
                     IsLegal = Parser.GetNullableBooleanValue(reader, "IsLegal"),

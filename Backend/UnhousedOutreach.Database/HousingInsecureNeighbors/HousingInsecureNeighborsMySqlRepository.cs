@@ -7,11 +7,11 @@ namespace UnhousedOutreach.Database.HousingInsecureNeighbors;
 public class HousingInsecureNeighborsMySqlRepository(string connectionString) : Repository(connectionString)
 {
     #region Get Methods
-    public IEnumerable<HousingInsecureNeighbor> GetHousingInsecureNeighbors(int outreachTeamId)
+    public async Task<IEnumerable<HousingInsecureNeighbor>> GetHousingInsecureNeighbors(int outreachTeamId)
     {
         // GET NEIGHBORS.
         Dictionary<string, object?> parameters = new() {{"@OutreachTeamId", outreachTeamId}};
-        var reader = ExecuteReader(HousingInsecureNeighborsMySqlQueries.GetHousingInsecureNeighbors, parameters);
+        var reader = await ExecuteReader(HousingInsecureNeighborsMySqlQueries.GetHousingInsecureNeighbors, parameters);
         Dictionary<int, HousingInsecureNeighbor> idsToNeighborsMap = [];
         while (reader.Read())
         {
@@ -45,11 +45,11 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
                 Location = reader["NeighborLocationId"] == DBNull.Value ? null : new()
                 {
                     LocationId = (int)reader["NeighborLocationId"],
-                    LocationTypeId = Parser.GetNullableValue<int?>(reader, "NeighborLocationTypeId"),
+                    LocationTypeId = (int)reader["NeighborLocationTypeId"],
                     Latitude = Parser.GetNullableValue<decimal?>(reader, "NeighborLocationLatitude"),
                     Longitude = Parser.GetNullableValue<decimal?>(reader, "NeighborLocationLongitude"),
                     Address = Parser.GetNullableValue<string?>(reader, "NeighborLocationAddress"),
-                    City = Parser.GetNullableValue<string?>(reader, "NeighborLocationCity"),
+                    City = (string)reader["NeighborLocationCity"],
                     State = Parser.GetEnumValue<State>(reader, "NeighborLocationState"),
                     ZipCode = Parser.GetNullableValue<string?>(reader, "NeighborLocationZipCode"),
                     IsLegal = Parser.GetNullableBooleanValue(reader, "NeighborLocationIsLegal"),
@@ -58,11 +58,11 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
                 DesiredLocation = reader["DesiredLocationId"] == DBNull.Value ? null : new()
                 {
                     LocationId = (int)reader["DesiredLocationId"],
-                    LocationTypeId = Parser.GetNullableValue<int?>(reader, "DesiredLocationTypeId"),
+                    LocationTypeId = (int)reader["DesiredLocationTypeId"],
                     Latitude = Parser.GetNullableValue<decimal?>(reader, "DesiredLocationLatitude"),
                     Longitude = Parser.GetNullableValue<decimal?>(reader, "DesiredLocationLongitude"),
                     Address = Parser.GetNullableValue<string?>(reader, "DesiredLocationAddress"),
-                    City = Parser.GetNullableValue<string?>(reader, "DesiredLocationCity"),
+                    City = (string)reader["DesiredLocationCity"],
                     State = Parser.GetEnumValue<State>(reader, "DesiredLocationState"),
                     ZipCode = Parser.GetNullableValue<string?>(reader, "DesiredLocationZipCode"),
                     IsLegal = Parser.GetNullableBooleanValue(reader, "DesiredLocationIsLegal"),
@@ -153,11 +153,11 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
                 Location = reader["LocationId"] == DBNull.Value ? null : new()
                 {
                     LocationId = (int)reader["LocationId"],
-                    LocationTypeId = Parser.GetNullableValue<int?>(reader, "LocationTypeId"),
+                    LocationTypeId = (int)reader["LocationTypeId"],
                     Latitude = Parser.GetNullableValue<decimal?>(reader, "Latitude"),
                     Longitude = Parser.GetNullableValue<decimal?>(reader, "Longitude"),
                     Address = Parser.GetNullableValue<string?>(reader, "Address"),
-                    City = Parser.GetNullableValue<string?>(reader, "City"),
+                    City = (string)reader["City"],
                     State = Parser.GetEnumValue<State>(reader, "State"),
                     ZipCode = Parser.GetNullableValue<string?>(reader, "ZipCode"),
                     IsLegal = Parser.GetNullableBooleanValue(reader, "IsLegal"),

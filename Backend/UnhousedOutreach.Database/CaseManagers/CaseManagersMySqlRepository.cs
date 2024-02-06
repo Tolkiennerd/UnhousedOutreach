@@ -6,11 +6,11 @@ namespace UnhousedOutreach.Database.CaseManagers;
 public class CaseManagersMySqlRepository(string connectionString) : Repository(connectionString)
 {
     #region Get Methods
-    public IEnumerable<CaseManager> GetCaseManagers(int outreachTeamId)
+    public async Task<IEnumerable<CaseManager>> GetCaseManagers(int outreachTeamId)
     {
         // GET NEIGHBORS.
         Dictionary<string, object?> parameters = new() {{"@OutreachTeamId", outreachTeamId}};
-        var reader = ExecuteReader(CaseManagersMySqlQueries.GetCaseManagers, parameters);
+        var reader = await ExecuteReader(CaseManagersMySqlQueries.GetCaseManagers, parameters);
         IList<CaseManager> caseManagers = [];
         while (reader.Read())
         {

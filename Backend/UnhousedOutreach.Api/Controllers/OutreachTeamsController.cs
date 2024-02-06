@@ -23,9 +23,15 @@ public class OutreachTeamsController : ControllerBase
 
     #region Public Methods
     [HttpGet("outreach-teams")]
-    public IEnumerable<OutreachTeam> GetOutreachTeams() => repository.GetOutreachTeams();
+    public async Task<IEnumerable<OutreachTeam>> GetOutreachTeams()
+    {
+        return await repository.GetOutreachTeams();
+    }
 
     [HttpPost("outreach-team")]
-    public async Task SetOutreachTeam(OutreachTeam outreachTeam) => await repository.SetOutreachTeam(outreachTeam);
+    public async Task SetOutreachTeam(OutreachTeam outreachTeam)
+    {
+        await repository.SetOutreachTeam(outreachTeam);
+    }
     #endregion
 }

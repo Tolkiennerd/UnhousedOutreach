@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.35, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Linux (x86_64)
 --
--- Host: localhost    Database: UnhousedOutreach
+-- Host: 127.0.0.1    Database: UnhousedOutreach
 -- ------------------------------------------------------
--- Server version	8.0.35-0ubuntu0.22.04.1
+-- Server version	8.0.36-0ubuntu0.22.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -26,13 +26,19 @@ CREATE TABLE `CaseManager` (
   `CaseManagerId` int NOT NULL AUTO_INCREMENT,
   `FirstName` varchar(45) DEFAULT NULL,
   `LastName` varchar(45) DEFAULT NULL,
-  `CommonName` varchar(45) DEFAULT NULL,
+  `PreferredName` varchar(45) DEFAULT NULL,
+  `GenderId` int DEFAULT NULL,
   `PhoneNumber` varchar(45) DEFAULT NULL,
   `EmailAddress` varchar(45) DEFAULT NULL,
-  `Organization` varchar(45) DEFAULT NULL,
+  `SupportServiceOrganizationId` int DEFAULT NULL,
   `Comments` blob,
-  PRIMARY KEY (`CaseManagerId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `OutreachTeamId` int NOT NULL,
+  PRIMARY KEY (`CaseManagerId`),
+  KEY `fk_CaseManager_SupportServiceOrganizationId_idx` (`SupportServiceOrganizationId`),
+  KEY `fk_CaseManager_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_CaseManager_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`),
+  CONSTRAINT `fk_CaseManager_SupportServiceOrganizationId` FOREIGN KEY (`SupportServiceOrganizationId`) REFERENCES `SupportServiceOrganization` (`SupportServiceOrganizationId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +47,7 @@ CREATE TABLE `CaseManager` (
 
 LOCK TABLES `CaseManager` WRITE;
 /*!40000 ALTER TABLE `CaseManager` DISABLE KEYS */;
+INSERT INTO `CaseManager` VALUES (2,'Case','Manager',NULL,0,NULL,'123-456-7890',NULL,NULL,1);
 /*!40000 ALTER TABLE `CaseManager` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,10 +59,10 @@ DROP TABLE IF EXISTS `CushionCondition`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `CushionCondition` (
-  `CushionConditionId` int NOT NULL,
+  `CushionConditionId` int NOT NULL AUTO_INCREMENT,
   `CushionCondition` varchar(45) NOT NULL,
   PRIMARY KEY (`CushionConditionId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,10 +83,10 @@ DROP TABLE IF EXISTS `CushionType`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `CushionType` (
-  `CushionTypeId` int NOT NULL,
+  `CushionTypeId` int NOT NULL AUTO_INCREMENT,
   `CushionType` varchar(45) NOT NULL,
   PRIMARY KEY (`CushionTypeId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,10 +107,10 @@ DROP TABLE IF EXISTS `Disability`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Disability` (
-  `DisabilityId` int NOT NULL,
+  `DisabilityId` int NOT NULL AUTO_INCREMENT,
   `Disability` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`DisabilityId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,7 +119,7 @@ CREATE TABLE `Disability` (
 
 LOCK TABLES `Disability` WRITE;
 /*!40000 ALTER TABLE `Disability` DISABLE KEYS */;
-INSERT INTO `Disability` VALUES (1,'Alcoholism'),(2,'Drug Addiction'),(3,'HIV'),(4,'PTSD'),(5,'Blindness'),(6,'Deafness'),(7,'Amputation'),(8,'Depression'),(9,'Diabetes'),(10,'Anxiety'),(11,'OCD'),(12,'Eating Disorder'),(13,'Schizophrenia'),(14,'Bipolar Disorder'),(15,'Skin Condition'),(16,'Tourettes Syndrome'),(17,'Vertigo'),(18,'Heart Condition'),(19,'Paraplegia'),(20,'ADHD'),(21,'Autism'),(22,'Sleeping Disorder');
+INSERT INTO `Disability` VALUES (1,'Alcoholism'),(2,'Drug Addiction'),(3,'HIV'),(4,'PTSD'),(5,'Blindness'),(6,'Deafness'),(7,'Amputation'),(8,'Depression'),(9,'Diabetes'),(10,'Anxiety'),(11,'OCD'),(12,'Eating Disorder'),(13,'Schizophrenia'),(14,'Bipolar Disorder'),(15,'Skin Condition'),(16,'Tourette\'s Syndrome'),(17,'Vertigo'),(18,'Heart Condition'),(19,'Paraplegia'),(20,'ADHD'),(21,'Autism'),(22,'Sleeping Disorder');
 /*!40000 ALTER TABLE `Disability` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -124,10 +131,10 @@ DROP TABLE IF EXISTS `Ethnicity`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Ethnicity` (
-  `EthnicityId` int NOT NULL,
+  `EthnicityId` int NOT NULL AUTO_INCREMENT,
   `Ethnicity` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`EthnicityId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,10 +155,10 @@ DROP TABLE IF EXISTS `Gender`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Gender` (
-  `GenderId` int NOT NULL,
+  `GenderId` int NOT NULL AUTO_INCREMENT,
   `Gender` varchar(45) NOT NULL,
   PRIMARY KEY (`GenderId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,22 +182,31 @@ CREATE TABLE `HousingInsecureNeighbor` (
   `HousingInsecureNeighborId` int NOT NULL AUTO_INCREMENT,
   `FirstName` varchar(45) DEFAULT NULL,
   `LastName` varchar(45) DEFAULT NULL,
-  `CommonName` varchar(45) DEFAULT NULL,
+  `PreferredName` varchar(45) DEFAULT NULL,
   `DateOfBirth` datetime DEFAULT NULL,
   `GenderId` int DEFAULT NULL,
   `PhoneNumber` varchar(15) DEFAULT NULL,
   `EmailAddress` varchar(45) DEFAULT NULL,
   `HousingStatusId` int DEFAULT NULL,
-  `IsUnhoused` tinyint DEFAULT NULL,
+  `IsHoused` tinyint DEFAULT NULL,
   `IsVeteran` tinyint DEFAULT NULL,
+  `HasIdentification` tinyint DEFAULT NULL,
+  `IsCitizen` tinyint DEFAULT NULL,
   `CoatOrJacketCount` int DEFAULT NULL,
   `ShirtSizeId` int DEFAULT NULL,
-  `ShoeSize` int DEFAULT NULL,
+  `ShoeSizeId` int DEFAULT NULL,
   `PantsSizeId` int DEFAULT NULL,
   `CaseManagerId` int DEFAULT NULL,
   `LocationId` int DEFAULT NULL,
   `DesiredLocationId` int DEFAULT NULL,
+  `CushionTypeId` int DEFAULT NULL,
+  `CushionConditionId` int DEFAULT NULL,
+  `BlanketCount` int DEFAULT NULL,
+  `HasSleepingBag` tinyint DEFAULT NULL,
+  `SleepingBagConditionId` int DEFAULT NULL,
+  `SleepingBagTemperatureThresholdFahrenheit` int DEFAULT NULL,
   `Comments` blob,
+  `OutreachTeamId` int NOT NULL,
   PRIMARY KEY (`HousingInsecureNeighborId`),
   KEY `fk_HousingInsecureNeighbor_GenderId_idx` (`GenderId`),
   KEY `fk_HousingInsecureNeighbor_HousingStatusId_idx` (`HousingStatusId`),
@@ -199,14 +215,16 @@ CREATE TABLE `HousingInsecureNeighbor` (
   KEY `fk_HousingInsecureNeighbor_CaseManagerId_idx` (`CaseManagerId`),
   KEY `fk_HousingInsecureNeighbor_ShirtSizeId_idx` (`ShirtSizeId`),
   KEY `fk_HousingInsecureNeighbor_PantsSizeId_idx` (`PantsSizeId`),
+  KEY `fk_HousingInsecureNeighbor_OutreachTeamId_idx` (`OutreachTeamId`),
   CONSTRAINT `fk_HousingInsecureNeighbor_CaseManagerId` FOREIGN KEY (`CaseManagerId`) REFERENCES `CaseManager` (`CaseManagerId`),
   CONSTRAINT `fk_HousingInsecureNeighbor_DesiredLocationId` FOREIGN KEY (`DesiredLocationId`) REFERENCES `Location` (`LocationId`),
   CONSTRAINT `fk_HousingInsecureNeighbor_GenderId` FOREIGN KEY (`GenderId`) REFERENCES `Gender` (`GenderId`),
   CONSTRAINT `fk_HousingInsecureNeighbor_HousingStatusId` FOREIGN KEY (`HousingStatusId`) REFERENCES `HousingStatus` (`HousingStatusId`),
   CONSTRAINT `fk_HousingInsecureNeighbor_LocationId` FOREIGN KEY (`LocationId`) REFERENCES `Location` (`LocationId`),
+  CONSTRAINT `fk_HousingInsecureNeighbor_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`),
   CONSTRAINT `fk_HousingInsecureNeighbor_PantsSizeId` FOREIGN KEY (`PantsSizeId`) REFERENCES `PantsSize` (`PantsSizeId`),
   CONSTRAINT `fk_HousingInsecureNeighbor_ShirtSizeId` FOREIGN KEY (`ShirtSizeId`) REFERENCES `ShirtSize` (`ShirtSizeId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,6 +233,7 @@ CREATE TABLE `HousingInsecureNeighbor` (
 
 LOCK TABLES `HousingInsecureNeighbor` WRITE;
 /*!40000 ALTER TABLE `HousingInsecureNeighbor` DISABLE KEYS */;
+INSERT INTO `HousingInsecureNeighbor` VALUES (2,'John','Smith','Johnny','1990-01-22 18:47:07',1,'234-567-8901',NULL,1,0,0,1,1,2,NULL,NULL,NULL,2,1,NULL,1,1,2,1,1,10,_binary 'first guy',1),(3,'Greg',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(4,'Joey','Jones',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2);
 /*!40000 ALTER TABLE `HousingInsecureNeighbor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -228,10 +247,13 @@ DROP TABLE IF EXISTS `HousingInsecureNeighborDisability`;
 CREATE TABLE `HousingInsecureNeighborDisability` (
   `HousingInsecureNeighborId` int NOT NULL,
   `DisabilityId` int NOT NULL,
+  `OutreachTeamId` int NOT NULL,
   KEY `fk_HousingInsecureNeighborDisability_HousingInsecureNeighbo_idx` (`HousingInsecureNeighborId`),
   KEY `fk_HousingInsecureNeighborDisability_DisabilityId_idx` (`DisabilityId`),
+  KEY `fk_HousingInsecureNeighborDisability_OutreachTeamId_idx` (`OutreachTeamId`),
   CONSTRAINT `fk_HousingInsecureNeighborDisability_DisabilityId` FOREIGN KEY (`DisabilityId`) REFERENCES `Disability` (`DisabilityId`),
-  CONSTRAINT `fk_HousingInsecureNeighborDisability_HousingInsecureNeighborId` FOREIGN KEY (`HousingInsecureNeighborId`) REFERENCES `HousingInsecureNeighbor` (`HousingInsecureNeighborId`)
+  CONSTRAINT `fk_HousingInsecureNeighborDisability_HousingInsecureNeighborId` FOREIGN KEY (`HousingInsecureNeighborId`) REFERENCES `HousingInsecureNeighbor` (`HousingInsecureNeighborId`),
+  CONSTRAINT `fk_HousingInsecureNeighborDisability_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -241,6 +263,7 @@ CREATE TABLE `HousingInsecureNeighborDisability` (
 
 LOCK TABLES `HousingInsecureNeighborDisability` WRITE;
 /*!40000 ALTER TABLE `HousingInsecureNeighborDisability` DISABLE KEYS */;
+INSERT INTO `HousingInsecureNeighborDisability` VALUES (3,1,1),(3,2,1);
 /*!40000 ALTER TABLE `HousingInsecureNeighborDisability` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -254,10 +277,13 @@ DROP TABLE IF EXISTS `HousingInsecureNeighborEthnicity`;
 CREATE TABLE `HousingInsecureNeighborEthnicity` (
   `HousingInsecureNeighborId` int NOT NULL,
   `EthnicityId` int NOT NULL,
+  `OutreachTeamId` int NOT NULL,
   KEY `fk_Ethnicity_HousingInsecureNeighborId_idx` (`HousingInsecureNeighborId`),
   KEY `fk_HousingInsecureNeighborEthnicity_EthnicityId_idx` (`EthnicityId`),
+  KEY `fk_HousingInsecureNeighborEthnicity_OutreachTeamId_idx` (`OutreachTeamId`),
   CONSTRAINT `fk_Ethnicity_HousingInsecureNeighborId` FOREIGN KEY (`HousingInsecureNeighborId`) REFERENCES `HousingInsecureNeighbor` (`HousingInsecureNeighborId`),
-  CONSTRAINT `fk_HousingInsecureNeighborEthnicity_EthnicityId` FOREIGN KEY (`EthnicityId`) REFERENCES `Ethnicity` (`EthnicityId`)
+  CONSTRAINT `fk_HousingInsecureNeighborEthnicity_EthnicityId` FOREIGN KEY (`EthnicityId`) REFERENCES `Ethnicity` (`EthnicityId`),
+  CONSTRAINT `fk_HousingInsecureNeighborEthnicity_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -267,45 +293,51 @@ CREATE TABLE `HousingInsecureNeighborEthnicity` (
 
 LOCK TABLES `HousingInsecureNeighborEthnicity` WRITE;
 /*!40000 ALTER TABLE `HousingInsecureNeighborEthnicity` DISABLE KEYS */;
+INSERT INTO `HousingInsecureNeighborEthnicity` VALUES (2,1,1),(2,2,1),(3,3,1),(4,4,2);
 /*!40000 ALTER TABLE `HousingInsecureNeighborEthnicity` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `HousingInsecureNeighborFamily`
+-- Table structure for table `HousingInsecureNeighborFamilyMember`
 --
 
-DROP TABLE IF EXISTS `HousingInsecureNeighborFamily`;
+DROP TABLE IF EXISTS `HousingInsecureNeighborFamilyMember`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `HousingInsecureNeighborFamily` (
-  `HousingInsecureNeighborFamilyId` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `HousingInsecureNeighborFamilyMember` (
+  `HousingInsecureNeighborFamilyMemberId` int NOT NULL AUTO_INCREMENT,
   `HousingInsecureNeighborId` int NOT NULL,
   `FirstName` varchar(45) DEFAULT NULL,
   `LastName` varchar(45) DEFAULT NULL,
-  `RelationshipToNeighbor` enum('Undefined','Child','Parent','Sibling','Cousin','Uncle/Aunt','Grandparent','Grandson','Nephew/Neice','Other') NOT NULL,
+  `PreferredName` varchar(45) DEFAULT NULL,
+  `RelationshipToNeighbor` enum('Undefined','Child','Parent','Sibling','Cousin','AuntOrUncle','Grandparent','Grandchild','NieceOrNephew','Other') NOT NULL,
   `GenderId` int DEFAULT NULL,
   `PhoneNumber` varchar(45) DEFAULT NULL,
   `EmailAddress` varchar(45) DEFAULT NULL,
   `LocationId` int DEFAULT NULL,
   `IsHoused` tinyint DEFAULT NULL,
   `Comments` blob,
-  PRIMARY KEY (`HousingInsecureNeighborFamilyId`),
+  `OutreachTeamId` int NOT NULL,
+  PRIMARY KEY (`HousingInsecureNeighborFamilyMemberId`),
   KEY `fk_HousingInsecureNeighborFamily_HousingInsecureNeighborId_idx` (`HousingInsecureNeighborId`),
   KEY `fk_HousingInsecureNeighborFamily_GenderId_idx` (`GenderId`),
   KEY `fk_HousingInsecureNeighborFamily_LocationId_idx` (`LocationId`),
+  KEY `fk_HousingInsecureNeighborFamilyMember_OutreachTeamId_idx` (`OutreachTeamId`),
   CONSTRAINT `fk_HousingInsecureNeighborFamily_GenderId` FOREIGN KEY (`GenderId`) REFERENCES `Gender` (`GenderId`),
   CONSTRAINT `fk_HousingInsecureNeighborFamily_HousingInsecureNeighborId` FOREIGN KEY (`HousingInsecureNeighborId`) REFERENCES `HousingInsecureNeighbor` (`HousingInsecureNeighborId`),
-  CONSTRAINT `fk_HousingInsecureNeighborFamily_LocationId` FOREIGN KEY (`LocationId`) REFERENCES `Location` (`LocationId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `fk_HousingInsecureNeighborFamily_LocationId` FOREIGN KEY (`LocationId`) REFERENCES `Location` (`LocationId`),
+  CONSTRAINT `fk_HousingInsecureNeighborFamilyMember_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `HousingInsecureNeighborFamily`
+-- Dumping data for table `HousingInsecureNeighborFamilyMember`
 --
 
-LOCK TABLES `HousingInsecureNeighborFamily` WRITE;
-/*!40000 ALTER TABLE `HousingInsecureNeighborFamily` DISABLE KEYS */;
-/*!40000 ALTER TABLE `HousingInsecureNeighborFamily` ENABLE KEYS */;
+LOCK TABLES `HousingInsecureNeighborFamilyMember` WRITE;
+/*!40000 ALTER TABLE `HousingInsecureNeighborFamilyMember` DISABLE KEYS */;
+INSERT INTO `HousingInsecureNeighborFamilyMember` VALUES (1,3,'Bob','Smith','Bobby','Parent',1,'456-789-0123','bob@gmail.com',NULL,1,_binary 'testing',1);
+/*!40000 ALTER TABLE `HousingInsecureNeighborFamilyMember` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -318,9 +350,12 @@ DROP TABLE IF EXISTS `HousingInsecureNeighborRequest`;
 CREATE TABLE `HousingInsecureNeighborRequest` (
   `HousingInsecureNeighborId` int NOT NULL,
   `RequestId` int NOT NULL,
+  `OutreachTeamId` int NOT NULL,
   KEY `fk_HousingInsecureNeighborRequest_HousingInsecureNeighborId_idx` (`HousingInsecureNeighborId`),
   KEY `fk_HousingInsecureNeighborRequest_RequestId_idx` (`RequestId`),
+  KEY `fk_HousingInsecureNeighborRequest_OutreachTeamId_idx` (`OutreachTeamId`),
   CONSTRAINT `fk_HousingInsecureNeighborRequest_HousingInsecureNeighborId` FOREIGN KEY (`HousingInsecureNeighborId`) REFERENCES `HousingInsecureNeighbor` (`HousingInsecureNeighborId`),
+  CONSTRAINT `fk_HousingInsecureNeighborRequest_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`),
   CONSTRAINT `fk_HousingInsecureNeighborRequest_RequestId` FOREIGN KEY (`RequestId`) REFERENCES `Request` (`RequestId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -331,6 +366,7 @@ CREATE TABLE `HousingInsecureNeighborRequest` (
 
 LOCK TABLES `HousingInsecureNeighborRequest` WRITE;
 /*!40000 ALTER TABLE `HousingInsecureNeighborRequest` DISABLE KEYS */;
+INSERT INTO `HousingInsecureNeighborRequest` VALUES (3,1,1),(3,2,1);
 /*!40000 ALTER TABLE `HousingInsecureNeighborRequest` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -344,21 +380,12 @@ DROP TABLE IF EXISTS `HousingInsecureNeighborTent`;
 CREATE TABLE `HousingInsecureNeighborTent` (
   `HousingInsecureNeighborId` int NOT NULL,
   `TentId` int NOT NULL,
-  `CushionTypeId` int DEFAULT NULL,
-  `CushionConditionId` int DEFAULT NULL,
-  `BlanketCount` int DEFAULT NULL,
-  `HasSleepingBag` int DEFAULT NULL,
-  `SleepingBagConditionId` int DEFAULT NULL,
-  `SleepingBagTemperatureThreshold` int DEFAULT NULL,
+  `OutreachTeamId` int NOT NULL,
   KEY `fk_HousingInsecureNeighborTent_TentId_idx` (`TentId`),
   KEY `fk_HousingInsecureNeighborTent_HousingInsecureNeighborId_idx` (`HousingInsecureNeighborId`),
-  KEY `fk_HousingInsecureNeighborTent_CushionTypeId_idx` (`CushionTypeId`),
-  KEY `fk_HousingInsecureNeighborTent_CushionConditionId_idx` (`CushionConditionId`),
-  KEY `fk_HousingInsecureNeighborTent_SleepingBagConditionId_idx` (`SleepingBagConditionId`),
-  CONSTRAINT `fk_HousingInsecureNeighborTent_CushionConditionId` FOREIGN KEY (`CushionConditionId`) REFERENCES `CushionCondition` (`CushionConditionId`),
-  CONSTRAINT `fk_HousingInsecureNeighborTent_CushionTypeId` FOREIGN KEY (`CushionTypeId`) REFERENCES `CushionType` (`CushionTypeId`),
+  KEY `fk_HousingInsecureNeighborTent_OutreachTeamId_idx` (`OutreachTeamId`),
   CONSTRAINT `fk_HousingInsecureNeighborTent_HousingInsecureNeighborId` FOREIGN KEY (`HousingInsecureNeighborId`) REFERENCES `HousingInsecureNeighbor` (`HousingInsecureNeighborId`),
-  CONSTRAINT `fk_HousingInsecureNeighborTent_SleepingBagConditionId` FOREIGN KEY (`SleepingBagConditionId`) REFERENCES `SleepingBagCondition` (`SleepingBagConditionId`),
+  CONSTRAINT `fk_HousingInsecureNeighborTent_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`),
   CONSTRAINT `fk_HousingInsecureNeighborTent_TentId` FOREIGN KEY (`TentId`) REFERENCES `Tent` (`TentId`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -369,6 +396,7 @@ CREATE TABLE `HousingInsecureNeighborTent` (
 
 LOCK TABLES `HousingInsecureNeighborTent` WRITE;
 /*!40000 ALTER TABLE `HousingInsecureNeighborTent` DISABLE KEYS */;
+INSERT INTO `HousingInsecureNeighborTent` VALUES (2,2,1);
 /*!40000 ALTER TABLE `HousingInsecureNeighborTent` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -380,10 +408,10 @@ DROP TABLE IF EXISTS `HousingStatus`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `HousingStatus` (
-  `HousingStatusId` int NOT NULL,
+  `HousingStatusId` int NOT NULL AUTO_INCREMENT,
   `HousingStatus` varchar(45) NOT NULL,
   PRIMARY KEY (`HousingStatusId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -424,15 +452,15 @@ LOCK TABLES `HousingStatusHistory` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `IsUnhousedHistory`
+-- Table structure for table `IsHousedHistory`
 --
 
-DROP TABLE IF EXISTS `IsUnhousedHistory`;
+DROP TABLE IF EXISTS `IsHousedHistory`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `IsUnhousedHistory` (
+CREATE TABLE `IsHousedHistory` (
   `HousingInsecureNeighborId` int NOT NULL,
-  `IsUnhoused` tinyint NOT NULL,
+  `IsHoused` tinyint NOT NULL,
   `FirstRecorded` date NOT NULL,
   KEY `fk_IsUnhousedHistory_HousingInsecureNeighborId_idx` (`HousingInsecureNeighborId`),
   CONSTRAINT `fk_IsUnhousedHistory_HousingInsecureNeighborId` FOREIGN KEY (`HousingInsecureNeighborId`) REFERENCES `HousingInsecureNeighbor` (`HousingInsecureNeighborId`)
@@ -440,12 +468,12 @@ CREATE TABLE `IsUnhousedHistory` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `IsUnhousedHistory`
+-- Dumping data for table `IsHousedHistory`
 --
 
-LOCK TABLES `IsUnhousedHistory` WRITE;
-/*!40000 ALTER TABLE `IsUnhousedHistory` DISABLE KEYS */;
-/*!40000 ALTER TABLE `IsUnhousedHistory` ENABLE KEYS */;
+LOCK TABLES `IsHousedHistory` WRITE;
+/*!40000 ALTER TABLE `IsHousedHistory` DISABLE KEYS */;
+/*!40000 ALTER TABLE `IsHousedHistory` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -457,19 +485,24 @@ DROP TABLE IF EXISTS `Location`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Location` (
   `LocationId` int NOT NULL AUTO_INCREMENT,
+  `Name` varchar(45) DEFAULT NULL,
   `LocationTypeId` int NOT NULL,
-  `Latitude` decimal(10,0) DEFAULT NULL,
-  `Longitude` decimal(10,0) DEFAULT NULL,
+  `Latitude` decimal(8,6) DEFAULT NULL,
+  `Longitude` decimal(9,6) DEFAULT NULL,
   `Address` varchar(45) DEFAULT NULL,
   `City` varchar(45) NOT NULL,
   `State` enum('Undefined','AL','AK','AZ','AR','CA','CO','CT','DC','DE','FL','GA','HI','ID','IL','IN','IA','KS','KT','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY') NOT NULL,
-  `ZipCode` varchar(10) NOT NULL,
+  `ZipCode` varchar(10) DEFAULT NULL,
   `IsLegal` tinyint DEFAULT NULL,
+  `ArrivalDate` date DEFAULT NULL,
   `Comments` blob,
+  `OutreachTeamId` int NOT NULL,
   PRIMARY KEY (`LocationId`),
   KEY `fk_Location_LocationTypeId_idx` (`LocationTypeId`),
-  CONSTRAINT `fk_Location_LocationTypeId` FOREIGN KEY (`LocationTypeId`) REFERENCES `LocationType` (`LocationTypeId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_Location_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_Location_LocationTypeId` FOREIGN KEY (`LocationTypeId`) REFERENCES `LocationType` (`LocationTypeId`),
+  CONSTRAINT `fk_Location_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -478,6 +511,7 @@ CREATE TABLE `Location` (
 
 LOCK TABLES `Location` WRITE;
 /*!40000 ALTER TABLE `Location` DISABLE KEYS */;
+INSERT INTO `Location` VALUES (1,NULL,1,38.951500,-77.348700,NULL,'Reston','UT','20190',1,NULL,NULL,1),(2,NULL,2,38.951600,-77.348800,NULL,'Reston','UT','20190',1,NULL,NULL,1),(3,NULL,3,38.951700,-77.348900,NULL,'Reston','UT','20190',1,NULL,NULL,2);
 /*!40000 ALTER TABLE `Location` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -516,10 +550,10 @@ DROP TABLE IF EXISTS `LocationType`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `LocationType` (
-  `LocationTypeId` int NOT NULL,
+  `LocationTypeId` int NOT NULL AUTO_INCREMENT,
   `LocationType` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`LocationTypeId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -533,6 +567,30 @@ INSERT INTO `LocationType` VALUES (1,'Tent'),(2,'Car'),(3,'Bus Stop'),(4,'Shelte
 UNLOCK TABLES;
 
 --
+-- Table structure for table `OutreachTeam`
+--
+
+DROP TABLE IF EXISTS `OutreachTeam`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `OutreachTeam` (
+  `OutreachTeamId` int NOT NULL AUTO_INCREMENT,
+  `Name` varchar(45) NOT NULL,
+  PRIMARY KEY (`OutreachTeamId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `OutreachTeam`
+--
+
+LOCK TABLES `OutreachTeam` WRITE;
+/*!40000 ALTER TABLE `OutreachTeam` DISABLE KEYS */;
+INSERT INTO `OutreachTeam` VALUES (1,'test team 1'),(2,'test team 2');
+/*!40000 ALTER TABLE `OutreachTeam` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `PantsSize`
 --
 
@@ -540,7 +598,7 @@ DROP TABLE IF EXISTS `PantsSize`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `PantsSize` (
-  `PantsSizeId` int NOT NULL,
+  `PantsSizeId` int NOT NULL AUTO_INCREMENT,
   `PantsSize` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`PantsSizeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -563,10 +621,13 @@ DROP TABLE IF EXISTS `Request`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Request` (
-  `RequestId` int NOT NULL,
+  `RequestId` int NOT NULL AUTO_INCREMENT,
   `Request` varchar(45) NOT NULL,
-  PRIMARY KEY (`RequestId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `OutreachTeamid` int NOT NULL,
+  PRIMARY KEY (`RequestId`),
+  KEY `fk_Request_OutreachTeamId_idx` (`OutreachTeamid`),
+  CONSTRAINT `fk_Request_OutreachTeamId` FOREIGN KEY (`OutreachTeamid`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -575,7 +636,7 @@ CREATE TABLE `Request` (
 
 LOCK TABLES `Request` WRITE;
 /*!40000 ALTER TABLE `Request` DISABLE KEYS */;
-INSERT INTO `Request` VALUES (1,'Tent'),(2,'Cushion'),(3,'Sleeping Bag'),(4,'Blanket'),(5,'Tarp'),(6,'Coat'),(7,'Jacket'),(8,'Gloves'),(9,'Socks');
+INSERT INTO `Request` VALUES (1,'Tent',1),(2,'Cushion',1),(3,'Sleeping Bag',1),(4,'Blanket',1),(5,'Tarp',1),(6,'Coat',1),(7,'Jacket',1),(8,'Gloves',1),(9,'Socks',1);
 /*!40000 ALTER TABLE `Request` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -587,10 +648,10 @@ DROP TABLE IF EXISTS `ShirtSize`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ShirtSize` (
-  `ShirtSizeId` int NOT NULL,
+  `ShirtSizeId` int NOT NULL AUTO_INCREMENT,
   `ShirtSize` varchar(45) NOT NULL,
   PRIMARY KEY (`ShirtSizeId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -604,6 +665,30 @@ INSERT INTO `ShirtSize` VALUES (1,'Women\'s XS'),(2,'Women\'s S'),(3,'Women\'s M
 UNLOCK TABLES;
 
 --
+-- Table structure for table `ShoeSize`
+--
+
+DROP TABLE IF EXISTS `ShoeSize`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ShoeSize` (
+  `ShoeSizeId` int NOT NULL AUTO_INCREMENT,
+  `ShoeSize` varchar(45) NOT NULL,
+  PRIMARY KEY (`ShoeSizeId`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ShoeSize`
+--
+
+LOCK TABLES `ShoeSize` WRITE;
+/*!40000 ALTER TABLE `ShoeSize` DISABLE KEYS */;
+INSERT INTO `ShoeSize` VALUES (1,'Men\'s 6'),(2,'Men\'s 6.5'),(3,'Men\'s 7'),(4,'Men\'s 7.5'),(5,'Men\'s 8');
+/*!40000 ALTER TABLE `ShoeSize` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `SleepingBagCondition`
 --
 
@@ -611,10 +696,10 @@ DROP TABLE IF EXISTS `SleepingBagCondition`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `SleepingBagCondition` (
-  `SleepingBagConditionId` int NOT NULL,
+  `SleepingBagConditionId` int NOT NULL AUTO_INCREMENT,
   `SleepingBagCondition` varchar(45) NOT NULL,
   PRIMARY KEY (`SleepingBagConditionId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -628,6 +713,33 @@ INSERT INTO `SleepingBagCondition` VALUES (1,'New'),(2,'Gently Used'),(3,'Modera
 UNLOCK TABLES;
 
 --
+-- Table structure for table `SupportServiceOrganization`
+--
+
+DROP TABLE IF EXISTS `SupportServiceOrganization`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `SupportServiceOrganization` (
+  `SupportServiceOrganizationId` int NOT NULL AUTO_INCREMENT,
+  `Name` varchar(45) DEFAULT NULL,
+  `Comments` blob,
+  `OutreachTeamId` int NOT NULL,
+  PRIMARY KEY (`SupportServiceOrganizationId`),
+  KEY `fk_SupportServiceOrganization_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_SupportServiceOrganization_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `SupportServiceOrganization`
+--
+
+LOCK TABLES `SupportServiceOrganization` WRITE;
+/*!40000 ALTER TABLE `SupportServiceOrganization` DISABLE KEYS */;
+/*!40000 ALTER TABLE `SupportServiceOrganization` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Tent`
 --
 
@@ -635,21 +747,24 @@ DROP TABLE IF EXISTS `Tent`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Tent` (
-  `TentId` int NOT NULL,
+  `TentId` int NOT NULL AUTO_INCREMENT,
   `LocationId` int NOT NULL,
   `PersonSize` int DEFAULT NULL,
   `TentConditionId` int DEFAULT NULL,
   `TarpCount` int DEFAULT NULL,
   `TentUsageId` int DEFAULT NULL,
   `Comments` blob,
+  `OutreachTeamId` int NOT NULL,
   PRIMARY KEY (`TentId`),
   KEY `fk_Tent_LocationId_idx` (`LocationId`),
   KEY `fk_Tent_TentConditionId_idx` (`TentConditionId`),
   KEY `fk_Tent_TentUsageId_idx` (`TentUsageId`),
+  KEY `fk_Tent_OutreachTeamId_idx` (`OutreachTeamId`),
   CONSTRAINT `fk_Tent_LocationId` FOREIGN KEY (`LocationId`) REFERENCES `Location` (`LocationId`),
+  CONSTRAINT `fk_Tent_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`),
   CONSTRAINT `fk_Tent_TentConditionId` FOREIGN KEY (`TentConditionId`) REFERENCES `TentCondition` (`TentConditionId`),
   CONSTRAINT `fk_Tent_TentUsageId` FOREIGN KEY (`TentUsageId`) REFERENCES `TentUsage` (`TentUsageId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -658,6 +773,7 @@ CREATE TABLE `Tent` (
 
 LOCK TABLES `Tent` WRITE;
 /*!40000 ALTER TABLE `Tent` DISABLE KEYS */;
+INSERT INTO `Tent` VALUES (2,1,4,NULL,2,1,_binary 'first tent',1);
 /*!40000 ALTER TABLE `Tent` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -693,10 +809,10 @@ DROP TABLE IF EXISTS `TentUsage`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `TentUsage` (
-  `TentUsageId` int NOT NULL,
+  `TentUsageId` int NOT NULL AUTO_INCREMENT,
   `TentUsage` varchar(45) NOT NULL,
   PRIMARY KEY (`TentUsageId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -708,6 +824,38 @@ LOCK TABLES `TentUsage` WRITE;
 INSERT INTO `TentUsage` VALUES (1,'Permanent Residence'),(2,'Occasional Residence'),(3,'Storage'),(4,'Vacant');
 /*!40000 ALTER TABLE `TentUsage` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `User`
+--
+
+DROP TABLE IF EXISTS `User`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `User` (
+  `UserId` int NOT NULL AUTO_INCREMENT,
+  `Username` varchar(45) NOT NULL,
+  `OutreachTeamId` int NOT NULL,
+  `IsAdmin` tinyint NOT NULL DEFAULT '0',
+  `TableRead` tinyint NOT NULL DEFAULT '0',
+  `TableWrite` tinyint NOT NULL DEFAULT '0',
+  `MapRead` tinyint NOT NULL DEFAULT '0',
+  `MapWrite` tinyint NOT NULL DEFAULT '0',
+  `EmailAddress` varchar(45) NOT NULL,
+  PRIMARY KEY (`UserId`),
+  KEY `fk_User_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_User_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `User`
+--
+
+LOCK TABLES `User` WRITE;
+/*!40000 ALTER TABLE `User` DISABLE KEYS */;
+/*!40000 ALTER TABLE `User` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -718,4 +866,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-01-02 22:19:52
+-- Dump completed on 2024-02-04 17:42:11

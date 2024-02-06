@@ -22,118 +22,205 @@ public class LookupsController : ControllerBase
 
     #region All
     [HttpGet("all")]
-    public Core.Lookups.Lookups GetLookups([FromQuery(Name = "otid")]int outreachTeamId) => repository.GetLookups(outreachTeamId);
+    public async Task<Core.Lookups.Lookups> GetLookups([FromQuery(Name = "otid")]int outreachTeamId)
+    {
+        return await repository.GetLookups(outreachTeamId);
+    }
     #endregion
 
     #region Cushion Condition
     [HttpGet("cushion-conditions")]
-    public Dictionary<int, string> GetCushionConditionsLookup() => repository.GetCushionConditions();
+    public async Task<Dictionary<int, string>> GetCushionConditionsLookup()
+    {
+        return await repository.GetCushionConditions();
+    }
 
     [HttpPost("cushion-condition")]
-    public async Task SetCushionCondition(int? id, string value) => await repository.SetCushionCondition(id, value);
+    public async Task SetCushionCondition(int? id, string value)
+    {
+        await repository.SetCushionCondition(id, value);
+    }
     #endregion
 
     #region Cushion Type
     [HttpGet("cushion-types")]
-    public Dictionary<int, string> GetCushionTypesLookup() => repository.GetCushionTypes();
+    public async Task<Dictionary<int, string>> GetCushionTypesLookup()
+    {
+        return await repository.GetCushionTypes();
+    }
 
     [HttpPost("cushion-type")]
-    public async Task SetCushionType(int? id, string value) => await repository.SetCushionType(id, value);
+    public async Task SetCushionType(int? id, string value)
+    {
+        await repository.SetCushionType(id, value);
+    }
     #endregion
 
     #region Disability
     [HttpGet("disabilities")]
-    public Dictionary<int, string> GetDisabilitiesLookup() => repository.GetDisabilities();
+    public async Task<Dictionary<int, string>> GetDisabilitiesLookup()
+    {
+        return await repository.GetDisabilities();
+    }
 
     [HttpPost("disability")]
-    public async Task SetDisability(int? id, string value) => await repository.SetDisability(id, value);
+    public async Task SetDisability(int? id, string value)
+    {
+        await repository.SetDisability(id, value);
+    }
     #endregion
 
     #region Ethnicity
     [HttpGet("ethnicities")]
-    public Dictionary<int, string> GetEthnicitiesLookup() => repository.GetEthnicities();
+    public async Task<Dictionary<int, string>> GetEthnicitiesLookup()
+    {
+        return await repository.GetEthnicities();
+    }
 
     [HttpPost("ethnicity")]
-    public async Task SetEthnicity(int? id, string value) => await repository.SetEthnicity(id, value);
+    public async Task SetEthnicity(int? id, string value)
+    {
+        await repository.SetEthnicity(id, value);
+    }
     #endregion
 
     #region Gender
     [HttpGet("genders")]
-    public Dictionary<int, string> GetGendersLookup() => repository.GetGenders();
+    public async Task<Dictionary<int, string>> GetGendersLookup()
+    {
+        return await repository.GetGenders();
+    }
 
     [HttpPost("gender")]
-    public async Task SetGender(int? id, string value) => await repository.SetGender(id, value);
+    public async Task SetGender(int? id, string value)
+    {
+        await repository.SetGender(id, value);
+    }
     #endregion
 
     #region Housing Status
     [HttpGet("housing-statuses")]
-    public Dictionary<int, string> GetHousingStatusesLookup() => repository.GetHousingStatuses();
+    public async Task<Dictionary<int, string>> GetHousingStatusesLookup()
+    {
+        return await repository.GetHousingStatuses();
+    }
 
     [HttpPost("housing-status")]
-    public async Task SetHousingStatus(int? id, string value) => await repository.SetHousingStatus(id, value);
+    public async Task SetHousingStatus(int? id, string value)
+    {
+        await repository.SetHousingStatus(id, value);
+    }
     #endregion
 
     #region Location Type
     [HttpGet("location-types")]
-    public Dictionary<int, string> GetLocationTypesLookup() => repository.GetLocationTypes();
+    public async Task<Dictionary<int, string>> GetLocationTypesLookup()
+    {
+        return await repository.GetLocationTypes();
+    }
 
     [HttpPost("location-type")]
-    public async Task SetLocationType(int? id, string value) => await repository.SetLocationType(id, value);
+    public async Task SetLocationType(int? id, string value)
+    {
+        await repository.SetLocationType(id, value);
+    }
     #endregion
 
     #region Pants Size
     [HttpGet("pants-sizes")]
-    public Dictionary<int, string> GetPantsSizesLookup() => repository.GetPantsSizes();
+    public async Task<Dictionary<int, string>> GetPantsSizesLookup()
+    {
+        return await repository.GetPantsSizes();
+    }
 
     [HttpPost("pants-size")]
-    public async Task SetPantsSize(int? id, string value) => await repository.SetPantsSize(id, value);
+    public async Task SetPantsSize(int? id, string value)
+    {
+        await repository.SetPantsSize(id, value);
+    }
     #endregion
 
     #region Request
     [HttpGet("requests")]
-    public Dictionary<int, string> GetRequestsLookup() => repository.GetRequests();
+    public async Task<Dictionary<int, string>> GetRequestsLookup()
+    {
+        return await repository.GetRequests();
+    }
 
     [HttpPost("request")]
-    public async Task SetRequest(int? id, string value, int outreachTeamId) => await repository.SetRequest(id, value, outreachTeamId);
+    public async Task SetRequest(int? id, string value, int outreachTeamId)
+    {
+        await repository.SetRequest(id, value, outreachTeamId);
+    }
     #endregion
 
     #region Shirt Size
     [HttpGet("shirt-sizes")]
-    public Dictionary<int, string> GetShirtSizesLookup() => repository.GetShirtSizes();
+    public async Task<Dictionary<int, string>> GetShirtSizesLookup()
+    {
+        return await repository.GetShirtSizes();
+    }
 
     [HttpPost("shirt-size")]
-    public async Task SetShirtSize(int? id, string value) => await repository.SetShirtSize(id, value);
+    public async Task SetShirtSize(int? id, string value)
+    {
+        await repository.SetShirtSize(id, value);
+    }
     #endregion
 
     #region Shoe Size
     [HttpGet("shoe-sizes")]
-    public Dictionary<int, string> GetShoeSizesLookup() => repository.GetShoeSizes();
+    public async Task<Dictionary<int, string>> GetShoeSizesLookup()
+    {
+        return await repository.GetShoeSizes();
+    }
 
     [HttpPost("shoe-size")]
-    public async Task SetShoeSize(int? id, string value) => await repository.SetShoeSize(id, value);
+    public async Task SetShoeSize(int? id, string value)
+    {
+        await repository.SetShoeSize(id, value);
+    }
     #endregion
 
     #region Sleeping Bag Condition
     [HttpGet("sleeping-bag-conditions")]
-    public Dictionary<int, string> GetSleepingBagConditionsLookup() => repository.GetSleepingBagConditions();
+    public async Task<Dictionary<int, string>> GetSleepingBagConditionsLookup()
+    {
+        return await repository.GetSleepingBagConditions();
+    }
 
     [HttpPost("sleeping-bag-condition")]
-    public async Task SetSleepingBagCondition(int? id, string value) => await repository.SetSleepingBagCondition(id, value);
+    public async Task SetSleepingBagCondition(int? id, string value)
+    {
+        await repository.SetSleepingBagCondition(id, value);
+    }
     #endregion
 
     #region Tent Condition
     [HttpGet("tent-conditions")]
-    public Dictionary<int, string> GetTentConditionsLookup() => repository.GetTentConditions();
+    public async Task<Dictionary<int, string>> GetTentConditionsLookup()
+    {
+        return await repository.GetTentConditions();
+    }
 
     [HttpPost("tent-condition")]
-    public async Task SetTentCondition(int? id, string value) => await repository.SetTentCondition(id, value);
+    public async Task SetTentCondition(int? id, string value)
+    {
+        await repository.SetTentCondition(id, value);
+    }
     #endregion
 
     #region Tent Usage
     [HttpGet("tent-usages")]
-    public Dictionary<int, string> GetTentUsagesLookup() => repository.GetTentUsages();
+    public async Task<Dictionary<int, string>> GetTentUsagesLookup()
+    {
+        return await repository.GetTentUsages();
+    }
 
     [HttpPost("tent-usage")]
-    public async Task SetTentUsage(int? id, string value) => await repository.SetTentUsage(id, value);
+    public async Task SetTentUsage(int? id, string value)
+    {
+        await repository.SetTentUsage(id, value);
+    }
     #endregion
 }

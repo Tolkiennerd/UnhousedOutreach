@@ -1,9 +1,9 @@
+import { useContext, useEffect, useState } from 'react';
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import axios from 'axios';
 import { HousingInsecureNeighbor, housingInsecureNeighborsColumns } from '..';
 import { Lookups } from '../../../lookups';
-import { useContext, useEffect, useState } from 'react';
 import { LookupsContext } from '../../../../App';
-import axios from 'axios';
 
 export function HousingInsecureNeighborsDesktopView() {
     // DEFINE THE TABLE.
@@ -26,7 +26,7 @@ export function HousingInsecureNeighborsDesktopView() {
     // CONTENT.
     return (
         <>
-            <h3 style={{textAlign: 'center'}}>Housing Insecure Neighbors</h3>
+            <h3>Housing Insecure Neighbors</h3>
             <table>
                 <thead>
                     <tr>
