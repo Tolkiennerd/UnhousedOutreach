@@ -3,8 +3,8 @@ namespace UnhousedOutreach.Api;
 public class ConnectionStrings
 {
     #region Private Fields
-    private static readonly string unhousedOutreachDbUidEnvironmentVariableName = "UnhousedOutreachDbUid";
-    private static readonly string unhousedOutreachDbPwdEnvironmentVariableName = "UnhousedOutreachDbPwd";
+    private static readonly string unhousedOutreachDbUidEnvironmentVariableName = "UNHOUSED_OUTREACH_DB_UID";
+    private static readonly string unhousedOutreachDbPwdEnvironmentVariableName = "UNHOUSED_OUTREACH_DB_PWD";
     private string unhousedOutreachConnectionString = string.Empty;
     #endregion
 
