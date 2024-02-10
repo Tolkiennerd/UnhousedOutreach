@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { OutreachMapDesktopView, OutreachMapMobileView } from '../features/mapping';
-import { MapProps } from '../features/neighbors/housing-insecure';
 
-const OutreachMap = (props: MapProps) => {
+
+const OutreachMap = () => {
     // GET PARAMETERS.
     const { latitude, longitude} = useParams();
 
