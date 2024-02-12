@@ -30,197 +30,197 @@ public class LookupsController : ControllerBase
 
     #region Cushion Condition
     [HttpGet("cushion-conditions")]
-    public async Task<Dictionary<int, string>> GetCushionConditionsLookup()
+    public async Task<Dictionary<int, string>> GetCushionConditionsLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
-        return await repository.GetCushionConditions();
+        return await repository.GetCushionConditions(outreachTeamId);
     }
 
     [HttpPost("cushion-condition")]
-    public async Task SetCushionCondition(int? id, string value)
+    public async Task SetCushionCondition([FromBody]KeyValuePair<int?, string> cushionCondition, [FromQuery(Name = "otid")]int outreachTeamId)
     {
-        await repository.SetCushionCondition(id, value);
+        await repository.SetCushionCondition(cushionCondition.Key, cushionCondition.Value, outreachTeamId);
     }
     #endregion
 
     #region Cushion Type
     [HttpGet("cushion-types")]
-    public async Task<Dictionary<int, string>> GetCushionTypesLookup()
+    public async Task<Dictionary<int, string>> GetCushionTypesLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
-        return await repository.GetCushionTypes();
+        return await repository.GetCushionTypes(outreachTeamId);
     }
 
     [HttpPost("cushion-type")]
-    public async Task SetCushionType(int? id, string value)
+    public async Task SetCushionType([FromBody]KeyValuePair<int?, string> cushionType, [FromQuery(Name = "otid")]int outreachTeamId)
     {
-        await repository.SetCushionType(id, value);
+        await repository.SetCushionType(cushionType.Key, cushionType.Value, outreachTeamId);
     }
     #endregion
 
     #region Disability
     [HttpGet("disabilities")]
-    public async Task<Dictionary<int, string>> GetDisabilitiesLookup()
+    public async Task<Dictionary<int, string>> GetDisabilitiesLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
-        return await repository.GetDisabilities();
+        return await repository.GetDisabilities(outreachTeamId);
     }
 
     [HttpPost("disability")]
-    public async Task SetDisability(int? id, string value)
+    public async Task SetDisability([FromBody]KeyValuePair<int?, string> disability, [FromQuery(Name = "otid")]int outreachTeamId)
     {
-        await repository.SetDisability(id, value);
+        await repository.SetDisability(disability.Key, disability.Value, outreachTeamId);
     }
     #endregion
 
     #region Ethnicity
     [HttpGet("ethnicities")]
-    public async Task<Dictionary<int, string>> GetEthnicitiesLookup()
+    public async Task<Dictionary<int, string>> GetEthnicitiesLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
-        return await repository.GetEthnicities();
+        return await repository.GetEthnicities(outreachTeamId);
     }
 
     [HttpPost("ethnicity")]
-    public async Task SetEthnicity(int? id, string value)
+    public async Task SetEthnicity([FromBody]KeyValuePair<int?, string> ethnicity, [FromQuery(Name = "otid")]int outreachTeamId)
     {
-        await repository.SetEthnicity(id, value);
+        await repository.SetEthnicity(ethnicity.Key, ethnicity.Value, outreachTeamId);
     }
     #endregion
 
     #region Gender
     [HttpGet("genders")]
-    public async Task<Dictionary<int, string>> GetGendersLookup()
+    public async Task<Dictionary<int, string>> GetGendersLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
-        return await repository.GetGenders();
+        return await repository.GetGenders(outreachTeamId);
     }
 
     [HttpPost("gender")]
-    public async Task SetGender(int? id, string value)
+    public async Task SetGender([FromBody]KeyValuePair<int?, string> gender, [FromQuery(Name = "otid")]int outreachTeamId)
     {
-        await repository.SetGender(id, value);
+        await repository.SetGender(gender.Key, gender.Value, outreachTeamId);
     }
     #endregion
 
     #region Housing Status
     [HttpGet("housing-statuses")]
-    public async Task<Dictionary<int, string>> GetHousingStatusesLookup()
+    public async Task<Dictionary<int, string>> GetHousingStatusesLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
-        return await repository.GetHousingStatuses();
+        return await repository.GetHousingStatuses(outreachTeamId);
     }
 
     [HttpPost("housing-status")]
-    public async Task SetHousingStatus(int? id, string value)
+    public async Task SetHousingStatus([FromBody]KeyValuePair<int?, string> housingStatus, [FromQuery(Name = "otid")]int outreachTeamId)
     {
-        await repository.SetHousingStatus(id, value);
+        await repository.SetHousingStatus(housingStatus.Key, housingStatus.Value, outreachTeamId);
     }
     #endregion
 
     #region Location Type
     [HttpGet("location-types")]
-    public async Task<Dictionary<int, string>> GetLocationTypesLookup()
+    public async Task<Dictionary<int, string>> GetLocationTypesLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
-        return await repository.GetLocationTypes();
+        return await repository.GetLocationTypes(outreachTeamId);
     }
 
     [HttpPost("location-type")]
-    public async Task SetLocationType(int? id, string value)
+    public async Task SetLocationType([FromBody]KeyValuePair<int?, string> locationType, [FromQuery(Name = "otid")]int outreachTeamId)
     {
-        await repository.SetLocationType(id, value);
+        await repository.SetLocationType(locationType.Key, locationType.Value, outreachTeamId);
     }
     #endregion
 
     #region Pants Size
     [HttpGet("pants-sizes")]
-    public async Task<Dictionary<int, string>> GetPantsSizesLookup()
+    public async Task<Dictionary<int, string>> GetPantsSizesLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
-        return await repository.GetPantsSizes();
+        return await repository.GetPantsSizes(outreachTeamId);
     }
 
     [HttpPost("pants-size")]
-    public async Task SetPantsSize(int? id, string value)
+    public async Task SetPantsSize([FromBody]KeyValuePair<int?, string> pantsSize, [FromQuery(Name = "otid")]int outreachTeamId)
     {
-        await repository.SetPantsSize(id, value);
+        await repository.SetPantsSize(pantsSize.Key, pantsSize.Value, outreachTeamId);
     }
     #endregion
 
     #region Request
     [HttpGet("requests")]
-    public async Task<Dictionary<int, string>> GetRequestsLookup()
+    public async Task<Dictionary<int, string>> GetRequestsLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
-        return await repository.GetRequests();
+        return await repository.GetRequests(outreachTeamId);
     }
 
     [HttpPost("request")]
-    public async Task SetRequest(int? id, string value, int outreachTeamId)
+    public async Task SetRequest([FromBody]KeyValuePair<int?, string> request, [FromQuery(Name = "otid")]int outreachTeamId)
     {
-        await repository.SetRequest(id, value, outreachTeamId);
+        await repository.SetRequest(request.Key, request.Value, outreachTeamId);
     }
     #endregion
 
     #region Shirt Size
     [HttpGet("shirt-sizes")]
-    public async Task<Dictionary<int, string>> GetShirtSizesLookup()
+    public async Task<Dictionary<int, string>> GetShirtSizesLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
-        return await repository.GetShirtSizes();
+        return await repository.GetShirtSizes(outreachTeamId);
     }
 
     [HttpPost("shirt-size")]
-    public async Task SetShirtSize(int? id, string value)
+    public async Task SetShirtSize([FromBody]KeyValuePair<int?, string> shirtSize, [FromQuery(Name = "otid")]int outreachTeamId)
     {
-        await repository.SetShirtSize(id, value);
+        await repository.SetShirtSize(shirtSize.Key, shirtSize.Value, outreachTeamId);
     }
     #endregion
 
     #region Shoe Size
     [HttpGet("shoe-sizes")]
-    public async Task<Dictionary<int, string>> GetShoeSizesLookup()
+    public async Task<Dictionary<int, string>> GetShoeSizesLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
-        return await repository.GetShoeSizes();
+        return await repository.GetShoeSizes(outreachTeamId);
     }
 
     [HttpPost("shoe-size")]
-    public async Task SetShoeSize(int? id, string value)
+    public async Task SetShoeSize([FromBody]KeyValuePair<int?, string> shoeSize, [FromQuery(Name = "otid")]int outreachTeamId)
     {
-        await repository.SetShoeSize(id, value);
+        await repository.SetShoeSize(shoeSize.Key, shoeSize.Value, outreachTeamId);
     }
     #endregion
 
     #region Sleeping Bag Condition
     [HttpGet("sleeping-bag-conditions")]
-    public async Task<Dictionary<int, string>> GetSleepingBagConditionsLookup()
+    public async Task<Dictionary<int, string>> GetSleepingBagConditionsLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
-        return await repository.GetSleepingBagConditions();
+        return await repository.GetSleepingBagConditions(outreachTeamId);
     }
 
     [HttpPost("sleeping-bag-condition")]
-    public async Task SetSleepingBagCondition(int? id, string value)
+    public async Task SetSleepingBagCondition([FromBody]KeyValuePair<int?, string> sleepingBagCondition, [FromQuery(Name = "otid")]int outreachTeamId)
     {
-        await repository.SetSleepingBagCondition(id, value);
+        await repository.SetSleepingBagCondition(sleepingBagCondition.Key, sleepingBagCondition.Value, outreachTeamId);
     }
     #endregion
 
     #region Tent Condition
     [HttpGet("tent-conditions")]
-    public async Task<Dictionary<int, string>> GetTentConditionsLookup()
+    public async Task<Dictionary<int, string>> GetTentConditionsLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
-        return await repository.GetTentConditions();
+        return await repository.GetTentConditions(outreachTeamId);
     }
 
     [HttpPost("tent-condition")]
-    public async Task SetTentCondition(int? id, string value)
+    public async Task SetTentCondition([FromBody]KeyValuePair<int?, string> tentCondition, [FromQuery(Name = "otid")]int outreachTeamId)
     {
-        await repository.SetTentCondition(id, value);
+        await repository.SetTentCondition(tentCondition.Key, tentCondition.Value, outreachTeamId);
     }
     #endregion
 
     #region Tent Usage
     [HttpGet("tent-usages")]
-    public async Task<Dictionary<int, string>> GetTentUsagesLookup()
+    public async Task<Dictionary<int, string>> GetTentUsagesLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
-        return await repository.GetTentUsages();
+        return await repository.GetTentUsages(outreachTeamId);
     }
 
     [HttpPost("tent-usage")]
-    public async Task SetTentUsage(int? id, string value)
+    public async Task SetTentUsage([FromBody]KeyValuePair<int?, string> tentUsage, [FromQuery(Name = "otid")]int outreachTeamId)
     {
-        await repository.SetTentUsage(id, value);
+        await repository.SetTentUsage(tentUsage.Key, tentUsage.Value, outreachTeamId);
     }
     #endregion
 }

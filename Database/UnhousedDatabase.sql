@@ -61,7 +61,10 @@ DROP TABLE IF EXISTS `CushionCondition`;
 CREATE TABLE `CushionCondition` (
   `CushionConditionId` int NOT NULL AUTO_INCREMENT,
   `CushionCondition` varchar(45) NOT NULL,
-  PRIMARY KEY (`CushionConditionId`)
+  `OutreachTeamId` int NOT NULL,
+  PRIMARY KEY (`CushionConditionId`),
+  KEY `fk_CushionCondition_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_CushionCondition_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -71,7 +74,7 @@ CREATE TABLE `CushionCondition` (
 
 LOCK TABLES `CushionCondition` WRITE;
 /*!40000 ALTER TABLE `CushionCondition` DISABLE KEYS */;
-INSERT INTO `CushionCondition` VALUES (1,'New'),(2,'Ripped'),(3,'Wet'),(4,'Filthy'),(5,'Gently Used'),(6,'Moderately Used');
+INSERT INTO `CushionCondition` VALUES (1,'New',1),(2,'Ripped',1),(3,'Wet',1),(4,'Filthy',1),(5,'Gently Used',1),(6,'Moderately Used',1);
 /*!40000 ALTER TABLE `CushionCondition` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,7 +88,10 @@ DROP TABLE IF EXISTS `CushionType`;
 CREATE TABLE `CushionType` (
   `CushionTypeId` int NOT NULL AUTO_INCREMENT,
   `CushionType` varchar(45) NOT NULL,
-  PRIMARY KEY (`CushionTypeId`)
+  `OutreachTeamId` int NOT NULL,
+  PRIMARY KEY (`CushionTypeId`),
+  KEY `fk_CushionType_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_CushionType_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -95,7 +101,7 @@ CREATE TABLE `CushionType` (
 
 LOCK TABLES `CushionType` WRITE;
 /*!40000 ALTER TABLE `CushionType` DISABLE KEYS */;
-INSERT INTO `CushionType` VALUES (1,'Twin Mattress'),(2,'Full Mattress'),(3,'Cot'),(4,'Foam'),(5,'Sleeping Pad'),(6,'Air Mattress'),(7,'Carpet');
+INSERT INTO `CushionType` VALUES (1,'Twin Mattress',1),(2,'Full Mattress',1),(3,'Cot',1),(4,'Foam',1),(5,'Sleeping Pad',1),(6,'Air Mattress',1),(7,'Carpet',1);
 /*!40000 ALTER TABLE `CushionType` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,7 +115,10 @@ DROP TABLE IF EXISTS `Disability`;
 CREATE TABLE `Disability` (
   `DisabilityId` int NOT NULL AUTO_INCREMENT,
   `Disability` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`DisabilityId`)
+  `OutreachTeamId` int NOT NULL,
+  PRIMARY KEY (`DisabilityId`),
+  KEY `fk_Disability_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_Disability_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -119,7 +128,7 @@ CREATE TABLE `Disability` (
 
 LOCK TABLES `Disability` WRITE;
 /*!40000 ALTER TABLE `Disability` DISABLE KEYS */;
-INSERT INTO `Disability` VALUES (1,'Alcoholism'),(2,'Drug Addiction'),(3,'HIV'),(4,'PTSD'),(5,'Blindness'),(6,'Deafness'),(7,'Amputation'),(8,'Depression'),(9,'Diabetes'),(10,'Anxiety'),(11,'OCD'),(12,'Eating Disorder'),(13,'Schizophrenia'),(14,'Bipolar Disorder'),(15,'Skin Condition'),(16,'Tourette\'s Syndrome'),(17,'Vertigo'),(18,'Heart Condition'),(19,'Paraplegia'),(20,'ADHD'),(21,'Autism'),(22,'Sleeping Disorder');
+INSERT INTO `Disability` VALUES (1,'Alcoholism',1),(2,'Drug Addiction',1),(3,'HIV',1),(4,'PTSD',1),(5,'Blindness',1),(6,'Deafness',1),(7,'Amputation',1),(8,'Depression',1),(9,'Diabetes',1),(10,'Anxiety',1),(11,'OCD',1),(12,'Eating Disorder',1),(13,'Schizophrenia',1),(14,'Bipolar Disorder',1),(15,'Skin Condition',1),(16,'Tourette\'s Syndrome',1),(17,'Vertigo',1),(18,'Heart Condition',1),(19,'Paraplegia',1),(20,'ADHD',1),(21,'Autism',1),(22,'Sleeping Disorder',1);
 /*!40000 ALTER TABLE `Disability` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,7 +142,10 @@ DROP TABLE IF EXISTS `Ethnicity`;
 CREATE TABLE `Ethnicity` (
   `EthnicityId` int NOT NULL AUTO_INCREMENT,
   `Ethnicity` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`EthnicityId`)
+  `OutreachTeamId` int NOT NULL,
+  PRIMARY KEY (`EthnicityId`),
+  KEY `fk_Ethnicity_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_Ethnicity_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -143,7 +155,7 @@ CREATE TABLE `Ethnicity` (
 
 LOCK TABLES `Ethnicity` WRITE;
 /*!40000 ALTER TABLE `Ethnicity` DISABLE KEYS */;
-INSERT INTO `Ethnicity` VALUES (1,'White'),(2,'Black'),(3,'Hispanic'),(4,'Asian'),(5,'Native American'),(6,'Pacific Islander');
+INSERT INTO `Ethnicity` VALUES (1,'White',1),(2,'Black',1),(3,'Hispanic',1),(4,'Asian',1),(5,'Native American',1),(6,'Pacific Islander',1);
 /*!40000 ALTER TABLE `Ethnicity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -157,7 +169,10 @@ DROP TABLE IF EXISTS `Gender`;
 CREATE TABLE `Gender` (
   `GenderId` int NOT NULL AUTO_INCREMENT,
   `Gender` varchar(45) NOT NULL,
-  PRIMARY KEY (`GenderId`)
+  `OutreachTeamId` int NOT NULL,
+  PRIMARY KEY (`GenderId`),
+  KEY `fk_Gender_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_Gender_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -167,7 +182,7 @@ CREATE TABLE `Gender` (
 
 LOCK TABLES `Gender` WRITE;
 /*!40000 ALTER TABLE `Gender` DISABLE KEYS */;
-INSERT INTO `Gender` VALUES (1,'Male'),(2,'Female'),(3,'Non-Binary'),(4,'Other');
+INSERT INTO `Gender` VALUES (1,'Male',1),(2,'Female',1),(3,'Non-Binary',1),(4,'Other',1);
 /*!40000 ALTER TABLE `Gender` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -410,7 +425,10 @@ DROP TABLE IF EXISTS `HousingStatus`;
 CREATE TABLE `HousingStatus` (
   `HousingStatusId` int NOT NULL AUTO_INCREMENT,
   `HousingStatus` varchar(45) NOT NULL,
-  PRIMARY KEY (`HousingStatusId`)
+  `OutreachTeamId` int NOT NULL,
+  PRIMARY KEY (`HousingStatusId`),
+  KEY `fk_HousingStatus_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_HousingStatus_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -420,7 +438,7 @@ CREATE TABLE `HousingStatus` (
 
 LOCK TABLES `HousingStatus` WRITE;
 /*!40000 ALTER TABLE `HousingStatus` DISABLE KEYS */;
-INSERT INTO `HousingStatus` VALUES (1,'Not in system'),(2,'No housing plan'),(3,'Has housing plan'),(4,'Is housed');
+INSERT INTO `HousingStatus` VALUES (1,'Not in system',1),(2,'No housing plan',1),(3,'Has housing plan',1),(4,'Is housed',1);
 /*!40000 ALTER TABLE `HousingStatus` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -552,7 +570,10 @@ DROP TABLE IF EXISTS `LocationType`;
 CREATE TABLE `LocationType` (
   `LocationTypeId` int NOT NULL AUTO_INCREMENT,
   `LocationType` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`LocationTypeId`)
+  `OutreachTeamId` int NOT NULL,
+  PRIMARY KEY (`LocationTypeId`),
+  KEY `fk_LocationType_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_LocationType_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -562,7 +583,7 @@ CREATE TABLE `LocationType` (
 
 LOCK TABLES `LocationType` WRITE;
 /*!40000 ALTER TABLE `LocationType` DISABLE KEYS */;
-INSERT INTO `LocationType` VALUES (1,'Tent'),(2,'Car'),(3,'Bus Stop'),(4,'Shelter'),(5,'Nothing'),(6,'Apartment'),(7,'House');
+INSERT INTO `LocationType` VALUES (1,'Tent',1),(2,'Car',1),(3,'Bus Stop',1),(4,'Shelter',1),(5,'Nothing',1),(6,'Apartment',1),(7,'House',1);
 /*!40000 ALTER TABLE `LocationType` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -600,7 +621,10 @@ DROP TABLE IF EXISTS `PantsSize`;
 CREATE TABLE `PantsSize` (
   `PantsSizeId` int NOT NULL AUTO_INCREMENT,
   `PantsSize` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`PantsSizeId`)
+  `OutreachTeamId` int DEFAULT NULL,
+  PRIMARY KEY (`PantsSizeId`),
+  KEY `fk_PantsSize_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_PantsSize_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -650,7 +674,10 @@ DROP TABLE IF EXISTS `ShirtSize`;
 CREATE TABLE `ShirtSize` (
   `ShirtSizeId` int NOT NULL AUTO_INCREMENT,
   `ShirtSize` varchar(45) NOT NULL,
-  PRIMARY KEY (`ShirtSizeId`)
+  `OutreachTeamId` int NOT NULL,
+  PRIMARY KEY (`ShirtSizeId`),
+  KEY `fk_ShirtSize_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_ShirtSize_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -660,7 +687,7 @@ CREATE TABLE `ShirtSize` (
 
 LOCK TABLES `ShirtSize` WRITE;
 /*!40000 ALTER TABLE `ShirtSize` DISABLE KEYS */;
-INSERT INTO `ShirtSize` VALUES (1,'Women\'s XS'),(2,'Women\'s S'),(3,'Women\'s M'),(4,'Women\'s L'),(5,'Women\'s XL'),(6,'Women\'s XXL'),(7,'Women\'s XXXL'),(8,'Men\'s XS'),(9,'Men\'s S'),(10,'Men\'s M'),(11,'Men\'s L'),(12,'Men\'s XL'),(13,'Men\'s XXL'),(14,'Men\'s XXXL');
+INSERT INTO `ShirtSize` VALUES (1,'Women\'s XS',1),(2,'Women\'s S',1),(3,'Women\'s M',1),(4,'Women\'s L',1),(5,'Women\'s XL',1),(6,'Women\'s XXL',1),(7,'Women\'s XXXL',1),(8,'Men\'s XS',1),(9,'Men\'s S',1),(10,'Men\'s M',1),(11,'Men\'s L',1),(12,'Men\'s XL',1),(13,'Men\'s XXL',1),(14,'Men\'s XXXL',1);
 /*!40000 ALTER TABLE `ShirtSize` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -674,7 +701,10 @@ DROP TABLE IF EXISTS `ShoeSize`;
 CREATE TABLE `ShoeSize` (
   `ShoeSizeId` int NOT NULL AUTO_INCREMENT,
   `ShoeSize` varchar(45) NOT NULL,
-  PRIMARY KEY (`ShoeSizeId`)
+  `OutreachTeamId` int NOT NULL DEFAULT '1',
+  PRIMARY KEY (`ShoeSizeId`),
+  KEY `fk_ShoeSize_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_ShoeSize_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -684,7 +714,7 @@ CREATE TABLE `ShoeSize` (
 
 LOCK TABLES `ShoeSize` WRITE;
 /*!40000 ALTER TABLE `ShoeSize` DISABLE KEYS */;
-INSERT INTO `ShoeSize` VALUES (1,'Men\'s 6'),(2,'Men\'s 6.5'),(3,'Men\'s 7'),(4,'Men\'s 7.5'),(5,'Men\'s 8');
+INSERT INTO `ShoeSize` VALUES (1,'Men\'s 6',1),(2,'Men\'s 6.5',1),(3,'Men\'s 7',1),(4,'Men\'s 7.5',1),(5,'Men\'s 8',1);
 /*!40000 ALTER TABLE `ShoeSize` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -698,7 +728,10 @@ DROP TABLE IF EXISTS `SleepingBagCondition`;
 CREATE TABLE `SleepingBagCondition` (
   `SleepingBagConditionId` int NOT NULL AUTO_INCREMENT,
   `SleepingBagCondition` varchar(45) NOT NULL,
-  PRIMARY KEY (`SleepingBagConditionId`)
+  `OutreachTeamId` int NOT NULL,
+  PRIMARY KEY (`SleepingBagConditionId`),
+  KEY `fk_SleepingBagCondition_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_SleepingBagCondition_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -708,7 +741,7 @@ CREATE TABLE `SleepingBagCondition` (
 
 LOCK TABLES `SleepingBagCondition` WRITE;
 /*!40000 ALTER TABLE `SleepingBagCondition` DISABLE KEYS */;
-INSERT INTO `SleepingBagCondition` VALUES (1,'New'),(2,'Gently Used'),(3,'Moderately Used'),(4,'Ripped'),(5,'Wet'),(6,'Filthy'),(7,'Broken Zipper');
+INSERT INTO `SleepingBagCondition` VALUES (1,'New',1),(2,'Gently Used',1),(3,'Moderately Used',1),(4,'Ripped',1),(5,'Wet',1),(6,'Filthy',1),(7,'Broken Zipper',1);
 /*!40000 ALTER TABLE `SleepingBagCondition` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -787,7 +820,10 @@ DROP TABLE IF EXISTS `TentCondition`;
 CREATE TABLE `TentCondition` (
   `TentConditionId` int NOT NULL AUTO_INCREMENT,
   `TentCondition` varchar(45) NOT NULL,
-  PRIMARY KEY (`TentConditionId`)
+  `OutreachTeamId` int NOT NULL DEFAULT '1',
+  PRIMARY KEY (`TentConditionId`),
+  KEY `fk_TentCondition_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_TentCondition_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -797,7 +833,7 @@ CREATE TABLE `TentCondition` (
 
 LOCK TABLES `TentCondition` WRITE;
 /*!40000 ALTER TABLE `TentCondition` DISABLE KEYS */;
-INSERT INTO `TentCondition` VALUES (1,'New'),(2,'Gently Used'),(3,'Moderately Used'),(4,'Broken Zipper'),(5,'Torn'),(6,'No Rainfly'),(7,'Collapsed'),(8,'Broken Pole(s)');
+INSERT INTO `TentCondition` VALUES (1,'New',1),(2,'Gently Used',1),(3,'Moderately Used',1),(4,'Broken Zipper',1),(5,'Torn',1),(6,'No Rainfly',1),(7,'Collapsed',1),(8,'Broken Pole(s)',1);
 /*!40000 ALTER TABLE `TentCondition` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -811,7 +847,10 @@ DROP TABLE IF EXISTS `TentUsage`;
 CREATE TABLE `TentUsage` (
   `TentUsageId` int NOT NULL AUTO_INCREMENT,
   `TentUsage` varchar(45) NOT NULL,
-  PRIMARY KEY (`TentUsageId`)
+  `OutreachTeamId` int NOT NULL DEFAULT '1',
+  PRIMARY KEY (`TentUsageId`),
+  KEY `fk_TentUsage_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_TentUsage_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -821,7 +860,7 @@ CREATE TABLE `TentUsage` (
 
 LOCK TABLES `TentUsage` WRITE;
 /*!40000 ALTER TABLE `TentUsage` DISABLE KEYS */;
-INSERT INTO `TentUsage` VALUES (1,'Permanent Residence'),(2,'Occasional Residence'),(3,'Storage'),(4,'Vacant');
+INSERT INTO `TentUsage` VALUES (1,'Permanent Residence',1),(2,'Occasional Residence',1),(3,'Storage',1),(4,'Vacant',1);
 /*!40000 ALTER TABLE `TentUsage` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -866,4 +905,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-04 17:42:11
+-- Dump completed on 2024-02-10 12:31:40

@@ -7,74 +7,74 @@ namespace UnhousedOutreach.Database.Lookups;
 public class LookupsMySqlRepository(string connectionString) : Repository(connectionString)
 {
     #region Get Methods
-    public async Task<Dictionary<int, string>> GetCushionConditions()
+    public async Task<Dictionary<int, string>> GetCushionConditions(int outreachTeamId)
     {
-        return await GetLookup(LookupsMySqlQueries.GetCushionConditions);
+        return await GetLookup(LookupsMySqlQueries.GetCushionConditions, outreachTeamId);
     }
 
-    public async Task<Dictionary<int, string>> GetCushionTypes()
+    public async Task<Dictionary<int, string>> GetCushionTypes(int outreachTeamId)
     {
-        return await GetLookup(LookupsMySqlQueries.GetCushionTypes);
+        return await GetLookup(LookupsMySqlQueries.GetCushionTypes, outreachTeamId);
     }
 
-    public async Task<Dictionary<int, string>> GetDisabilities()
+    public async Task<Dictionary<int, string>> GetDisabilities(int outreachTeamId)
     {
-        return await GetLookup(LookupsMySqlQueries.GetDisabilities);
+        return await GetLookup(LookupsMySqlQueries.GetDisabilities, outreachTeamId);
     }
 
-    public async Task<Dictionary<int, string>> GetEthnicities()
+    public async Task<Dictionary<int, string>> GetEthnicities(int outreachTeamId)
     {
-        return await GetLookup(LookupsMySqlQueries.GetEthnicities);
+        return await GetLookup(LookupsMySqlQueries.GetEthnicities, outreachTeamId);
     }
 
-    public async Task<Dictionary<int, string>> GetGenders()
+    public async Task<Dictionary<int, string>> GetGenders(int outreachTeamId)
     {
-        return await GetLookup(LookupsMySqlQueries.GetGenders);
+        return await GetLookup(LookupsMySqlQueries.GetGenders, outreachTeamId);
     }
 
-    public async Task<Dictionary<int, string>> GetHousingStatuses()
+    public async Task<Dictionary<int, string>> GetHousingStatuses(int outreachTeamId)
     {
-        return await GetLookup(LookupsMySqlQueries.GetHousingStatuses);
+        return await GetLookup(LookupsMySqlQueries.GetHousingStatuses, outreachTeamId);
     }
 
-    public async Task<Dictionary<int, string>> GetLocationTypes()
+    public async Task<Dictionary<int, string>> GetLocationTypes(int outreachTeamId)
     {
-        return await GetLookup(LookupsMySqlQueries.GetLocationTypes);
+        return await GetLookup(LookupsMySqlQueries.GetLocationTypes, outreachTeamId);
     }
 
-    public async Task<Dictionary<int, string>> GetPantsSizes()
+    public async Task<Dictionary<int, string>> GetPantsSizes(int outreachTeamId)
     {
-        return await GetLookup(LookupsMySqlQueries.GetPantsSizes);
+        return await GetLookup(LookupsMySqlQueries.GetPantsSizes, outreachTeamId);
     }
 
-    public async Task<Dictionary<int, string>> GetRequests()
+    public async Task<Dictionary<int, string>> GetRequests(int outreachTeamId)
     {
-        return await GetLookup(LookupsMySqlQueries.GetRequests);
+        return await GetLookup(LookupsMySqlQueries.GetRequests, outreachTeamId);
     }
 
-    public async Task<Dictionary<int, string>> GetShirtSizes()
+    public async Task<Dictionary<int, string>> GetShirtSizes(int outreachTeamId)
     {
-        return await GetLookup(LookupsMySqlQueries.GetShirtSizes);
+        return await GetLookup(LookupsMySqlQueries.GetShirtSizes, outreachTeamId);
     }
 
-    public async Task<Dictionary<int, string>> GetShoeSizes()
+    public async Task<Dictionary<int, string>> GetShoeSizes(int outreachTeamId)
     {
-        return await GetLookup(LookupsMySqlQueries.GetShoeSizes);
+        return await GetLookup(LookupsMySqlQueries.GetShoeSizes, outreachTeamId);
     }
 
-    public async Task<Dictionary<int, string>> GetSleepingBagConditions()
+    public async Task<Dictionary<int, string>> GetSleepingBagConditions(int outreachTeamId)
     {
-        return await GetLookup(LookupsMySqlQueries.GetSleepingBagConditions);
+        return await GetLookup(LookupsMySqlQueries.GetSleepingBagConditions, outreachTeamId);
     }
 
-    public async Task<Dictionary<int, string>> GetTentConditions()
+    public async Task<Dictionary<int, string>> GetTentConditions(int outreachTeamId)
     {
-        return await GetLookup(LookupsMySqlQueries.GetTentConditions);
+        return await GetLookup(LookupsMySqlQueries.GetTentConditions, outreachTeamId);
     }
 
-    public async Task<Dictionary<int, string>> GetTentUsages()
+    public async Task<Dictionary<int, string>> GetTentUsages(int outreachTeamId)
     {
-        return await GetLookup(LookupsMySqlQueries.GetTentUsages);
+        return await GetLookup(LookupsMySqlQueries.GetTentUsages, outreachTeamId);
     }
     
     public async Task<Core.Lookups.Lookups> GetLookups(int outreachTeamId)
@@ -116,86 +116,87 @@ public class LookupsMySqlRepository(string connectionString) : Repository(connec
 #endregion
 
     #region Set Methods
-    public async Task SetCushionCondition(int? id, string value)
+    public async Task SetCushionCondition(int? id, string value, int outreachTeamId)
     {
-        await SetLookup(LookupsMySqlQueries.SetCushionCondition, "@CushionConditionId", "@CushionCondition", id, value);
+        await SetLookup(LookupsMySqlQueries.SetCushionCondition, "@CushionConditionId", "@CushionCondition", id, value, outreachTeamId);
     }
 
-    public async Task SetCushionType(int? id, string value)
+    public async Task SetCushionType(int? id, string value, int outreachTeamId)
     {
-        await SetLookup(LookupsMySqlQueries.SetCushionType, "@CushionTypeId", "@CushionType", id, value);
+        await SetLookup(LookupsMySqlQueries.SetCushionType, "@CushionTypeId", "@CushionType", id, value, outreachTeamId);
     }
 
-    public async Task SetDisability(int? id, string value)
+    public async Task SetDisability(int? id, string value, int outreachTeamId)
     {
-        await SetLookup(LookupsMySqlQueries.SetDisability, "@DisabilityId", "@Disability", id, value);
+        await SetLookup(LookupsMySqlQueries.SetDisability, "@DisabilityId", "@Disability", id, value, outreachTeamId);
     }
 
-    public async Task SetEthnicity(int? id, string value)
+    public async Task SetEthnicity(int? id, string value, int outreachTeamId)
     {
-        await SetLookup(LookupsMySqlQueries.SetEthnicity, "@EthnicityId", "@Ethnicity", id, value);
+        await SetLookup(LookupsMySqlQueries.SetEthnicity, "@EthnicityId", "@Ethnicity", id, value, outreachTeamId);
     }
 
-    public async Task SetGender(int? id, string value)
+    public async Task SetGender(int? id, string value, int outreachTeamId)
     {
-        await SetLookup(LookupsMySqlQueries.SetGender, "@GenderId", "@Gender", id, value);
+        await SetLookup(LookupsMySqlQueries.SetGender, "@GenderId", "@Gender", id, value, outreachTeamId);
     }
 
-    public async Task SetHousingStatus(int? id, string value)
+    public async Task SetHousingStatus(int? id, string value, int outreachTeamId)
     {
-        await SetLookup(LookupsMySqlQueries.SetHousingStatus, "@HousingStatusId", "@HousingStatus", id, value);
+        await SetLookup(LookupsMySqlQueries.SetHousingStatus, "@HousingStatusId", "@HousingStatus", id, value, outreachTeamId);
     }
 
-    public async Task SetLocationType(int? id, string value)
+    public async Task SetLocationType(int? id, string value, int outreachTeamId)
     {
-        await SetLookup(LookupsMySqlQueries.SetLocationType, "@LocationTypeId", "@LocationType", id, value);
+        await SetLookup(LookupsMySqlQueries.SetLocationType, "@LocationTypeId", "@LocationType", id, value, outreachTeamId);
     }
 
-    public async Task SetPantsSize(int? id, string value)
+    public async Task SetPantsSize(int? id, string value, int outreachTeamId)
     {
-        await SetLookup(LookupsMySqlQueries.SetPantsSize, "@PantsSizeId", "@PantsSize", id, value);
+        await SetLookup(LookupsMySqlQueries.SetPantsSize, "@PantsSizeId", "@PantsSize", id, value, outreachTeamId);
     }
 
     public async Task SetRequest(int? id, string value, int outreachTeamId)
     {
-        await SetLookupForOutreachTeam(LookupsMySqlQueries.SetRequest, "@RequestId", "@Request", id, value, outreachTeamId);
+        await SetLookup(LookupsMySqlQueries.SetRequest, "@RequestId", "@Request", id, value, outreachTeamId);
     }
 
-    public async Task SetShirtSize(int? id, string value)
+    public async Task SetShirtSize(int? id, string value, int outreachTeamId)
     {
-        await SetLookup(LookupsMySqlQueries.SetShirtSize, "@ShirtSizeId", "@ShirtSize", id, value);
+        await SetLookup(LookupsMySqlQueries.SetShirtSize, "@ShirtSizeId", "@ShirtSize", id, value, outreachTeamId);
     }
 
-    public async Task SetShoeSize(int? id, string value)
+    public async Task SetShoeSize(int? id, string value, int outreachTeamId)
     {
-        await SetLookup(LookupsMySqlQueries.SetShoeSize, "@ShoeSizeId", "@ShoeSize", id, value);
+        await SetLookup(LookupsMySqlQueries.SetShoeSize, "@ShoeSizeId", "@ShoeSize", id, value, outreachTeamId);
     }
 
-    public async Task SetSleepingBagCondition(int? id, string value)
+    public async Task SetSleepingBagCondition(int? id, string value, int outreachTeamId)
     {
-        await SetLookup(LookupsMySqlQueries.SetSleepingBagCondition, "@SleepingBagConditionId", "@SleepingBagCondition", id, value);
+        await SetLookup(LookupsMySqlQueries.SetSleepingBagCondition, "@SleepingBagConditionId", "@SleepingBagCondition", id, value, outreachTeamId);
     }
 
-    public async Task SetTentCondition(int? id, string value)
+    public async Task SetTentCondition(int? id, string value, int outreachTeamId)
     {
-        await SetLookup(LookupsMySqlQueries.SetTentCondition, "@TentConditionId", "@TentCondition", id, value);
+        await SetLookup(LookupsMySqlQueries.SetTentCondition, "@TentConditionId", "@TentCondition", id, value, outreachTeamId);
     }
 
-    public async Task SetTentUsage(int? id, string value)
+    public async Task SetTentUsage(int? id, string value, int outreachTeamId)
     {
-        await SetLookup(LookupsMySqlQueries.SetTentUsage, "@TentUsageId", "@TentUsage", id, value);
+        await SetLookup(LookupsMySqlQueries.SetTentUsage, "@TentUsageId", "@TentUsage", id, value, outreachTeamId);
     }
     #endregion
 
     #region Private Methods
-    private async Task<Dictionary<int, string>> GetLookup(string mySqlQuery)
+    private async Task<Dictionary<int, string>> GetLookup(string mySqlQuery, int outreachTeamId)
     {
         // GET CUSHION CONDITIONS.
-        var reader = await ExecuteReader(mySqlQuery);
+        Dictionary<string, object?> parameters = new(){{"@OutreachTeamId", outreachTeamId}};
+        var reader = await ExecuteReader(mySqlQuery, parameters);
         return GetLookupFromReader(reader);
     }
 
-    private Dictionary<int, string> GetLookupFromReader(DbDataReader reader)
+    private static Dictionary<int, string> GetLookupFromReader(DbDataReader reader)
     {
         Dictionary<int, string> lookup = [];
         while (reader.Read())
@@ -205,17 +206,7 @@ public class LookupsMySqlRepository(string connectionString) : Repository(connec
         return lookup;
     }
 
-    private async Task SetLookup(string mySqlStatement, string idParameterName, string valueParameterName, int? id, string value)
-    {
-        Dictionary<string, object?> parameters = new()
-        {
-            { idParameterName, id },
-            { valueParameterName, value }
-        };
-        await ExecuteNonQuery(mySqlStatement, parameters);
-    }
-
-    private async Task SetLookupForOutreachTeam(
+    private async Task SetLookup(
         string mySqlStatement, 
         string idParameterName, 
         string valueParameterName, 
