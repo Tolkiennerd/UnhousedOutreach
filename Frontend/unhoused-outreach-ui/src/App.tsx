@@ -29,6 +29,7 @@ function App() {
   };
   const [lookups, setLookups] = useState(initialLookups);
   useEffect(() => {
+    // TODO: Get OTID from user data.
     axios.get(`${process.env.REACT_APP_API_URL}/lookups/all?otid=1`)
       .then(response => setLookups(response.data))
       .catch(error => console.log(error));
@@ -41,7 +42,7 @@ function App() {
         <LookupsContext.Provider value={lookups}>
           <Routes>
               <Route path="/" element={<HousingInsecureNeighbors />} />
-              <Route path="/map/:latitude/:longitude" element={<OutreachMap startingLatitude={38.95} startingLongitude={-77.35} />} />
+              <Route path="/map/:latitude/:longitude" element={<OutreachMap />} />
           </Routes>
         </LookupsContext.Provider>
       </BrowserRouter>

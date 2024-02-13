@@ -59,3 +59,13 @@ table tr:last-child td:last-child {
 h3 {
   text-align: center;
 }
+
+.accordion {
+  margin-top: 5px;
+  background-color: #334 !important;
+  border: solid #556 2px;
+  color: white !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 95vw;
+}

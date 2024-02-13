@@ -1,27 +1,18 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import axios from 'axios';
-import { HousingInsecureNeighbor, housingInsecureNeighborsColumns } from '..';
+import { housingInsecureNeighborsColumns } from '..';
 import { Lookups } from '../../../lookups';
 import { LookupsContext } from '../../../../App';
+import { HousingInsecureNeighborPageProps } from '../../models/props';
 
-export function HousingInsecureNeighborsDesktopView() {
+
+export function HousingInsecureNeighborsTableView({ housingInsecureNeighborsData } : HousingInsecureNeighborPageProps) {
     // DEFINE THE TABLE.
     const lookups = useContext(LookupsContext) as Lookups;
-    const [housingInsecureNeighborsData, setHousingInsecureNeighborsData] = useState([] as HousingInsecureNeighbor[]);
     const table = useReactTable({
         columns: housingInsecureNeighborsColumns(lookups),
         data: housingInsecureNeighborsData,
         getCoreRowModel: getCoreRowModel() });
-
-    // GET THE DATA.
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/housing-insecure-neighbors?otid=1`)
-            .then(response => {
-                setHousingInsecureNeighborsData(response.data)
-            })
-            .catch(error => console.log(error));
-    }, []);
 
     // CONTENT.
     return (
