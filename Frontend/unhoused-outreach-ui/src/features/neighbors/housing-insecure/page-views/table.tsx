@@ -4,6 +4,7 @@ import { housingInsecureNeighborsColumns } from '..';
 import { Lookups } from '../../../lookups';
 import { LookupsContext } from '../../../../App';
 import { HousingInsecureNeighborPageProps } from '../../models/props';
+import './table.css';
 
 
 export function HousingInsecureNeighborsTableView({ housingInsecureNeighborsData } : HousingInsecureNeighborPageProps) {
