@@ -19,7 +19,7 @@ To start the API, open a terminal at the Backend folder (relative to the root of
 
 To start the UI, open a terminal at the Frontend/unhoused-outreach-ui folder (relative to the root of the project) and run:
 
-`npm install`
+`npm install`  
 `npm start`
 
 Pull up the site on http://localhost:4200!
