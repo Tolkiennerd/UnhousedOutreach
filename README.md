@@ -15,7 +15,7 @@ Clone the repository.
 
 To start the API, open a terminal at the Backend folder (relative to the root of the project) and run:
 
-`dotnet run --project Backend/UnhousedOutreach.Api`
+`dotnet run --project UnhousedOutreach.Api`
 
 To start the UI, open a terminal at the Frontend/unhoused-outreach-ui folder (relative to the root of the project) and run:
 
