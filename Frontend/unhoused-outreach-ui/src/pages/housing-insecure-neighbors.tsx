@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
     HousingInsecureNeighbor,
-    HousingInsecureNeighborsAccordionView,
-    HousingInsecureNeighborsTableView } from '../features/neighbors/housing-insecure';
+    HousingInsecureNeighborsAccordionView } from '../features/neighbors/housing-insecure';
 import axios from 'axios';
 
 
@@ -21,17 +20,10 @@ const HousingInsecureNeighbors = () => {
             .catch(error => console.log(error));
     }, []);
 
-    // CHECK VIEW.
-    // TODO: Implement toggle to switch between table and accordion view.
-    const useAccordionView = true;
-
     // CONTENT.
     return (
         <div style={{paddingTop: '20px'}}>
-        {useAccordionView ?
-            <HousingInsecureNeighborsAccordionView housingInsecureNeighborsData={housingInsecureNeighborsData} /> :
-            <HousingInsecureNeighborsTableView housingInsecureNeighborsData={housingInsecureNeighborsData} />
-        }
+            <HousingInsecureNeighborsAccordionView housingInsecureNeighborsData={housingInsecureNeighborsData} />
         </div>
     );
 }

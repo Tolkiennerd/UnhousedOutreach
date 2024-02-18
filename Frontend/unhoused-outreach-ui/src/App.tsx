@@ -6,6 +6,7 @@ import { Lookups } from './features/lookups';
 import OutreachMap from './pages/outreach-map';
 import axios from 'axios';
 import UnhousedOutreachNavbar from './features/navbar/navbar';
+import Home from './pages/home';
 
 export const LookupsContext = React.createContext<Lookups | null>(null);
 
@@ -41,7 +42,8 @@ function App() {
         <UnhousedOutreachNavbar/>
         <LookupsContext.Provider value={lookups}>
           <Routes>
-              <Route path="/" element={<HousingInsecureNeighbors />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/neighbors" element={<HousingInsecureNeighbors />} />
               <Route path="/map/:latitude/:longitude" element={<OutreachMap />} />
           </Routes>
         </LookupsContext.Provider>
