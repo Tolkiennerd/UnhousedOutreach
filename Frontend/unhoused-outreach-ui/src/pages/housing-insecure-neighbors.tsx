@@ -1,21 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
-    HousingInsecureNeighborsDesktopView,
-    HousingInsecureNeighborsMobileView } from '../features/neighbors/housing-insecure';
+    HousingInsecureNeighbor,
+    HousingInsecureNeighborsAccordionView } from '../features/neighbors/housing-insecure';
+import axios from 'axios';
 
-function HousingInsecureNeighbors() {
-    // CHECK FOR MOBILE.
-    const [detectedScreenWidthInPixels, setDetectedScreenWidthInPixels] = useState(window.innerWidth);
-    window.addEventListener('resize', () => setDetectedScreenWidthInPixels(window.innerWidth));
-    const isMobile = detectedScreenWidthInPixels <= 500;
+
+const HousingInsecureNeighbors = () => {
+    // TODO: Use react-responsive to detect screen size and write site so the layout auto-adjusts
+    // without needing to entirely rewrite the page.
+
+    // GET THE DATA.
+    const [housingInsecureNeighborsData, setHousingInsecureNeighborsData] = useState([] as HousingInsecureNeighbor[]);
+    useEffect(() => {
+        // TODO: Get OTID from user data.
+        axios.get(`${process.env.REACT_APP_API_URL}/housing-insecure-neighbors?otid=1`)
+            .then(response => {
+                setHousingInsecureNeighborsData(response.data)
+            })
+            .catch(error => console.log(error));
+    }, []);
 
     // CONTENT.
     return (
-        <div>
-        {isMobile ?
-            <HousingInsecureNeighborsMobileView/> :
-            <HousingInsecureNeighborsDesktopView/>
-        }
+        <div style={{paddingTop: '20px'}}>
+            <HousingInsecureNeighborsAccordionView housingInsecureNeighborsData={housingInsecureNeighborsData} />
         </div>
     );
 }

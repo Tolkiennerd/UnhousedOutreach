@@ -6,10 +6,10 @@ import tentIcon from "../../../assets/tent.png"
 import { Icon, LatLngExpression } from 'leaflet'
 import axios from 'axios';
 import { LocationWithNeighbor } from '../models/location-with-neighbor';
-import { MapProps } from '../../neighbors/housing-insecure';
+import { MapProps } from '..';
 
 
-export function OutreachMapDesktopView({startingLatitude, startingLongitude}: MapProps) {
+export function OutreachMapDefaultView({startingLatitude, startingLongitude}: MapProps) {
     // GET LOOKUPS.
     const lookups = useContext(LookupsContext) as Lookups;
 
@@ -17,6 +17,7 @@ export function OutreachMapDesktopView({startingLatitude, startingLongitude}: Ma
     const [locationsWithNeighbors, setLocationsWithNeighbors] = useState([] as LocationWithNeighbor[]);
     const tentMarkerIcon = new Icon({iconUrl: tentIcon, iconSize: [40, 50], iconAnchor: [20, 25]});
     useEffect(() => {
+        // TODO: Get OTID from user data.
         axios.get(`${process.env.REACT_APP_API_URL}/locations-with-neighbors?otid=1`)
             .then(response => setLocationsWithNeighbors(response.data))
             .catch(error => console.log(error));

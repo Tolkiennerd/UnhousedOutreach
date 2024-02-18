@@ -14,7 +14,7 @@ function UnhousedOutreachNavbar() {
       <Container>
         <Navbar.Brand className="navbar-main navbar-link" href="/">Unhoused Outreach</Navbar.Brand>
           <Nav className="navbar-items">
-            <Nav.Link className="navbar-link" href="/">Neighbors</Nav.Link>
+            <Nav.Link className="navbar-link" href="/neighbors">Neighbors</Nav.Link>
             <Nav.Link className="navbar-link" href={mapRouteLink}>Map</Nav.Link>
           </Nav>
       </Container>
