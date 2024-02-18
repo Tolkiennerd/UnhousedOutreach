@@ -1,5 +1,7 @@
 # Getting Started
 
+## Prerequisites
+
 Make sure you have all of the following on your machine:
 - MySQL (or MariaDB)
   - Ubuntu installation guide: https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04
@@ -10,6 +12,8 @@ Make sure you have all of the following on your machine:
 - Node
   - Ubuntu installation guide: https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04
   - Windows download link: https://nodejs.org/en/download 
+
+## Create Database
 
 Open a MySQL shell with:
 
@@ -28,11 +32,15 @@ Create a user with all permissions on that database with:
 
 Exit the MySQL shell.
 
+## Add Environment Variables And Clone Repository
+
 Add the following environment variables:
 - UNHOUSED_OUTREACH_DB_UID (with the username for the user created above)
 - UNHOUSED_OUTREACH_DB_PWD (with the password for the user created above)
 
 Clone the repository.
+
+## Start the Site
 
 To start the API, open a terminal at the Backend folder (relative to the root of the project) and run:
 
