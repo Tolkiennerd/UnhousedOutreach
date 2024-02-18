@@ -35,7 +35,7 @@ export function HousingInsecureNeighborsAccordionView({ housingInsecureNeighbors
         if (!neighbor.location) {
             return null;
         }
-        const mapLink = `map/${neighbor.location.latitude}/${neighbor.location.longitude}`;
+        const mapLink = `/map/${neighbor.location.latitude}/${neighbor.location.longitude}`;
         return (
             <>
                 Location:
