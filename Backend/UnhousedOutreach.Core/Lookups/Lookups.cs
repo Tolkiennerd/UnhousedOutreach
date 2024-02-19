@@ -13,6 +13,7 @@ public class Lookups
     public Dictionary<int, string> Request {get; set;} = [];
     public Dictionary<int, string> ShirtSize {get; set;} = [];
     public Dictionary<int, string> ShoeSize {get; set;} = [];
+    public Dictionary<int, string> Skill {get; set;} = [];
     public Dictionary<int, string> SleepingBagCondition {get; set;} = [];
     public Dictionary<int, string> TentCondition {get; set;} = [];
     public Dictionary<int, string> TentUsage {get; set;} = [];

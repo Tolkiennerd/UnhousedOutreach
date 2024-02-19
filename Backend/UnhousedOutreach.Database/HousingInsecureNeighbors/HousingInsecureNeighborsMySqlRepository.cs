@@ -137,6 +137,15 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
             idsToNeighborsMap[housingInsecureNeighborId].RequestIds.Add(requestId);
         }
 
+        // GET SKILLS.
+        reader.NextResult();
+        while (reader.Read())
+        {
+            var housingInsecureNeighborId = (int)reader["HousingInsecureNeighborId"];
+            var skillId = (int)reader["SkillId"];
+            idsToNeighborsMap[housingInsecureNeighborId].SkillIds.Add(skillId);
+        }
+
         // GET TENTS.
         reader.NextResult();
         while (reader.Read())
@@ -260,6 +269,17 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
             {"@OutreachTeamId", outreachTeamId}
         };
         await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.SetHousingInsecureNeighborRequest, parameters);
+    }
+
+    public async Task SetHousingInsecureNeighborSkill(int housingInsecureNeighborId, int skillId, int outreachTeamId)
+    {
+        Dictionary<string, object?> parameters = new()
+        {
+            {"@HousingInsecureNeighborId", housingInsecureNeighborId},
+            {"@SkillId", skillId},
+            {"@OutreachTeamId", outreachTeamId}
+        };
+        await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.SetHousingInsecureNeighborSkill, parameters);
     }
 
     public async Task SetHousingInsecureNeighborTent(int housingInsecureNeighborId, int tentId, int outreachTeamId)

@@ -182,6 +182,20 @@ public class LookupsController : ControllerBase
     }
     #endregion
 
+    #region Skill
+    [HttpGet("skills")]
+    public async Task<Dictionary<int, string>> GetSkillsLookup([FromQuery(Name = "otid")]int outreachTeamId)
+    {
+        return await repository.GetSkills(outreachTeamId);
+    }
+
+    [HttpPost("skill")]
+    public async Task SetSkill([FromBody]KeyValuePair<int?, string> skill, [FromQuery(Name = "otid")]int outreachTeamId)
+    {
+        await repository.SetSkill(skill.Key, skill.Value, outreachTeamId);
+    }
+    #endregion
+
     #region Sleeping Bag Condition
     [HttpGet("sleeping-bag-conditions")]
     public async Task<Dictionary<int, string>> GetSleepingBagConditionsLookup([FromQuery(Name = "otid")]int outreachTeamId)

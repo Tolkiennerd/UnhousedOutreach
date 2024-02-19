@@ -11,6 +11,7 @@ export interface Lookups
   request: Record<number, string>;
   shirtSize: Record<number, string>;
   shoeSize: Record<number, string>;
+  skill: Record<number, string>;
   sleepingBagCondition: Record<number, string>;
   tentCondition: Record<number, string>;
   tentUsage: Record<number, string>;

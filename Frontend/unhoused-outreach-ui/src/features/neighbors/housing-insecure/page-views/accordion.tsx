@@ -70,6 +70,9 @@ export function HousingInsecureNeighborsAccordionView({ housingInsecureNeighbors
                             <div style={{flex: 1}}>
                                 Ethnicities: {neighbor.ethnicityIds.map(ethnicityId => lookups.ethnicity[ethnicityId])}
                             </div>
+                            <div style={{flex: 1}}>
+                                Skills: {neighbor.skillIds.map(skillId => lookups.skill[skillId])}
+                            </div>
                         </div>
                     </AccordionDetails>
                 </Accordion>
