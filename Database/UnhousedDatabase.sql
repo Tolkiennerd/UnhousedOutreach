@@ -386,6 +386,35 @@ INSERT INTO `HousingInsecureNeighborRequest` VALUES (3,1,1),(3,2,1);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `HousingInsecureNeighborSkill`
+--
+
+DROP TABLE IF EXISTS `HousingInsecureNeighborSkill`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `HousingInsecureNeighborSkill` (
+  `HousingInsecureNeighborId` int NOT NULL,
+  `SkillId` int NOT NULL,
+  `OutreachTeamId` int NOT NULL,
+  KEY `fk_HousingInsecureNeighborSkill_HousingInsecureNeighborId_idx` (`HousingInsecureNeighborId`),
+  KEY `fk_HousingInsecureNeighborSkill_SkillId_idx` (`SkillId`),
+  KEY `fk_HousingInsecureNeighborSkill_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_HousingInsecureNeighborSkill_HousingInsecureNeighborId` FOREIGN KEY (`HousingInsecureNeighborId`) REFERENCES `HousingInsecureNeighbor` (`HousingInsecureNeighborId`),
+  CONSTRAINT `fk_HousingInsecureNeighborSkill_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`),
+  CONSTRAINT `fk_HousingInsecureNeighborSkill_SkillId` FOREIGN KEY (`SkillId`) REFERENCES `Skill` (`SkillId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `HousingInsecureNeighborSkill`
+--
+
+LOCK TABLES `HousingInsecureNeighborSkill` WRITE;
+/*!40000 ALTER TABLE `HousingInsecureNeighborSkill` DISABLE KEYS */;
+/*!40000 ALTER TABLE `HousingInsecureNeighborSkill` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `HousingInsecureNeighborTent`
 --
 
@@ -719,6 +748,32 @@ INSERT INTO `ShoeSize` VALUES (1,'Men\'s 6',1),(2,'Men\'s 6.5',1),(3,'Men\'s 7',
 UNLOCK TABLES;
 
 --
+-- Table structure for table `Skill`
+--
+
+DROP TABLE IF EXISTS `Skill`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Skill` (
+  `SkillId` int NOT NULL AUTO_INCREMENT,
+  `Skill` varchar(45) NOT NULL,
+  `OutreachTeamId` int NOT NULL,
+  PRIMARY KEY (`SkillId`),
+  KEY `fk_Skill_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_Skill_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Skill`
+--
+
+LOCK TABLES `Skill` WRITE;
+/*!40000 ALTER TABLE `Skill` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Skill` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `SleepingBagCondition`
 --
 
@@ -905,4 +960,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-10 12:31:40
+-- Dump completed on 2024-02-19  1:14:40
