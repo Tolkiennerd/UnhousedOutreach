@@ -205,6 +205,18 @@ public class LocationsMySqlRepository(string connectionString) : Repository(conn
             }
         }
         
+        // GET SKILLS.
+        reader.NextResult();
+        while (reader.Read())
+        {
+            var housingInsecureNeighborId = (int)reader["HousingInsecureNeighborId"];
+            if (idsToNeighborsMap.ContainsKey(housingInsecureNeighborId))
+            {
+                var skillId = (int)reader["SkillId"];
+                idsToNeighborsMap[housingInsecureNeighborId].SkillIds.Add(skillId);
+            }
+        }
+        
         // GET LOCATIONS WITH NEIGHBORS.
         foreach (KeyValuePair<LocationWithNeighbor, List<int>> locationToNeighborIds in locationsToNeighborIds)
         {

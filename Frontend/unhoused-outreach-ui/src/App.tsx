@@ -24,6 +24,7 @@ function App() {
     request: {},
     shirtSize: {},
     shoeSize: {},
+    skill: {},
     sleepingBagCondition: {},
     tentCondition: {},
     tentUsage: {}

@@ -10,6 +10,7 @@ export interface HousingInsecureNeighbor extends Neighbor
     disabilityIds: number[];
     familyMembers: FamilyMember[];
     requestIds: number[];
+    skillIds: number[];
     housingStatusId?: number;
     isHoused?: boolean;
     isVeteran?: boolean;

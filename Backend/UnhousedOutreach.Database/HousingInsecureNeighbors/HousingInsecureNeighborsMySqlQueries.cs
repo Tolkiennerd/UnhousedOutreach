@@ -98,6 +98,10 @@ SELECT HousingInsecureNeighborId, RequestId
 FROM HousingInsecureNeighborRequest
 WHERE OutreachTeamId = @OutreachTeamId;
 
+SELECT HousingInsecureNeighborId, SkillId
+FROM HousingInsecureNeighborSkill
+WHERE OutreachTeamId = @OutreachTeamId;
+
 SELECT
     HousingInsecureNeighborTent.HousingInsecureNeighborId,
     Tent.TentId,
@@ -209,6 +213,10 @@ VALUES (@HousingInsecureNeighborId, @EthnicityId, @OutreachTeamId)
     internal static readonly string SetHousingInsecureNeighborRequest = @"
 INSERT INTO HousingInsecureNeighborRequest
 VALUES (@HousingInsecureNeighborId, @RequestId, @OutreachTeamId)
+";
+    internal static readonly string SetHousingInsecureNeighborSkill = @"
+INSERT INTO HousingInsecureNeighborSkill
+VALUES (@HousingInsecureNeighborId, @SkillId, @OutreachTeamId)
 ";
     internal static readonly string SetHousingInsecureNeighborTent = @"
 INSERT INTO HousingInsecureNeighborTent

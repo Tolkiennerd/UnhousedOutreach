@@ -158,5 +158,9 @@ WHERE OutreachTeamId = @OutreachTeamId;
 SELECT HousingInsecureNeighborId, RequestId
 FROM HousingInsecureNeighborRequest
 WHERE OutreachTeamId = @OutreachTeamId;
+
+SELECT HousingInsecureNeighborId, SkillId
+FROM HousingInsecureNeighborSkill
+WHERE OutreachTeamId = @OutreachTeamId;
 "; 
 }
