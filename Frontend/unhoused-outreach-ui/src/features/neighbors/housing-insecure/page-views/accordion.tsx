@@ -8,6 +8,7 @@ import { ExpandMore } from '@mui/icons-material';
 import moment from 'moment';
 import { HousingInsecureNeighborPageProps } from '../../models/props';
 import './accordion.css';
+import { Neighbor } from '../../models/neighbor';
 
 
 export function HousingInsecureNeighborsAccordionView({ housingInsecureNeighborsData }: HousingInsecureNeighborPageProps) {
@@ -15,7 +16,11 @@ export function HousingInsecureNeighborsAccordionView({ housingInsecureNeighbors
     const lookups = useContext(LookupsContext) as Lookups;
 
     // FIELD FORMATTING FUNCTIONS.
-    const getFullName = (neighbor: HousingInsecureNeighbor): string => {
+    const getFullName = (neighbor: Neighbor | undefined): string => {
+        if (!neighbor) {
+            return 'Unknown';
+        }
+
         const firstName = neighbor.firstName ?? '';
         const preferredName = neighbor.preferredName ? ` "${neighbor.preferredName}"`: '';
         const lastName = neighbor.lastName ?? '';
@@ -23,28 +28,31 @@ export function HousingInsecureNeighborsAccordionView({ housingInsecureNeighbors
     };
     const getAge = (neighbor: HousingInsecureNeighbor): string => {
         if (!neighbor.dateOfBirth) {
-            return 'Unknown';
+            return 'Unknown age';
         }
         const birthDate = moment(neighbor.dateOfBirth);
         const currentDate = moment(new Date());
         const age = currentDate.diff(birthDate, "years");
-        return String(age);
+        return `${String(age)} years old`;
     };
-    const getContact = (neighbor: HousingInsecureNeighbor): string => neighbor.phoneNumber ?? neighbor.emailAddress ?? 'N/A';
+    const getContact = (neighbor: HousingInsecureNeighbor): string => neighbor.phoneNumber ?? neighbor.emailAddress ?? 'No contact info';
     const getLocation = (neighbor: HousingInsecureNeighbor) => {
         if (!neighbor.location) {
-            return null;
+            return 'Unknown location';
         }
         const mapLink = `/map/${neighbor.location.latitude}/${neighbor.location.longitude}`;
         return (
-            <>
-                Location:
-                <Link to={mapLink} style={{color: 'drakblue'}}>
-                    {neighbor.location.name ?? lookups.locationType[neighbor.location.locationTypeId]}
-                </Link>
-            </>
+            <Link to={mapLink} style={{color: 'drakblue'}}>
+                {neighbor.location.name ?? lookups.locationType[neighbor.location.locationTypeId]}
+            </Link>
         );
     };
+    const getCsvList = (ids: number[], lookup: Record<number, string>) => {
+        if (ids.length === 0) {
+            return "None";
+        }
+        return ids.map((id, index) => `${lookup[id]}${index === ids.length - 1 ? '' : ', '}`);
+    }
 
     // CONTENT.
     return (
@@ -63,15 +71,22 @@ export function HousingInsecureNeighborsAccordionView({ housingInsecureNeighbors
                         </div>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <div style={{display: 'flex'}}>
+                        <div style={{display: 'flex', width: '100%'}}>
                             <div style={{flex: 1}}>
-                                Gender: {neighbor.genderId ? lookups.gender[neighbor.genderId] : 'Unknown'}
+                                {neighbor.genderId ? `${lookups.gender[neighbor.genderId]} | ` : '' }
+                                {getCsvList(neighbor.ethnicityIds, lookups.ethnicity)}
                             </div>
                             <div style={{flex: 1}}>
-                                Ethnicities: {neighbor.ethnicityIds.map(ethnicityId => lookups.ethnicity[ethnicityId])}
+                                Case Manager: {getFullName(neighbor.caseManager)}
                             </div>
                             <div style={{flex: 1}}>
-                                Skills: {neighbor.skillIds.map(skillId => lookups.skill[skillId])}
+                                Housing Status: {neighbor.housingStatusId ? lookups.housingStatus[neighbor.housingStatusId] : 'Unknown'}
+                            </div>
+                            <div style={{flex: 1}}>
+                                Requests: {getCsvList(neighbor.requestIds, lookups.request)}
+                            </div>
+                            <div style={{flex: 1}}>
+                                Disabilities: {getCsvList(neighbor.disabilityIds, lookups.disability)}
                             </div>
                         </div>
                     </AccordionDetails>
