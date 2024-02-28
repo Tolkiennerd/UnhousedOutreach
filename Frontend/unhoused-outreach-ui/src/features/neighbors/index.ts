@@ -1,1 +1,1 @@
-export type { Neighbor } from './models/neighbor';
+export { Neighbor } from './models/neighbor';

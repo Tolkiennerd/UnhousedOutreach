@@ -185,8 +185,6 @@ public class LocationsMySqlRepository(string connectionString) : Repository(conn
                     GenderId = Parser.GetNullableValue<int?>(reader, "GenderId"),
                     PhoneNumber = Parser.GetNullableValue<string?>(reader, "PhoneNumber"),
                     EmailAddress = Parser.GetNullableValue<string?>(reader, "EmailAddress"),
-                    // Location for family members not implemented currently.
-                    Location = null,
                     IsHoused = Parser.GetNullableBooleanValue(reader, "IsHoused"),
                     Comments = Parser.GetNullableStringValueFromByteArray(reader, "Comments"),
                 });

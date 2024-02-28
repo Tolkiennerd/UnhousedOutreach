@@ -21,6 +21,7 @@ public class HousingInsecureNeighbor : Neighbor
     public int? ShoeSizeId {get; set;}
     public int? PantsSizeId {get; set;}
     public CaseManager? CaseManager {get; set;}
+    public Location? Location {get; set;}
     public Location? DesiredLocation {get; set;}
     public List<Tent> Tents {get; set;} = [];
     public int? CushionTypeId {get; set;}

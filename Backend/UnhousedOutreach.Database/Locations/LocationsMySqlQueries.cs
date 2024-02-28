@@ -149,7 +149,6 @@ SELECT
     GenderId,
     PhoneNumber,
     EmailAddress,
-    LocationId,
     IsHoused,
     Comments
 FROM HousingInsecureNeighborFamilyMember

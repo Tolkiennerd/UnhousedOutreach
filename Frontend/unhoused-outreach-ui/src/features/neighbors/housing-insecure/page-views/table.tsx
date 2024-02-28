@@ -1,12 +1,8 @@
 import { useContext, useState } from 'react';
 import { HousingInsecureNeighbor, InfoCard } from '../../../neighbors/housing-insecure';
 import { LookupsContext } from '../../../../App';
-import { Lookups } from '../../../lookups';
-import { Table, TableHead, TableRow, TableBody, TableContainer, TableCell, Box, Collapse, Chip, Avatar } from '@mui/material';
-import { Link } from 'react-router-dom';
-import moment from 'moment';
-import { HousingInsecureNeighborPageProps } from '../../models/props';
-import { Neighbor } from '../../models/neighbor';
+import { Lookups, getCsvList } from '../../../lookups';
+import { Table, TableHead, TableRow, TableBody, TableContainer, TableCell, Box, Collapse } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { Edit } from '@mui/icons-material';
 import tentIcon from '../../../../assets/tent.png';
@@ -14,68 +10,6 @@ import supportServicesIcon from '../../../../assets/cornerstones.png';
 import './table.css';
 
 // FIELD FORMATTING FUNCTIONS.
-const getFullName = (neighbor: Neighbor | undefined, defaultName: string = 'Unknown'): string => {
-    if (!neighbor) {
-        return defaultName;
-    }
-
-    const firstName = neighbor.firstName ?? '';
-    const preferredName = neighbor.preferredName ? ` "${neighbor.preferredName}"`: '';
-    const lastName = neighbor.lastName ?? '';
-    return `${firstName}${preferredName} ${lastName}`
-};
-const getAge = (neighbor: HousingInsecureNeighbor): string => {
-    if (!neighbor.dateOfBirth) {
-        return 'Unknown';
-    }
-    const birthDate = moment(neighbor.dateOfBirth);
-    const currentDate = moment(new Date());
-    const age = currentDate.diff(birthDate, 'years');
-    return String(age);
-};
-const getContact = (neighbor: Neighbor): string => neighbor.phoneNumber ?? neighbor.emailAddress ?? '';
-const getLocation = (neighbor: HousingInsecureNeighbor, locationTypeLookup: Record<number, string>) => {
-    if (!neighbor.location) {
-        return 'Unknown';
-    }
-    const mapLink = `/map/${neighbor.location.latitude}/${neighbor.location.longitude}`;
-    return (
-        <Link to={mapLink}>
-            <Chip
-                avatar={<Avatar src={tentIcon} />}
-                label={neighbor.location.name ?? locationTypeLookup[neighbor.location.locationTypeId]}
-                clickable={true}
-                className='location-link'
-                sx={{
-                height: 'auto',
-                '& .MuiChip-label': {
-                    display: 'block',
-                    whiteSpace: 'normal',
-                }
-                }}
-            />
-        </Link>
-    );
-};
-const getCsvList = (ids: number[], lookup: Record<number, string>) => {
-    if (ids.length === 0) {
-        return 'None';
-    }
-    return ids.map(id => lookup[id]).join(', ');
-}
-const getHousingStatus = (neighbor: HousingInsecureNeighbor, housingStatusLookup: Record<number, string>): string => {
-    if (!neighbor.housingStatusId) {
-        return 'Unknown';
-    }
-    return housingStatusLookup[neighbor.housingStatusId];
-}
-const getGender = (genderId: number | undefined, genderLookup: Record<number, string>) => {
-    if (!genderId) {
-        return 'Unknown';
-    }
-    return genderLookup[genderId];
-}
-
 function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
     // GET THE DATA.
     const lookups = useContext(LookupsContext) as Lookups;
@@ -87,21 +21,21 @@ function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
             <TableRow onClick={() => setOpen(!open)} sx={{ '& > *': { borderBottom: 'unset' } }}>
                 <TableCell className='extra-small-screen'><Edit/></TableCell>
                 <TableCell className='extra-small-screen'>
-                    <div>{getFullName(neighbor)}</div>
-                    <div style={{color: 'darkgray'}}>{getContact(neighbor)}</div>
+                    <div>{neighbor.getFullName()}</div>
+                    <div style={{color: 'darkgray'}}>{neighbor.getContact()}</div>
                 </TableCell>
                 <TableCell className='small-screen'>
-                    <div>{getLocation(neighbor, lookups.locationType)}</div>
+                    <div>{neighbor.location?.getLocationLink(tentIcon, lookups.locationType) ?? 'Unknown'}</div>
                     <div style={{color: 'darkgray'}}>{neighbor.location?.arrivalDate?.toLocaleDateString() ?? ''}</div>
                 </TableCell>
                 <TableCell className='small-screen'>
-                    <div>{getHousingStatus(neighbor, lookups.housingStatus)}</div>
-                    <div style={{color: 'darkgray'}}>{getFullName(neighbor?.caseManager, '')}</div>
+                    <div>{neighbor.getHousingStatus(lookups.housingStatus)}</div>
+                    <div style={{color: 'darkgray'}}>{neighbor?.caseManager?.getFullName() ?? ''}</div>
                 </TableCell>
                 <TableCell className='small-screen'>{neighbor.requestIds.length}</TableCell>
-                <TableCell className='medium-screen'>{getAge(neighbor)}</TableCell>
+                <TableCell className='medium-screen'>{neighbor.getAge()}</TableCell>
                 <TableCell className='medium-screen'>{getCsvList(neighbor.ethnicityIds, lookups.ethnicity)}</TableCell>
-                <TableCell className='medium-screen'>{getGender(neighbor.genderId, lookups.gender)}</TableCell>
+                <TableCell className='medium-screen'>{neighbor.getGender(lookups.gender)}</TableCell>
                 <TableCell className='large-screen'>TODO: English Level</TableCell>
                 <TableCell className='large-screen'>{neighbor.isHoused ? 'Yes' : 'No'}</TableCell>
                 <TableCell className='large-screen'>{neighbor.isCitizen ? 'Yes' : 'No'}</TableCell>
@@ -134,9 +68,9 @@ function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
                                 backgroundColor='rgb(14, 3, 138)' 
                                 className='box-card extra-small-screen'
                                 chips={[
-                                    {label: getHousingStatus(neighbor, lookups.housingStatus), icon: supportServicesIcon},
-                                    {label: neighbor.caseManager ? getFullName(neighbor.caseManager) : undefined},
-                                    {label: neighbor.caseManager?.phoneNumber || neighbor.caseManager?.emailAddress ? getContact(neighbor.caseManager) : undefined}
+                                    {label: neighbor.getHousingStatus(lookups.housingStatus), icon: supportServicesIcon},
+                                    {label: neighbor.caseManager?.getFullName()},
+                                    {label: neighbor.caseManager?.getContact()}
                                 ]}
                             />
                             <InfoCard
@@ -145,8 +79,8 @@ function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
                                 backgroundColor='rgb(215, 104, 60)' 
                                 className='box-card medium-screen'
                                 chips={[
-                                    {label: neighbor.dateOfBirth ? getAge(neighbor) : undefined},
-                                    {label: neighbor.genderId ? getGender(neighbor.genderId, lookups.gender) : undefined},
+                                    {label: neighbor.dateOfBirth ? neighbor.getAge() : undefined},
+                                    {label: neighbor.genderId ? neighbor.getGender(lookups.gender) : undefined},
                                     {label: neighbor.ethnicityIds.length > 0 ? getCsvList(neighbor.ethnicityIds, lookups.ethnicity) : undefined}
                                 ]}
                             />
@@ -207,7 +141,7 @@ function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
     )
 }
 
-export function HousingInsecureNeighborsTableView({ housingInsecureNeighborsData }: HousingInsecureNeighborPageProps) {
+export function HousingInsecureNeighborsTableView({ housingInsecureNeighbors }: { housingInsecureNeighbors: HousingInsecureNeighbor[] }) {
     const columns = [
         {name: '', class: 'extra-small-screen'},
         {name: 'Name', class: 'extra-small-screen'},
@@ -238,7 +172,7 @@ export function HousingInsecureNeighborsTableView({ housingInsecureNeighborsData
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                    {housingInsecureNeighborsData.map((neighbor) => (
+                    {housingInsecureNeighbors.map((neighbor) => (
                         <Row key={neighbor.housingInsecureNeighborId} neighbor={neighbor} />
                     ))}
                     </TableBody>
