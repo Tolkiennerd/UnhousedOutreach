@@ -1,7 +1,7 @@
 .navbar {
     padding: 1vw;
     background-color: black;
-    height: 3.5vh;
+    font-size: 1.25rem;
 }
 
 .navbar-link {

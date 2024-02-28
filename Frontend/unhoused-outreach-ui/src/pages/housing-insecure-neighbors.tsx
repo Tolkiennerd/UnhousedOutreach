@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import {
     HousingInsecureNeighbor,
-    HousingInsecureNeighborsAccordionView } from '../features/neighbors/housing-insecure';
+    HousingInsecureNeighborsAccordionView, 
+    HousingInsecureNeighborsTableView} from '../features/neighbors/housing-insecure';
 import axios from 'axios';
 
 
@@ -23,7 +24,7 @@ const HousingInsecureNeighbors = () => {
     // CONTENT.
     return (
         <div style={{paddingTop: '20px'}}>
-            <HousingInsecureNeighborsAccordionView housingInsecureNeighborsData={housingInsecureNeighborsData} />
+            <HousingInsecureNeighborsTableView housingInsecureNeighborsData={housingInsecureNeighborsData} />
         </div>
     );
 }

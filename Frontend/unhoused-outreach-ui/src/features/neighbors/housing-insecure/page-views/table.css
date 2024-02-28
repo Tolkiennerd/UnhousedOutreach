@@ -1,0 +1,115 @@
+.MuiPaper-root {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 95vw !important;
+}
+
+.MuiCard-root {
+    width: fit-content !important;
+    max-width: 90% !important;
+    padding: 5px;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 10px;
+}
+
+.MuiTable-root {
+    background-color: #001;
+}
+
+.MuiTableCell-root {
+    color: white !important;
+    border-bottom-color: #334 !important;
+    font-size: 1rem !important;
+}
+
+.MuiTableCell-head {
+    border-bottom-width: 2px !important;
+    font-weight: bold !important;
+}
+
+.collapsible-table-cell {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+@media screen and (max-width: 480px) {
+}
+
+@media screen and (min-width: 481px) {
+    .box-card.extra-small-screen {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .MuiTableCell-root.small-screen {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .MuiTableCell-root.medium-screen {
+        display: none !important;
+    }
+}
+
+@media screen and (min-width: 901px) {
+    .box-card.medium-screen {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .MuiTableCell-root.large-screen {
+        display: none !important;
+    }
+}
+
+@media screen and (min-width: 1201px) {
+    .box-card.large-screen {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    .MuiTableCell-root.extra-large-screen {
+        display: none !important;
+    }
+}
+
+.MuiAvatar-root.MuiAvatar-circular.MuiChip-avatar {
+    background-color: none;
+}
+
+.MuiChip-root.MuiChip-filled {
+    background-color: #445;
+}
+
+.MuiChip-root {
+    font-family: Arial !important;
+    font-size: 1rem !important;
+    color: white !important;
+    margin-right: 5px !important;
+    margin-top: 5px !important;
+}
+
+.comments {
+    color: black;
+}
+
+.box-card {
+    margin-right: 10px !important;
+}
+
+.box {
+    padding-bottom: 10px;
+    display: inline-flex;
+    flex-flow: wrap;
+}
+
+.location-link {
+    vertical-align: baseline;
+    margin-top: 0 !important;
+    background-color: rgb(102, 102, 0) !important;
+}
