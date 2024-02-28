@@ -19,7 +19,7 @@ export class Location
 
     constructor(json: any) {
         this.locationId = json?.locationId;
-        this.name = json?.locationId;
+        this.name = json?.name;
         this.locationTypeId = json?.locationTypeId;
         this.latitude = json?.latitude;
         this.longitude = json?.longitude;
