@@ -1,5 +1,4 @@
-using UnhousedOutreach.Core.Neighbors;
-
+using UnhousedOutreach.Core.Mapping;
 namespace UnhousedOutreach.Core.Neighbors.HousingInsecure;
 
 public class FamilyMember : Neighbor

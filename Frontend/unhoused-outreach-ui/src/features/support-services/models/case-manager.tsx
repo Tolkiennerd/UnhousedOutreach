@@ -1,13 +1,14 @@
 import { Organization } from "..";
+import { Neighbor } from "../../neighbors";
 
-export interface CaseManager
+export class CaseManager extends Neighbor
 {
-    caseManagerId: number;
-    firstName?: string;
-    lastName?: string;
-    preferredName?: string;
-    phoneNumber?: string;
-    emailAddress?: string;
+    caseManagerId: number = 0;
     organization?: Organization;
-    comments?: string;
+
+    constructor(json: any) {
+        super(json);
+        this.caseManagerId = json?.caseManagerId;
+        this.organization = json?.organization;
+    }
 }

@@ -121,8 +121,6 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
                 GenderId = Parser.GetNullableValue<int?>(reader, "GenderId"),
                 PhoneNumber = Parser.GetNullableValue<string?>(reader, "PhoneNumber"),
                 EmailAddress = Parser.GetNullableValue<string?>(reader, "EmailAddress"),
-                // Location for family members not implemented currently.
-                Location = null,
                 IsHoused = Parser.GetNullableBooleanValue(reader, "IsHoused"),
                 Comments = Parser.GetNullableStringValueFromByteArray(reader, "Comments"),
             });
@@ -252,7 +250,6 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
             {"@GenderId", familyMember.GenderId},
             {"@PhoneNumber", familyMember.PhoneNumber},
             {"@EmailAddress", familyMember.EmailAddress},
-            {"@LocationId", familyMember.Location?.LocationId},
             {"@IsHoused", familyMember.IsHoused},
             {"@Comments", familyMember.Comments},
             {"@OutreachTeamId", outreachTeamId}

@@ -1,5 +1,3 @@
-using UnhousedOutreach.Core.Mapping;
-
 namespace UnhousedOutreach.Core.Neighbors;
 
 public class Neighbor
@@ -11,6 +9,5 @@ public class Neighbor
     public int? GenderId {get; set;}
     public string? PhoneNumber {get; set;}
     public string? EmailAddress {get; set;}
-    public Location? Location {get; set;}
     public string? Comments {get; set;}
 }

@@ -88,7 +88,6 @@ SELECT
     GenderId,
     PhoneNumber,
     EmailAddress,
-    LocationId,
     IsHoused,
     Comments
 FROM HousingInsecureNeighborFamilyMember
@@ -234,7 +233,6 @@ VALUES (
     @GenderId,
     @PhoneNumber,
     @EmailAddress,
-    @LocationId,
     @IsHoused,
     @Comments,
     @OutreachTeamId
@@ -249,7 +247,6 @@ ON DUPLICATE KEY UPDATE
     GenderId = @GenderId,
     PhoneNumber = @PhoneNumber,
     EmailAddress = @EmailAddress,
-    LocationId = @LocationId,
     IsHoused = @IsHoused,
     Comments = @Comments,
     OutreachTeamId = @OutreachTeamId
