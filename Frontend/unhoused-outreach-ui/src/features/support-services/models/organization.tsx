@@ -1,12 +1,10 @@
 export class Organization
 {
-    supportServiceOrganizationId: number;
+    supportServiceOrganizationId: number = 0;
     name?: string;
     comments?: string;
 
     constructor(json: any) {
-        this.supportServiceOrganizationId = json.supportServiceOrganizationId;
-        this.name = json.name;
-        this.comments = json.comments;
+        Object.assign(this, json);
     }
 }

@@ -1,2 +1,2 @@
 export type { Lookups } from './models/lookups';
-export { getCsvList } from './functions/data-formatting';
+export { getCsvList, getLookupValue, getLookupString } from './functions/data-formatting';

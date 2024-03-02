@@ -36,14 +36,14 @@
 @media screen and (max-width: 480px) {
 }
 
-@media screen and (min-width: 481px) {
-    .box-card.extra-small-screen {
+@media screen and (max-width: 650px) {
+    .MuiTableCell-root.small-screen {
         display: none !important;
     }
 }
 
-@media screen and (max-width: 650px) {
-    .MuiTableCell-root.small-screen {
+@media screen and (min-width: 651px) {
+    .box-card.extra-small-screen {
         display: none !important;
     }
 }
@@ -55,7 +55,7 @@
 }
 
 @media screen and (min-width: 901px) {
-    .box-card.medium-screen {
+    .box-card.small-screen {
         display: none !important;
     }
 }
@@ -67,13 +67,19 @@
 }
 
 @media screen and (min-width: 1201px) {
-    .box-card.large-screen {
+    .box-card.medium-screen {
         display: none !important;
     }
 }
 
 @media screen and (max-width: 1600px) {
     .MuiTableCell-root.extra-large-screen {
+        display: none !important;
+    }
+}
+
+@media screen and (min-width: 1601px) {
+    .box-card.large-screen {
         display: none !important;
     }
 }

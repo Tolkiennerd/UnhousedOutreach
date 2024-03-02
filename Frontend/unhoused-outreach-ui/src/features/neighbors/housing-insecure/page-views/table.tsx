@@ -1,19 +1,27 @@
 import { useContext, useState } from 'react';
 import { HousingInsecureNeighbor, InfoCard } from '../../../neighbors/housing-insecure';
 import { LookupsContext } from '../../../../App';
-import { Lookups, getCsvList } from '../../../lookups';
+import { Lookups, getCsvList, getLookupString, getLookupValue } from '../../../lookups';
 import { Table, TableHead, TableRow, TableBody, TableContainer, TableCell, Box, Collapse } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { Edit } from '@mui/icons-material';
 import tentIcon from '../../../../assets/tent.png';
 import supportServicesIcon from '../../../../assets/cornerstones.png';
 import './table.css';
+import { getValue } from '@testing-library/user-event/dist/utils';
 
 // FIELD FORMATTING FUNCTIONS.
 function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
     // GET THE DATA.
     const lookups = useContext(LookupsContext) as Lookups;
     const [open, setOpen] = useState(false);
+
+    const displayNullableBoolean = (nullableBoolean: boolean | undefined): string => {
+        if (nullableBoolean === undefined) {
+            return 'Unknown';
+        }
+        return nullableBoolean ? 'Yes' : 'No';
+    }
 
     // CONTENT.
     return (
@@ -29,18 +37,18 @@ function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
                     <div style={{color: 'darkgray'}}>{neighbor.location?.arrivalDate?.toLocaleDateString() ?? ''}</div>
                 </TableCell>
                 <TableCell className='small-screen'>
-                    <div>{neighbor.getHousingStatus(lookups.housingStatus)}</div>
+                    <div>{getLookupString(neighbor.housingStatusId, lookups.housingStatus)}</div>
                     <div style={{color: 'darkgray'}}>{neighbor?.caseManager?.getFullName() ?? ''}</div>
                 </TableCell>
                 <TableCell className='small-screen'>{neighbor.requestIds.length}</TableCell>
                 <TableCell className='medium-screen'>{neighbor.getAge()}</TableCell>
                 <TableCell className='medium-screen'>{getCsvList(neighbor.ethnicityIds, lookups.ethnicity)}</TableCell>
-                <TableCell className='medium-screen'>{neighbor.getGender(lookups.gender)}</TableCell>
+                <TableCell className='medium-screen'>{getLookupString(neighbor.genderId, lookups.gender)}</TableCell>
                 <TableCell className='large-screen'>TODO: English Level</TableCell>
-                <TableCell className='large-screen'>{neighbor.isHoused ? 'Yes' : 'No'}</TableCell>
-                <TableCell className='large-screen'>{neighbor.isCitizen ? 'Yes' : 'No'}</TableCell>
-                <TableCell className='extra-large-screen'>{neighbor.hasIdentification ? 'Yes' : 'No'}</TableCell>
-                <TableCell className='extra-large-screen'>{neighbor.isVeteran ? 'Yes' : 'No'}</TableCell>
+                <TableCell className='large-screen'>{displayNullableBoolean(neighbor.isHoused)}</TableCell>
+                <TableCell className='large-screen'>{displayNullableBoolean(neighbor.isCitizen)}</TableCell>
+                <TableCell className='extra-large-screen'>{displayNullableBoolean(neighbor.hasIdentification)}</TableCell>
+                <TableCell className='extra-large-screen'>{displayNullableBoolean(neighbor.isVeteran)}</TableCell>
                 <TableCell className='extra-large-screen'>TODO: Income</TableCell>
             </TableRow>
             <TableRow>
@@ -68,7 +76,7 @@ function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
                                 backgroundColor='rgb(14, 3, 138)' 
                                 className='box-card extra-small-screen'
                                 chips={[
-                                    {label: neighbor.getHousingStatus(lookups.housingStatus), icon: supportServicesIcon},
+                                    {label: getLookupValue(neighbor.housingStatusId, lookups.housingStatus), icon: supportServicesIcon},
                                     {label: neighbor.caseManager?.getFullName()},
                                     {label: neighbor.caseManager?.getContact()}
                                 ]}
@@ -77,10 +85,10 @@ function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
                                 title='Demographics' 
                                 hide={!neighbor.dateOfBirth && !neighbor.genderId && neighbor.ethnicityIds.length === 0}
                                 backgroundColor='rgb(215, 104, 60)' 
-                                className='box-card medium-screen'
+                                className='box-card small-screen'
                                 chips={[
                                     {label: neighbor.dateOfBirth ? neighbor.getAge() : undefined},
-                                    {label: neighbor.genderId ? neighbor.getGender(lookups.gender) : undefined},
+                                    {label: getLookupValue(neighbor.genderId, lookups.gender)},
                                     {label: neighbor.ethnicityIds.length > 0 ? getCsvList(neighbor.ethnicityIds, lookups.ethnicity) : undefined}
                                 ]}
                             />
@@ -113,6 +121,15 @@ function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
                                     return {label: lookups.disability[disabilityId]}
                                 })}
                             />
+                            {/* <InfoCard
+                                title='Clothing Sizes'
+                                hide={neighbor.disabilityIds.length === 0}
+                                backgroundColor='rgb(174, 131, 24)'
+                                className='box-card'
+                                chips={[
+                                    {label: getVal}
+                                ]}
+                            /> */}
                             <InfoCard
                                 title='Language'
                                 // TODO: Add EnglishLevel and Languages

@@ -12,14 +12,11 @@ export class Neighbor
     comments?: string;
 
     constructor(json: any) {
-        this.firstName = json?.firstName;
-        this.lastName = json?.lastName;
-        this.preferredName = json?.preferredName;
-        this.dateOfBirth = json?.dateOfBirth;
-        this.genderId = json?.genderId;
-        this.phoneNumber = json?.phoneNumber;
-        this.emailAddress = json?.emailAddress;
-        this.comments = json?.comments;
+        // Assign all built-in types.
+        Object.assign(this, json);
+
+        // Assign all custom types.
+        this.dateOfBirth = json.date;
     }
 
     getFullName(): string {
@@ -39,12 +36,5 @@ export class Neighbor
         const currentDate = moment(new Date());
         const age = currentDate.diff(birthDate, 'years');
         return String(age);
-    }
-
-    getGender = (genderLookup: Record<number, string>): string => {
-        if (!this.genderId) {
-            return 'Unknown';
-        }
-        return genderLookup[this.genderId];
     }
 }
