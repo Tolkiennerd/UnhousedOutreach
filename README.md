@@ -17,7 +17,8 @@ Make sure you have all of the following on your machine:
 
 Open a MySQL shell with:
 
-`mysql -uroot -p`
+- Linux: `mysql -uroot -p`
+- Windows: `mysql.exe -uroot -p`
 
 Enter your root password.
 
