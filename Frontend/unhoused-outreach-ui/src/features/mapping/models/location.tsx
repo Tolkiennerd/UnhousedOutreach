@@ -18,18 +18,11 @@ export class Location
     comments?: string;
 
     constructor(json: any) {
-        this.locationId = json?.locationId;
-        this.name = json?.name;
-        this.locationTypeId = json?.locationTypeId;
-        this.latitude = json?.latitude;
-        this.longitude = json?.longitude;
-        this.address = json?.address;
-        this.city = json?.city;
-        this.state = json?.state;
-        this.zipCode = json?.zipCode;
-        this.isLegal = json?.isLegal;
-        this.arrivalDate = json?.arrivalDate;
-        this.comments = json?.comments;
+        // Assign all built-in types.
+        Object.assign(this, json);
+
+        // Assign all custom types.
+        this.state = json?.state ?? State.Undefined;
     }
 
     getLocationLink(iconPath: string, locationTypeLookup: Record<number, string>) {
