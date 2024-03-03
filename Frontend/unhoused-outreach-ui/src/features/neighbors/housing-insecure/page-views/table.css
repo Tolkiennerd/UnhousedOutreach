@@ -6,6 +6,7 @@
 
 .edit {
     width: 0 !important;
+    cursor: pointer;
 }
 
 .MuiCard-root {
