@@ -4,6 +4,10 @@
     width: 95vw !important;
 }
 
+.edit {
+    width: 0 !important;
+}
+
 .MuiCard-root {
     width: fit-content !important;
     max-width: 90% !important;

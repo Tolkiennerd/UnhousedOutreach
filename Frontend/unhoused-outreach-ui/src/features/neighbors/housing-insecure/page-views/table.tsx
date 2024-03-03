@@ -8,7 +8,10 @@ import { Edit } from '@mui/icons-material';
 import tentIcon from '../../../../assets/tent.png';
 import supportServicesIcon from '../../../../assets/cornerstones.png';
 import './table.css';
-import { getValue } from '@testing-library/user-event/dist/utils';
+import shoeIcon from '../../../../assets/shoe.png';
+import shirtIcon from '../../../../assets/shirt.png';
+import pantsIcon from '../../../../assets/pants.png';
+
 
 // FIELD FORMATTING FUNCTIONS.
 function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
@@ -27,7 +30,7 @@ function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
     return (
         <>
             <TableRow onClick={() => setOpen(!open)} sx={{ '& > *': { borderBottom: 'unset' } }}>
-                <TableCell className='extra-small-screen'><Edit/></TableCell>
+                <TableCell className='extra-small-screen edit'><Edit/></TableCell>
                 <TableCell className='extra-small-screen'>
                     <div>{neighbor.getFullName()}</div>
                     <div style={{color: 'darkgray'}}>{neighbor.getContact()}</div>
@@ -121,15 +124,17 @@ function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
                                     return {label: lookups.disability[disabilityId]}
                                 })}
                             />
-                            {/* <InfoCard
+                            <InfoCard
                                 title='Clothing Sizes'
-                                hide={neighbor.disabilityIds.length === 0}
-                                backgroundColor='rgb(174, 131, 24)'
+                                hide={!neighbor.shoeSizeId}
+                                backgroundColor='rgb(24, 174, 104)'
                                 className='box-card'
                                 chips={[
-                                    {label: getVal}
+                                    {label: getLookupValue(neighbor.shoeSizeId, lookups.shoeSize), icon: shoeIcon},
+                                    {label: getLookupValue(neighbor.shirtSizeId, lookups.shirtSize), icon: shirtIcon},
+                                    {label: getLookupValue(neighbor.pantsSizeId, lookups.pantsSize), icon: pantsIcon}
                                 ]}
-                            /> */}
+                            />
                             <InfoCard
                                 title='Language'
                                 // TODO: Add EnglishLevel and Languages
