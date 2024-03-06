@@ -55,7 +55,7 @@ export function Row({ neighbor, onEditClick }: { neighbor: HousingInsecureNeighb
                 <Cell 
                     text={neighbor.location?.getLocationLink(tentIcon, lookups.locationType) ?? 'Unknown'}
                     underText={neighbor.location?.arrivalDate?.toLocaleDateString() ?? ''}
-                    className='extra-small-screen'
+                    className='small-screen'
                     onClick={expandRow} 
                 />
                 <Cell

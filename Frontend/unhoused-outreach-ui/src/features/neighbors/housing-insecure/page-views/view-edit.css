@@ -1,0 +1,87 @@
+.MuiInputLabel-root {
+    color: white !important;
+}
+
+.MuiInputBase-input {
+    color: white !important;
+}
+
+.MuiOutlinedInput-notchedOutline {
+    border-color: white !important;
+}
+
+.MuiFormControl-root {
+    padding-right: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
+.MuiSvgIcon-root {
+    color: white !important;
+}
+
+#back-arrow {
+    color: inherit !important;
+}
+
+textarea {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    margin-right: 1rem !important;
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    padding: 12px !important;
+    border-radius: 5px 5px 0 5px !important;
+    color: white !important;
+    background-color: inherit !important;
+    border: 1px solid white !important;
+    box-shadow: 0px 2px 2px #1C2025 !important;
+
+    &:hover {
+      border-color: #3399FF !important;
+    }
+
+    &:focus {
+      outline: 0 !important;
+      border-color: #3399FF !important;
+      box-shadow: 0 0 0 3px #0072E5 !important;
+    }
+
+    /* firefox */
+    &:focus-visible {
+      outline: 0 !important;
+    }
+}
+
+.MuiPickersPopper-root > * {
+    width: 20rem !important;
+}
+
+.MuiPickersPopper-root > svg {
+    color: black !important;
+}
+
+.MuiPopover-root {
+    width: 100% !important;
+}
+
+.MuiPopover-root > * {
+    width: 14rem !important;
+}
+
+.MuiPaper-root {
+    background-color: #113 !important;
+    color: white !important;
+}
+
+.MuiDayCalendar-weekContainer > *{
+    color: white !important;
+}
+
+.MuiDayCalendar-header > *{
+    color: white !important;
+}
+
+.MuiBackdrop-root {
+    width: 100% !important;
+}

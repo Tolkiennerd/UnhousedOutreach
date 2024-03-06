@@ -28,7 +28,7 @@ export function HousingInsecureNeighborsTableView({ housingInsecureNeighbors }: 
                             <TableCell className='small-screen'>Location</TableCell>
                             <TableCell className='small-screen'>Housing Status</TableCell>
                             <TableCell className='small-screen'>Requests</TableCell>
-                            <TableCell className='medium-screen'>Age</TableCell>
+                            <TableCell className='small-screen'>Age</TableCell>
                             <TableCell className='medium-screen'>Ethnicity</TableCell>
                             <TableCell className='medium-screen'>Gender</TableCell>
                             <TableCell className='large-screen'>English Level</TableCell>
@@ -47,7 +47,9 @@ export function HousingInsecureNeighborsTableView({ housingInsecureNeighbors }: 
             </TableContainer>
 
             <Modal open={modalOpen} onClose={handleModalClose}>
-                <ViewEditHousingInsecureNeighbor neighbor={modalNeighbor} onClose={handleModalClose} />
+                <>
+                    <ViewEditHousingInsecureNeighbor neighbor={modalNeighbor} onClose={handleModalClose} />
+                </>
             </Modal>
         </>
     );
