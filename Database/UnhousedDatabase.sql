@@ -248,7 +248,7 @@ CREATE TABLE `HousingInsecureNeighbor` (
 
 LOCK TABLES `HousingInsecureNeighbor` WRITE;
 /*!40000 ALTER TABLE `HousingInsecureNeighbor` DISABLE KEYS */;
-INSERT INTO `HousingInsecureNeighbor` VALUES (2,'John','Smith','Johnny','1990-01-22 18:47:07',1,'234-567-8901',NULL,1,0,0,1,1,2,NULL,NULL,NULL,2,1,NULL,1,1,2,1,1,10,_binary 'first guy',1),(3,'Greg',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(4,'Joey','Jones',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2);
+INSERT INTO `HousingInsecureNeighbor` VALUES (2,'John','Smith','Johnny','1990-01-22 18:47:07',1,'234-567-8902','john@gmail.com',1,0,0,1,1,2,1,1,1,2,1,1,1,1,2,1,1,10,_binary 'first guy',1),(3,'Greg',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(4,'Joey','Jones',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2);
 /*!40000 ALTER TABLE `HousingInsecureNeighbor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -308,7 +308,7 @@ CREATE TABLE `HousingInsecureNeighborEthnicity` (
 
 LOCK TABLES `HousingInsecureNeighborEthnicity` WRITE;
 /*!40000 ALTER TABLE `HousingInsecureNeighborEthnicity` DISABLE KEYS */;
-INSERT INTO `HousingInsecureNeighborEthnicity` VALUES (2,1,1),(2,2,1),(3,3,1),(4,4,2);
+INSERT INTO `HousingInsecureNeighborEthnicity` VALUES (3,3,1),(4,4,2),(2,1,1),(2,4,1),(2,5,1);
 /*!40000 ALTER TABLE `HousingInsecureNeighborEthnicity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -329,18 +329,15 @@ CREATE TABLE `HousingInsecureNeighborFamilyMember` (
   `GenderId` int DEFAULT NULL,
   `PhoneNumber` varchar(45) DEFAULT NULL,
   `EmailAddress` varchar(45) DEFAULT NULL,
-  `LocationId` int DEFAULT NULL,
   `IsHoused` tinyint DEFAULT NULL,
   `Comments` blob,
   `OutreachTeamId` int NOT NULL,
   PRIMARY KEY (`HousingInsecureNeighborFamilyMemberId`),
   KEY `fk_HousingInsecureNeighborFamily_HousingInsecureNeighborId_idx` (`HousingInsecureNeighborId`),
   KEY `fk_HousingInsecureNeighborFamily_GenderId_idx` (`GenderId`),
-  KEY `fk_HousingInsecureNeighborFamily_LocationId_idx` (`LocationId`),
   KEY `fk_HousingInsecureNeighborFamilyMember_OutreachTeamId_idx` (`OutreachTeamId`),
   CONSTRAINT `fk_HousingInsecureNeighborFamily_GenderId` FOREIGN KEY (`GenderId`) REFERENCES `Gender` (`GenderId`),
   CONSTRAINT `fk_HousingInsecureNeighborFamily_HousingInsecureNeighborId` FOREIGN KEY (`HousingInsecureNeighborId`) REFERENCES `HousingInsecureNeighbor` (`HousingInsecureNeighborId`),
-  CONSTRAINT `fk_HousingInsecureNeighborFamily_LocationId` FOREIGN KEY (`LocationId`) REFERENCES `Location` (`LocationId`),
   CONSTRAINT `fk_HousingInsecureNeighborFamilyMember_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -351,7 +348,7 @@ CREATE TABLE `HousingInsecureNeighborFamilyMember` (
 
 LOCK TABLES `HousingInsecureNeighborFamilyMember` WRITE;
 /*!40000 ALTER TABLE `HousingInsecureNeighborFamilyMember` DISABLE KEYS */;
-INSERT INTO `HousingInsecureNeighborFamilyMember` VALUES (1,3,'Bob','Smith','Bobby','Parent',1,'456-789-0123','bob@gmail.com',NULL,1,_binary 'testing',1);
+INSERT INTO `HousingInsecureNeighborFamilyMember` VALUES (1,3,'Bob','Smith','Bobby','Parent',1,'456-789-0123','bob@gmail.com',1,_binary 'testing',1);
 /*!40000 ALTER TABLE `HousingInsecureNeighborFamilyMember` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -495,6 +492,7 @@ CREATE TABLE `HousingStatusHistory` (
 
 LOCK TABLES `HousingStatusHistory` WRITE;
 /*!40000 ALTER TABLE `HousingStatusHistory` DISABLE KEYS */;
+INSERT INTO `HousingStatusHistory` VALUES (2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-13'),(2,1,'2024-04-21'),(2,1,'2024-04-21'),(2,1,'2024-04-21'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25');
 /*!40000 ALTER TABLE `HousingStatusHistory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -520,6 +518,7 @@ CREATE TABLE `IsHousedHistory` (
 
 LOCK TABLES `IsHousedHistory` WRITE;
 /*!40000 ALTER TABLE `IsHousedHistory` DISABLE KEYS */;
+INSERT INTO `IsHousedHistory` VALUES (2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-10'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-11'),(2,0,'2024-04-13'),(2,0,'2024-04-21'),(2,0,'2024-04-21'),(2,0,'2024-04-21'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25'),(2,0,'2024-04-25');
 /*!40000 ALTER TABLE `IsHousedHistory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -558,7 +557,7 @@ CREATE TABLE `Location` (
 
 LOCK TABLES `Location` WRITE;
 /*!40000 ALTER TABLE `Location` DISABLE KEYS */;
-INSERT INTO `Location` VALUES (1,NULL,1,38.951500,-77.348700,NULL,'Reston','UT','20190',1,NULL,NULL,1),(2,NULL,2,38.951600,-77.348800,NULL,'Reston','UT','20190',1,NULL,NULL,1),(3,NULL,3,38.951700,-77.348900,NULL,'Reston','UT','20190',1,NULL,NULL,2);
+INSERT INTO `Location` VALUES (1,NULL,1,38.951500,-77.348700,NULL,'Reston','VA','20190',0,NULL,NULL,1),(2,NULL,2,38.951600,-77.348800,NULL,'Reston','UT','20190',1,NULL,NULL,1),(3,NULL,3,38.951700,-77.348900,NULL,'Reston','UT','20190',1,NULL,NULL,2);
 /*!40000 ALTER TABLE `Location` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -586,6 +585,7 @@ CREATE TABLE `LocationHistory` (
 
 LOCK TABLES `LocationHistory` WRITE;
 /*!40000 ALTER TABLE `LocationHistory` DISABLE KEYS */;
+INSERT INTO `LocationHistory` VALUES (2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-10'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-11'),(2,1,'2024-04-13'),(2,1,'2024-04-21'),(2,1,'2024-04-21'),(2,1,'2024-04-21'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25'),(2,1,'2024-04-25');
 /*!40000 ALTER TABLE `LocationHistory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -654,7 +654,7 @@ CREATE TABLE `PantsSize` (
   PRIMARY KEY (`PantsSizeId`),
   KEY `fk_PantsSize_OutreachTeamId_idx` (`OutreachTeamId`),
   CONSTRAINT `fk_PantsSize_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `OutreachTeam` (`OutreachTeamId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -663,6 +663,7 @@ CREATE TABLE `PantsSize` (
 
 LOCK TABLES `PantsSize` WRITE;
 /*!40000 ALTER TABLE `PantsSize` DISABLE KEYS */;
+INSERT INTO `PantsSize` VALUES (1,'Men\'s XS',1),(2,'Men\'s S',1),(3,'Men\'s M',1);
 /*!40000 ALTER TABLE `PantsSize` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -960,4 +961,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-19  1:14:40
+-- Dump completed on 2024-04-26 13:25:56
