@@ -1,9 +1,26 @@
+#menu-.MuiPopover-root.MuiMenu-root.MuiModal-root > .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded {
+    background-color: #001;
+    color: white;
+}
+
+.MuiDrawer-root > .MuiPaper-root {
+    width: min-content;
+}
+
+.MuiDrawer-root > .MuiPaper-root > .MuiBox-root {
+    min-height: 100%;
+}
+
 .MuiInputLabel-root {
     color: white !important;
 }
 
 .MuiInputBase-input {
     color: white !important;
+}
+
+.MuiInputBase-root {
+    width: 100%;
 }
 
 .MuiOutlinedInput-notchedOutline {
@@ -13,6 +30,9 @@
 .MuiFormControl-root {
     padding-right: 1rem !important;
     padding-bottom: 1rem !important;
+    width: 16.5rem !important;
+    margin-top: 1rem !important;
+    display: block;
 }
 
 .MuiSvgIcon-root {
@@ -24,32 +44,33 @@
 }
 
 textarea {
-    box-sizing: border-box !important;
-    width: 100% !important;
-    margin-right: 1rem !important;
-    font-size: 1rem !important;
-    font-weight: 400 !important;
-    line-height: 1.5 !important;
-    padding: 12px !important;
-    border-radius: 5px 5px 0 5px !important;
-    color: white !important;
-    background-color: inherit !important;
-    border: 1px solid white !important;
-    box-shadow: 0px 2px 2px #1C2025 !important;
+    box-sizing: border-box;
+    width: 16.5rem;
+    margin-right: 1rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    padding: 12px;
+    border-radius: 5px 5px 0 5px;
+    color: white;
+    background-color: inherit;
+    border: 1px solid white;
+    box-shadow: 0px 2px 2px #1C2025;
+    height: max-content;
 
     &:hover {
-      border-color: #3399FF !important;
+      border-color: #3399FF;
     }
 
     &:focus {
-      outline: 0 !important;
-      border-color: #3399FF !important;
-      box-shadow: 0 0 0 3px #0072E5 !important;
+      outline: 0;
+      border-color: #3399FF;
+      box-shadow: 0 0 0 3px #0072E5;
     }
 
     /* firefox */
     &:focus-visible {
-      outline: 0 !important;
+      outline: 0;
     }
 }
 
@@ -69,9 +90,15 @@ textarea {
     width: 14rem !important;
 }
 
-.MuiPaper-root {
-    background-color: #113 !important;
+.MuiPickersLayout-root {
+    background-color: #001 !important;
     color: white !important;
+}
+
+.menu-and-edit > div.MuiPaper-root {
+    background-color: #001 !important;
+    color: white !important;
+    height: fit-content;
 }
 
 .MuiDayCalendar-weekContainer > *{
@@ -84,4 +111,36 @@ textarea {
 
 .MuiBackdrop-root {
     width: 100% !important;
+}
+
+.full-width {
+    width: 100% !important;
+}
+
+.MuiFormControlLabel-root {
+    color: white;
+    margin-top: 1rem;
+}
+
+.menu-and-edit {
+    margin-top: 1rem;
+}
+
+.menu {
+    margin-left: 0 !important;
+    margin-top: 1rem !important;
+    flex: 2;
+}
+
+.edit-field {
+    flex: 7;
+    margin-left: 2rem;
+}
+
+.MuiMenuItem-root:hover {
+    background-color: rgba(175, 175, 175, 0.25) !important;
+}
+
+.MuiButtonBase-root.MuiMenuItem-root.MuiMenuItem-gutters.Mui-selected.MuiMenuItem-root.MuiMenuItem-gutters.Mui-selected {
+    background-color: rgba(0, 120, 255, 0.25);
 }

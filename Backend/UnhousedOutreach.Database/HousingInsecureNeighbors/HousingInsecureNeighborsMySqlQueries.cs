@@ -188,18 +188,26 @@ ON DUPLICATE KEY UPDATE
     Comments = @Comments,
     OutreachTeamId = @OutreachTeamId;
 
-SET @thisHousingInsecureNeighborId = (
-    SELECT IF (@HousingInsecureNeighborId=0, HousingInsecureNeighborId, @HousingInsecureNeighborId)
-    FROM HousingInsecureNeighbor ORDER BY HousingInsecureNeighborId DESC LIMIT 1);
-
 INSERT INTO HousingStatusHistory
-VALUES (@thisHousingInsecureNeighborId, @HousingStatusId, CURRENT_DATE());
+VALUES (
+    (SELECT IF (@HousingInsecureNeighborId=0, HousingInsecureNeighborId, @HousingInsecureNeighborId)
+    FROM HousingInsecureNeighbor ORDER BY HousingInsecureNeighborId DESC LIMIT 1),
+    @HousingStatusId, 
+    CURRENT_DATE());
 
 INSERT INTO IsHousedHistory
-VALUES (@thisHousingInsecureNeighborId, @IsHoused, CURRENT_DATE());
+VALUES (
+    (SELECT IF (@HousingInsecureNeighborId=0, HousingInsecureNeighborId, @HousingInsecureNeighborId)
+    FROM HousingInsecureNeighbor ORDER BY HousingInsecureNeighborId DESC LIMIT 1),
+    @IsHoused,
+    CURRENT_DATE());
 
 INSERT INTO LocationHistory
-VALUES (@thisHousingInsecureNeighborId, @LocationId, CURRENT_DATE());
+VALUES (
+    (SELECT IF (@HousingInsecureNeighborId=0, HousingInsecureNeighborId, @HousingInsecureNeighborId)
+    FROM HousingInsecureNeighbor ORDER BY HousingInsecureNeighborId DESC LIMIT 1),
+    @LocationId,
+    CURRENT_DATE());
 ";
     internal static readonly string SetHousingInsecureNeighborDisability = @"
 INSERT INTO HousingInsecureNeighborDisability
@@ -249,6 +257,24 @@ ON DUPLICATE KEY UPDATE
     EmailAddress = @EmailAddress,
     IsHoused = @IsHoused,
     Comments = @Comments,
+    OutreachTeamId = @OutreachTeamId
+";
+    internal static readonly string DeleteHousingInsecureNeighborRequest = @"
+DELETE FROM HousingInsecureNeighborRequest
+WHERE
+    HousingInsecureNeighborId = @HousingInsecureNeighborId
+        AND
+    RequestId = @RequestId
+        AND
+    OutreachTeamId = @OutreachTeamId
+";
+    internal static readonly string DeleteHousingInsecureNeighborEthnicity = @"
+DELETE FROM HousingInsecureNeighborEthnicity
+WHERE
+    HousingInsecureNeighborId = @HousingInsecureNeighborId
+        AND
+    EthnicityId = @EthnicityId
+        AND
     OutreachTeamId = @OutreachTeamId
 ";
 }

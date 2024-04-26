@@ -12,14 +12,16 @@ interface InfoCardProps
 {
     hide?: boolean;
     backgroundColor?: string;
+    border?: string;
     className?: string;
     title?: string;
     titleColor?: string;
     text?: string;
     chips?: ChipProps[]
+    elements?: JSX.Element[]
 }
 
-export function InfoCard({hide = false, backgroundColor, className, title, titleColor = 'white', text, chips}: InfoCardProps) {
+export function InfoCard({hide = false, backgroundColor, border, className, title, titleColor = 'white', text, chips, elements}: InfoCardProps) {
     const getChip = (chip: ChipProps) => (
         <Chip
             key={`${chip.label}-Chip`}
@@ -38,7 +40,11 @@ export function InfoCard({hide = false, backgroundColor, className, title, title
     return (
         <>
             {!hide ?
-            <Card style={{backgroundColor: backgroundColor}} className={className ?? ''} variant="outlined">
+            <Card
+                style={{backgroundColor: backgroundColor ?? 'inherit', border: border ?? 'inherit'}}
+                className={className ?? ''} 
+                variant="outlined"
+            >
                 {title ? <div style={{fontSize:'.8rem', color:titleColor}}>{title}</div> : null}
                 {text ? <div>{text}</div> : null}
                 {chips?.map(chip =>
@@ -50,6 +56,7 @@ export function InfoCard({hide = false, backgroundColor, className, title, title
                         getChip(chip)
                     : null
                 )}
+                {elements?.map(element => element)}
             </Card>
             : null
             }

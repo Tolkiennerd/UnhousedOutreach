@@ -290,4 +290,28 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
         await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.SetHousingInsecureNeighborTent, parameters);
     }
     #endregion
+
+    #region Delete Methods
+    public async Task DeleteHousingInsecureNeighborEthnicity(int housingInsecureNeighborId, int ethnicityId, int outreachTeamId)
+    {
+        Dictionary<string, object?> parameters = new()
+        {
+            {"@HousingInsecureNeighborId", housingInsecureNeighborId},
+            {"@EthnicityId", ethnicityId},
+            {"@OutreachTeamId", outreachTeamId}
+        };
+        await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.DeleteHousingInsecureNeighborEthnicity, parameters);
+    }
+
+    public async Task DeleteHousingInsecureNeighborRequest(int housingInsecureNeighborId, int requestId, int outreachTeamId)
+    {
+        Dictionary<string, object?> parameters = new()
+        {
+            {"@HousingInsecureNeighborId", housingInsecureNeighborId},
+            {"@RequestId", requestId},
+            {"@OutreachTeamId", outreachTeamId}
+        };
+        await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.DeleteHousingInsecureNeighborRequest, parameters);
+    }
+    #endregion
 }

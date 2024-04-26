@@ -34,8 +34,8 @@ public class LocationsController : ControllerBase
         return await repository.GetLocationsWithNeighbors(outreachTeamId);
     }
 
-    [HttpPost("location")]
-    public async Task SetLocation(Location location, [FromQuery(Name = "otid")]int outreachTeamId)
+    [HttpPut("location")]
+    public async Task SetLocation([FromBody]Location location, [FromQuery(Name = "otid")]int outreachTeamId)
     {
         await repository.SetLocation(location, outreachTeamId);
     }

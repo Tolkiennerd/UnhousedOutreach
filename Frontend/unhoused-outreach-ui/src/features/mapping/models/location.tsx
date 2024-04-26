@@ -11,7 +11,7 @@ export class Location
     longitude?: number;
     address?: string;
     city: string = '';
-    state: State = State.Undefined;
+    state: number = 0; //State = State.Undefined;
     zipCode?: string;
     isLegal?: boolean;
     arrivalDate?: Date;

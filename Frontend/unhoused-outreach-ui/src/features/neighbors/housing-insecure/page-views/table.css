@@ -1,4 +1,14 @@
-.MuiPaper-root {
+body {
+    --location-color: rgb(102, 102, 0);
+    --demographics-color: rgb(215, 104, 60);
+    --needs-color: rgb(217, 36, 36);
+    --housing-status-color: rgb(14, 3, 138);
+    --circumstances-color: purple;
+    --disability-color: rgb(174, 131, 24);
+    --clothing-color: rgb(24, 174, 104);
+}
+
+.table-container > .MuiPaper-root {
     margin-left: auto !important;
     margin-right: auto !important;
     width: 95vw !important;

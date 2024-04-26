@@ -1,6 +1,6 @@
 export enum State
 {
-    Undefined,
+    Undefined = 1,
     AL,
     AK,
     AZ,
@@ -22,6 +22,7 @@ export enum State
     LA,
     ME,
     MD,
+    MA,
     MI,
     MN,
     MS,

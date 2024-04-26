@@ -28,8 +28,8 @@ public class CaseManagersController : ControllerBase
         return await repository.GetCaseManagers(outreachTeamId);
     }
 
-    [HttpPost("case-manager")]
-    public async Task SetCaseManager(CaseManager caseManager, [FromQuery(Name = "otid")]int outreachTeamId)
+    [HttpPut("case-manager")]
+    public async Task SetCaseManager([FromBody]CaseManager caseManager, [FromQuery(Name = "otid")]int outreachTeamId)
     {
         await repository.SetCaseManager(caseManager, outreachTeamId);
     }

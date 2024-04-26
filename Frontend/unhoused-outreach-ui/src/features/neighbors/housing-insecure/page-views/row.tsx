@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
-import { TableRow, TableCell, Box, Collapse, } from '@mui/material';
+import { TableRow, TableCell, Box, Collapse, Chip, Drawer, } from '@mui/material';
 import { Edit } from '@mui/icons-material';
-import { HousingInsecureNeighbor, InfoCard } from '../../../neighbors/housing-insecure';
+import { HousingInsecureNeighbor, InfoCard, ViewEditHousingInsecureNeighbor } from '../../../neighbors/housing-insecure';
 import { LookupsContext } from '../../../../App';
 import { Lookups, getCsvList, getLookupString, getLookupValue } from '../../../lookups';
 import tentIcon from '../../../../assets/tent.png';
@@ -23,20 +23,21 @@ function Cell({ text, underText, className, onClick }: CellProps) {
     return (
         <TableCell onClick={onClick} className={className}>
             <div>{text}</div>
-            {underText ? <div style={{color: 'darkgray'}}>{underText}</div> : null}
+            {underText ? <div style={{color: 'darkgray', marginTop: '5px'}}>{underText}</div> : null}
         </TableCell>
     );
 }
 
 // FIELD FORMATTING FUNCTIONS.
-export function Row({ neighbor, onEditClick }: { neighbor: HousingInsecureNeighbor, onEditClick: (neighbor: HousingInsecureNeighbor) => void }) {
+export function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
     // GET THE DATA.
     const lookups = useContext(LookupsContext) as Lookups;
-    const [open, setOpen] = useState(false);
+    const [rowExpanded, setRowExpanded] = useState(false);
+    const [editPanelOpen, setEditPanelOpen] = useState(false);
 
     // CELL CLICK FUNCTIONS.
-    const expandRow = () => {setOpen(!open)};
-    const openEditModal = () => {onEditClick(neighbor)};
+    const expandRow = () => {setRowExpanded(!rowExpanded)};
+    const openDrawer = () => setEditPanelOpen(true);
 
     // DATA FORMATTING.
     const displayNullableBoolean = (nullableBoolean: boolean | undefined): string => {
@@ -45,12 +46,19 @@ export function Row({ neighbor, onEditClick }: { neighbor: HousingInsecureNeighb
         }
         return nullableBoolean ? 'Yes' : 'No';
     }
+    const getNumberChip = (value: number, backgroundColor: string): JSX.Element => {
+        return (
+            value ?
+                <Chip label={value} style={{backgroundColor: backgroundColor, border: 'none'}} variant="outlined" />
+            : <div>{value}</div>
+        );
+    }
 
     // CONTENT.
     return (
         <>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                <Cell text={<Edit />} className='extra-small-screen edit' onClick={openEditModal} />
+                <Cell text={<Edit />} className='extra-small-screen edit' onClick={openDrawer} />
                 <Cell text={neighbor.getFullName()} underText={neighbor.getContact()} className='extra-small-screen' onClick={expandRow} />
                 <Cell 
                     text={neighbor.location?.getLocationLink(tentIcon, lookups.locationType) ?? 'Unknown'}
@@ -64,7 +72,7 @@ export function Row({ neighbor, onEditClick }: { neighbor: HousingInsecureNeighb
                     className='small-screen'
                     onClick={expandRow} 
                 />
-                <Cell text={neighbor.requestIds.length} className='small-screen' onClick={expandRow} />
+                <Cell text={getNumberChip(neighbor.requestIds.length, 'var(--needs-color)')} className='small-screen' onClick={expandRow} />
                 <Cell text={neighbor.getAge()} className='small-screen' onClick={expandRow} />
                 <Cell text={getCsvList(neighbor.ethnicityIds, lookups.ethnicity)} className='medium-screen' onClick={expandRow} />
                 <Cell text={getLookupString(neighbor.genderId, lookups.gender)} className='medium-screen' onClick={expandRow} />
@@ -77,12 +85,12 @@ export function Row({ neighbor, onEditClick }: { neighbor: HousingInsecureNeighb
             <TableRow>
                 <TableCell className='collapsible-table-cell' />
                 <TableCell className='collapsible-table-cell' colSpan={15}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
+                    <Collapse in={rowExpanded} timeout="auto" unmountOnExit>
                         <Box className='box'>
                             <InfoCard
                                 title='Location' 
                                 hide={!neighbor.location}
-                                backgroundColor='rgb(102, 102, 0)'
+                                backgroundColor='var(--location-color)'
                                 className='box-card extra-small-screen'
                                 chips={[
                                     {
@@ -96,7 +104,7 @@ export function Row({ neighbor, onEditClick }: { neighbor: HousingInsecureNeighb
                             <InfoCard
                                 title='Housing Status' 
                                 hide={!neighbor.housingStatusId}
-                                backgroundColor='rgb(14, 3, 138)' 
+                                backgroundColor='var(--housing-status-color)' 
                                 className='box-card extra-small-screen'
                                 chips={[
                                     {label: getLookupValue(neighbor.housingStatusId, lookups.housingStatus), icon: supportServicesIcon},
@@ -107,7 +115,7 @@ export function Row({ neighbor, onEditClick }: { neighbor: HousingInsecureNeighb
                             <InfoCard
                                 title='Demographics' 
                                 hide={!neighbor.dateOfBirth && !neighbor.genderId && neighbor.ethnicityIds.length === 0}
-                                backgroundColor='rgb(215, 104, 60)' 
+                                backgroundColor='var(--demographics-color)' 
                                 className='box-card small-screen'
                                 chips={[
                                     {label: neighbor.dateOfBirth ? neighbor.getAge() : undefined},
@@ -117,7 +125,7 @@ export function Row({ neighbor, onEditClick }: { neighbor: HousingInsecureNeighb
                             />
                             <InfoCard
                                 title='Circumstances'
-                                backgroundColor='purple'
+                                backgroundColor='var(--circumstances-color)'
                                 className='box-card large-screen'
                                 chips={[
                                     {label: typeof(neighbor.isHoused)===typeof(true) ? neighbor.isHoused ? 'Housed' : 'Unhoused' : undefined},
@@ -127,9 +135,9 @@ export function Row({ neighbor, onEditClick }: { neighbor: HousingInsecureNeighb
                                 ]}
                             />
                             <InfoCard
-                                title='Requests' 
+                                title='Needs' 
                                 hide={neighbor.requestIds.length === 0}
-                                backgroundColor='rgb(217, 36, 36)' 
+                                backgroundColor='var(--needs-color)' 
                                 className='box-card'
                                 chips={neighbor.requestIds.map(requestId => {
                                     return {label: lookups.request[requestId]}
@@ -138,7 +146,7 @@ export function Row({ neighbor, onEditClick }: { neighbor: HousingInsecureNeighb
                             <InfoCard
                                 title='Disabilities'
                                 hide={neighbor.disabilityIds.length === 0}
-                                backgroundColor='rgb(174, 131, 24)'
+                                backgroundColor='var(--disability-color)'
                                 className='box-card'
                                 chips={neighbor.disabilityIds.map(disabilityId => {
                                     return {label: lookups.disability[disabilityId]}
@@ -147,7 +155,7 @@ export function Row({ neighbor, onEditClick }: { neighbor: HousingInsecureNeighb
                             <InfoCard
                                 title='Clothing'
                                 hide={!neighbor.shoeSizeId}
-                                backgroundColor='rgb(24, 174, 104)'
+                                backgroundColor='var(--clothing-color)'
                                 className='box-card'
                                 chips={[
                                     {label: getLookupValue(neighbor.shoeSizeId, lookups.shoeSize), icon: shoeIcon},
@@ -179,6 +187,10 @@ export function Row({ neighbor, onEditClick }: { neighbor: HousingInsecureNeighb
                     </Collapse>
                 </TableCell>
             </TableRow>
+
+            <Drawer open={editPanelOpen} onClose={() => setEditPanelOpen(false)} anchor='right'>
+                <ViewEditHousingInsecureNeighbor neighbor={neighbor} onClose={() => setEditPanelOpen(false)} />
+            </Drawer>
         </>
     )
 }

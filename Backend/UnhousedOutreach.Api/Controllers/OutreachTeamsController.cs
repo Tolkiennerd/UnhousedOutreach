@@ -28,7 +28,7 @@ public class OutreachTeamsController : ControllerBase
         return await repository.GetOutreachTeams();
     }
 
-    [HttpPost("outreach-team")]
+    [HttpPut("outreach-team")]
     public async Task SetOutreachTeam(OutreachTeam outreachTeam)
     {
         await repository.SetOutreachTeam(outreachTeam);

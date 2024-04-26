@@ -2,7 +2,7 @@ namespace UnhousedOutreach.Core.Mapping;
 
 public enum State
 {
-    Undefined,
+    Undefined = 1,
     AL,
     AK,
     AZ,
@@ -24,6 +24,7 @@ public enum State
     LA,
     ME,
     MD,
+    MA,
     MI,
     MN,
     MS,

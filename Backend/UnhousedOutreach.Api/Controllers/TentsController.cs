@@ -28,7 +28,7 @@ public class TentsController : ControllerBase
         return await repository.GetTents(outreachTeamId);
     }
 
-    [HttpPost("tent")]
+    [HttpPut("tent")]
     public async Task SetTent(Tent tent, [FromQuery(Name = "otid")]int outreachTeamId)
     {
         await repository.SetTent(tent, outreachTeamId);
