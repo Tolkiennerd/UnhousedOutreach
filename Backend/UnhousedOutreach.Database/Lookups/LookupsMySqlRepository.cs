@@ -1,5 +1,4 @@
 using System.Data.Common;
-using MySql.Data.MySqlClient;
 using UnhousedOutreach.Database.MySql;
 
 namespace UnhousedOutreach.Database.Lookups;

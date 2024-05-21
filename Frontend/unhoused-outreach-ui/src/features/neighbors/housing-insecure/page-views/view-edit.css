@@ -5,10 +5,7 @@
 
 .MuiDrawer-root > .MuiPaper-root {
     width: min-content;
-}
-
-.MuiDrawer-root > .MuiPaper-root > .MuiBox-root {
-    min-height: 100%;
+    background-color: #223;
 }
 
 .MuiInputLabel-root {

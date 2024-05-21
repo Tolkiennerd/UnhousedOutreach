@@ -1,4 +1,4 @@
-import { Box, FormControl, FormControlLabel, InputLabel, MenuItem, MenuList, Paper, Select, Switch, TextField, Typography } from "@mui/material";
+import { Box, Checkbox, FormControl, FormControlLabel, InputLabel, ListItemText, MenuItem, MenuList, Paper, Select, Switch, TextField, Typography } from "@mui/material";
 import { HousingInsecureNeighbor } from "../models/housing-insecure-neighbor";
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -80,8 +80,11 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
             .catch(error => console.log(error));
     }
     const setIds = (event: any, ids: number[], setMethod: any, deleteMethod: any): number[] => {
+        console.log(event);
+        console.log(event.explicitOriginalTarget.dataset.value);
         const selectedId = Number(event.explicitOriginalTarget.dataset.value);
         const selectedIdIndexInExistingList = ids.indexOf(selectedId);
+        console.log(selectedId);
         if (selectedIdIndexInExistingList === -1) {
             ids.push(selectedId);
             setMethod(neighbor.housingInsecureNeighborId, selectedId);
@@ -177,7 +180,14 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
                     <div className="edit-field">
                         <h3 style={{textAlign: 'left'}}>Demographics</h3>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker value={dayjs(neighbor.dateOfBirth)} label="Date of Birth" />
+                            <DatePicker 
+                                label="Date of Birth" 
+                                defaultValue={dayjs(neighbor.dateOfBirth)}
+                                onChange={(event) => {
+                                    neighbor.dateOfBirth = event?.toDate();
+                                    updateNeighborInDb(neighbor);
+                                }}
+                            />
                         </LocalizationProvider>
                         <div className='dropdown'>
                             <FormControl fullWidth id='gender-form'>
@@ -200,13 +210,22 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
                                 <Select
                                     label="Ethnicity"
                                     multiple
-                                    value={neighbor.ethnicityIds}
-                                    // defaultValue={neighbor.ethnicityIds}
+                                    defaultValue={neighbor.ethnicityIds}
+                                    renderValue={(ids) => ids.map(id => lookups.ethnicity[Number(id)]).join(', ')}
                                     onChange={(event) => neighbor.ethnicityIds = setIds(event, neighbor.ethnicityIds, setEthnicity, deleteEthnicity)}
                                     onBlur={() => updateNeighborInDb(neighbor)}
                                 >
                                     {Object.keys(lookups.ethnicity).map(id => 
-                                        <MenuItem key={`Ethnicity-${id}`} value={id}>{lookups.ethnicity[Number(id)]}</MenuItem>
+                                        <MenuItem key={`Ethnicity-${id}`} value={id}>
+                                            {/* <FormControlLabel
+                                                control={<Checkbox defaultChecked={neighbor.ethnicityIds.includes(Number(id))} />}
+                                                label={lookups.ethnicity[Number(id)]}
+                                            /> */}
+                                            {/* <Checkbox id={`ethnicity-checkbox-${id}`} defaultChecked={neighbor.ethnicityIds.includes(Number(id))} />
+                                            <div onClick={() => (document.getElementById(`ethnicity-checkbox-${id}`) as HTMLInputElement).checked = true}>{lookups.ethnicity[Number(id)]}</div> */}
+                                            {/* TODO: clean this up and use checkboxes */}
+                                            {lookups.ethnicity[Number(id)]}
+                                        </MenuItem>
                                     )}
                                 </Select>
                             </FormControl>
