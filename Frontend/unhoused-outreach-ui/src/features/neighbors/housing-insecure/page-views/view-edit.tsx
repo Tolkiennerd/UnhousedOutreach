@@ -221,10 +221,12 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
                                                 control={<Checkbox defaultChecked={neighbor.ethnicityIds.includes(Number(id))} />}
                                                 label={lookups.ethnicity[Number(id)]}
                                             /> */}
-                                            {/* <Checkbox id={`ethnicity-checkbox-${id}`} defaultChecked={neighbor.ethnicityIds.includes(Number(id))} />
-                                            <div onClick={() => (document.getElementById(`ethnicity-checkbox-${id}`) as HTMLInputElement).checked = true}>{lookups.ethnicity[Number(id)]}</div> */}
+                                            <Checkbox id={`ethnicity-checkbox-${id}`} defaultChecked={neighbor.ethnicityIds.includes(Number(id))} />
+                                            <div onClick={() => (document.getElementById(`ethnicity-checkbox-${id}`) as HTMLInputElement).checked = !(document.getElementById(`ethnicity-checkbox-${id}`) as HTMLInputElement).checked}>
+                                                {lookups.ethnicity[Number(id)]}
+                                            </div>
                                             {/* TODO: clean this up and use checkboxes */}
-                                            {lookups.ethnicity[Number(id)]}
+                                            {/* {lookups.ethnicity[Number(id)]} */}
                                         </MenuItem>
                                     )}
                                 </Select>
