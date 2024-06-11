@@ -25,7 +25,7 @@ export function HousingInsecureNeighborsAccordionView({ housingInsecureNeighbors
                             <div style={{flex:1}}>{neighbor.getAge()}</div>
                             <div style={{flex:1}}>{neighbor.getContact()}</div>
                             <div style={{flex:1}}>{neighbor.location?.getLocationLink(tentIcon, lookups.locationType) ?? 'Unknown'}</div>
-                            <div style={{flex:1}}>Requests: {neighbor.requestIds.length}</div>
+                            <div style={{flex:1}}>Needs: {neighbor.needIds.length}</div>
                         </div>
                     </AccordionSummary>
                     <AccordionDetails>
@@ -41,7 +41,7 @@ export function HousingInsecureNeighborsAccordionView({ housingInsecureNeighbors
                                 Housing Status: {neighbor.housingStatusId ? lookups.housingStatus[neighbor.housingStatusId] : 'Unknown'}
                             </div>
                             <div style={{flex: 1}}>
-                                Requests: {getCsvList(neighbor.requestIds, lookups.request)}
+                                Needs: {getCsvList(neighbor.needIds, lookups.need)}
                             </div>
                             <div style={{flex: 1}}>
                                 Disabilities: {getCsvList(neighbor.disabilityIds, lookups.disability)}

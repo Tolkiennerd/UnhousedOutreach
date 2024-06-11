@@ -51,9 +51,9 @@ export function OutreachMapDefaultView({startingLatitude, startingLongitude}: Ma
                                         )}
                                     </div>
                                     <div >
-                                        Requests:
-                                        {housingInsecureNeighbor.requestIds.map((requestId) => 
-                                            <span>{lookups.request[requestId]}</span>
+                                        Needs:
+                                        {housingInsecureNeighbor.needIds.map((needsId) => 
+                                            <span>{lookups.need[needsId]}</span>
                                         )}
                                     </div>
                                 </div>

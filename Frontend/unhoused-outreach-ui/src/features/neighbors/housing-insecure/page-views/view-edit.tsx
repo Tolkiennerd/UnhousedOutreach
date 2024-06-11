@@ -316,13 +316,13 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
                                 <Select 
                                     label="Needs"
                                     multiple
-                                    defaultValue={neighbor.requestIds}
-                                    onChange={(event) => neighbor.requestIds = event.target.value as number[]}
+                                    defaultValue={neighbor.needIds} 
+                                    onChange={(event) => neighbor.needIds = event.target.value as number[]}
                                     onBlur={() => updateNeighborInDb(neighbor)}
                                 >
-                                    {Object.keys(lookups.request).map(id => 
-                                        <MenuItem key={`Needs-${id}`} value={id}>{lookups.request[Number(id)]}</MenuItem>
-                                    ).sort((a, b) => lookups.request[Number(a.props.value)].localeCompare(lookups.request[Number(b.props.value)]))}
+                                    {Object.keys(lookups.need).map(id => 
+                                        <MenuItem key={`Needs-${id}`} value={id}>{lookups.need[Number(id)]}</MenuItem>
+                                    ).sort((a, b) => lookups.need[Number(a.props.value)].localeCompare(lookups.need[Number(b.props.value)]))}
                                 </Select>
                             </FormControl>
                         </div> 

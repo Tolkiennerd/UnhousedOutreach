@@ -154,8 +154,8 @@ SELECT
 FROM HousingInsecureNeighborFamilyMember
 WHERE OutreachTeamId = @OutreachTeamId;
 
-SELECT HousingInsecureNeighborId, RequestId
-FROM HousingInsecureNeighborRequest
+SELECT HousingInsecureNeighborId, NeedId
+FROM HousingInsecureNeighborNeed
 WHERE OutreachTeamId = @OutreachTeamId;
 
 SELECT HousingInsecureNeighborId, SkillId
