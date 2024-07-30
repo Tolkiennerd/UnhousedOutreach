@@ -140,15 +140,15 @@ public class LookupsController : ControllerBase
     }
     #endregion
 
-    #region Need
-    [HttpGet("need")]
-    public async Task<Dictionary<int, string>> GetNeedLookup([FromQuery(Name = "otid")]int outreachTeamId)
+    #region Needs
+    [HttpGet("needs")]
+    public async Task<Dictionary<int, string>> GetNeedsLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
         return await repository.GetNeeds(outreachTeamId);
     }
 
-    [HttpPost("need")]
-    public async Task SetNeed([FromBody]KeyValuePair<int?, string> need, [FromQuery(Name = "otid")]int outreachTeamId)
+    [HttpPost("needs")]
+    public async Task SetNeeds([FromBody]KeyValuePair<int?, string> need, [FromQuery(Name = "otid")]int outreachTeamId)
     {
         await repository.SetNeed(need.Key, need.Value, outreachTeamId);
     }
