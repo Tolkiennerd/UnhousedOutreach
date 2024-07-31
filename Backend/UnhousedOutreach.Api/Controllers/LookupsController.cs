@@ -147,8 +147,8 @@ public class LookupsController : ControllerBase
         return await repository.GetNeeds(outreachTeamId);
     }
 
-    [HttpPost("needs")]
-    public async Task SetNeeds([FromBody]KeyValuePair<int?, string> need, [FromQuery(Name = "otid")]int outreachTeamId)
+    [HttpPost("need")]
+    public async Task SetNeed([FromBody]KeyValuePair<int?, string> need, [FromQuery(Name = "otid")]int outreachTeamId)
     {
         await repository.SetNeed(need.Key, need.Value, outreachTeamId);
     }
