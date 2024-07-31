@@ -9,7 +9,7 @@ export class HousingInsecureNeighbor extends Neighbor
     ethnicityIds: number[] = [];
     disabilityIds: number[] = [];
     familyMembers: FamilyMember[] = [];
-    requestIds: number[] = [];
+    needIds: number[] = [];
     skillIds: number[] = [];
     housingStatusId?: number;
     isHoused?: boolean;

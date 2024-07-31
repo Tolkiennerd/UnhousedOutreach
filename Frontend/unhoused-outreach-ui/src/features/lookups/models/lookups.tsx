@@ -8,7 +8,7 @@ export interface Lookups
   housingStatus: Record<number, string>;
   locationType: Record<number, string>;
   pantsSize: Record<number, string>;
-  request: Record<number, string>;
+  need: Record<number, string>;
   shirtSize: Record<number, string>;
   shoeSize: Record<number, string>;
   skill: Record<number, string>;

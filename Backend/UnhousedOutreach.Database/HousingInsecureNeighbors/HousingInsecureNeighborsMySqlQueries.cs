@@ -93,8 +93,8 @@ SELECT
 FROM HousingInsecureNeighborFamilyMember
 WHERE OutreachTeamId = @OutreachTeamId;
 
-SELECT HousingInsecureNeighborId, RequestId
-FROM HousingInsecureNeighborRequest
+SELECT HousingInsecureNeighborId, NeedId
+FROM HousingInsecureNeighborNeed
 WHERE OutreachTeamId = @OutreachTeamId;
 
 SELECT HousingInsecureNeighborId, SkillId
@@ -217,9 +217,9 @@ VALUES (@HousingInsecureNeighborId, @DisabilityId, @OutreachTeamId)
 INSERT INTO HousingInsecureNeighborEthnicity
 VALUES (@HousingInsecureNeighborId, @EthnicityId, @OutreachTeamId)
 ";
-    internal static readonly string SetHousingInsecureNeighborRequest = @"
-INSERT INTO HousingInsecureNeighborRequest
-VALUES (@HousingInsecureNeighborId, @RequestId, @OutreachTeamId)
+    internal static readonly string SetHousingInsecureNeighborNeed = @"
+INSERT INTO HousingInsecureNeighborNeed
+VALUES (@HousingInsecureNeighborId, @NeedId, @OutreachTeamId)
 ";
     internal static readonly string SetHousingInsecureNeighborSkill = @"
 INSERT INTO HousingInsecureNeighborSkill
@@ -259,12 +259,12 @@ ON DUPLICATE KEY UPDATE
     Comments = @Comments,
     OutreachTeamId = @OutreachTeamId
 ";
-    internal static readonly string DeleteHousingInsecureNeighborRequest = @"
-DELETE FROM HousingInsecureNeighborRequest
+    internal static readonly string DeleteHousingInsecureNeighborNeed = @"
+DELETE FROM HousingInsecureNeighborNeed
 WHERE
     HousingInsecureNeighborId = @HousingInsecureNeighborId
         AND
-    RequestId = @RequestId
+    NeedId = @NeedId
         AND
     OutreachTeamId = @OutreachTeamId
 ";

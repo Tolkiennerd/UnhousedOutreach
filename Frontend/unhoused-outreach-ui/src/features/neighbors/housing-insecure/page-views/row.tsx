@@ -72,7 +72,7 @@ export function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
                     className='small-screen'
                     onClick={expandRow} 
                 />
-                <Cell text={getNumberChip(neighbor.requestIds.length, 'var(--needs-color)')} className='small-screen' onClick={expandRow} />
+                <Cell text={getNumberChip(neighbor.needIds.length, 'var(--needs-color)')} className='small-screen' onClick={expandRow} />
                 <Cell text={neighbor.getAge()} className='small-screen' onClick={expandRow} />
                 <Cell text={getCsvList(neighbor.ethnicityIds, lookups.ethnicity)} className='medium-screen' onClick={expandRow} />
                 <Cell text={getLookupString(neighbor.genderId, lookups.gender)} className='medium-screen' onClick={expandRow} />
@@ -136,11 +136,11 @@ export function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
                             />
                             <InfoCard
                                 title='Needs' 
-                                hide={neighbor.requestIds.length === 0}
+                                hide={neighbor.needIds.length === 0}
                                 backgroundColor='var(--needs-color)' 
                                 className='box-card'
-                                chips={neighbor.requestIds.map(requestId => {
-                                    return {label: lookups.request[requestId]}
+                                chips={neighbor.needIds.map(needId => {
+                                    return {label: lookups.need[needId]}
                                 })}
                             />
                             <InfoCard
