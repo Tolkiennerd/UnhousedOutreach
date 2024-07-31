@@ -8,20 +8,15 @@ namespace UnhousedOutreach.Api;
 [ApiController]
 public class CaseManagersController : ControllerBase
 {
-    #region Private Fields
     private readonly CaseManagersMySqlRepository repository;
-    #endregion
 
-    #region Constructor
     public CaseManagersController(IConfiguration configuration)
     {
         var connectionStrings = configuration.GetSection("ConnectionStrings").Get<ConnectionStrings>();
         var unhousedOutreachConnectionString = connectionStrings?.UnhousedOutreachConnectionString ?? string.Empty;
         repository = new(unhousedOutreachConnectionString);
     }
-    #endregion
 
-    #region Public Methods
     [HttpGet("case-managers")]
     public async Task<IEnumerable<CaseManager>> GetCaseManagers([FromQuery(Name = "otid")]int outreachTeamId)
     {
@@ -33,5 +28,4 @@ public class CaseManagersController : ControllerBase
     {
         await repository.SetCaseManager(caseManager, outreachTeamId);
     }
-    #endregion
 }

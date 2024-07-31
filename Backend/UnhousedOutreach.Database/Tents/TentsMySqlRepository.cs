@@ -6,7 +6,6 @@ namespace UnhousedOutreach.Database.Tents;
 
 public class TentsMySqlRepository(string connectionString) : Repository(connectionString)
 {
-    #region Get Methods
     public async Task<IEnumerable<Tent>> GetTents(int outreachTeamId)
     {
         // GET TENTS.
@@ -40,9 +39,7 @@ public class TentsMySqlRepository(string connectionString) : Repository(connecti
         }
         return tents.AsEnumerable();
     }
-    #endregion
-
-    #region Set Methods
+    
     public async Task SetTent(Tent tent, int outreachTeamId)
     {
         Dictionary<string, object?> parameters = new()
@@ -58,5 +55,4 @@ public class TentsMySqlRepository(string connectionString) : Repository(connecti
         };
         await ExecuteNonQuery(TentsMySqlQueries.SetTent, parameters);
     }
-    #endregion
 }

@@ -141,3 +141,7 @@ textarea {
 .MuiButtonBase-root.MuiMenuItem-root.MuiMenuItem-gutters.Mui-selected.MuiMenuItem-root.MuiMenuItem-gutters.Mui-selected {
     background-color: rgba(0, 120, 255, 0.25);
 }
+
+.MuiButtonBase-root.MuiCheckbox-root.MuiCheckbox-colorPrimary.MuiCheckbox-sizeMedium.PrivateSwitchBase-root.MuiCheckbox-root {
+    padding: 0 9px 0 0;
+}

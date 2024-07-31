@@ -6,7 +6,6 @@ namespace UnhousedOutreach.Database.HousingInsecureNeighbors;
 
 public class HousingInsecureNeighborsMySqlRepository(string connectionString) : Repository(connectionString)
 {
-    #region Get Methods
     public async Task<IEnumerable<HousingInsecureNeighbor>> GetHousingInsecureNeighbors(int outreachTeamId)
     {
         // GET NEIGHBORS.
@@ -176,9 +175,7 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
         var housingInsecureNeighbors = idsToNeighborsMap.Values.AsEnumerable();
         return housingInsecureNeighbors;
     }
-    #endregion
-
-    #region Set Methods
+    
     public async Task SetHousingInsecureNeighbor(HousingInsecureNeighbor housingInsecureNeighbor, int outreachTeamId)
     {
         Dictionary<string, object?> parameters = new()
@@ -289,9 +286,7 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
         };
         await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.SetHousingInsecureNeighborTent, parameters);
     }
-    #endregion
-
-    #region Delete Methods
+    
     public async Task DeleteHousingInsecureNeighborEthnicity(int housingInsecureNeighborId, int ethnicityId, int outreachTeamId)
     {
         Dictionary<string, object?> parameters = new()
@@ -313,5 +308,4 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
         };
         await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.DeleteHousingInsecureNeighborRequest, parameters);
     }
-    #endregion
 }

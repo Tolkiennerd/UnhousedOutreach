@@ -5,7 +5,6 @@ namespace UnhousedOutreach.Database.Lookups;
 
 public class LookupsMySqlRepository(string connectionString) : Repository(connectionString)
 {
-    #region Get Methods
     public async Task<Dictionary<int, string>> GetCushionConditions(int outreachTeamId)
     {
         return await GetLookup(LookupsMySqlQueries.GetCushionConditions, outreachTeamId);
@@ -119,9 +118,7 @@ public class LookupsMySqlRepository(string connectionString) : Repository(connec
         reader.NextResult();
         return lookups;
     }
-#endregion
-
-    #region Set Methods
+    
     public async Task SetCushionCondition(int? id, string value, int outreachTeamId)
     {
         await SetLookup(LookupsMySqlQueries.SetCushionCondition, "@CushionConditionId", "@CushionCondition", id, value, outreachTeamId);
@@ -196,9 +193,7 @@ public class LookupsMySqlRepository(string connectionString) : Repository(connec
     {
         await SetLookup(LookupsMySqlQueries.SetTentUsage, "@TentUsageId", "@TentUsage", id, value, outreachTeamId);
     }
-    #endregion
-
-    #region Private Methods
+    
     private async Task<Dictionary<int, string>> GetLookup(string mySqlQuery, int outreachTeamId)
     {
         // GET CUSHION CONDITIONS.
@@ -233,5 +228,4 @@ public class LookupsMySqlRepository(string connectionString) : Repository(connec
         };
         await ExecuteNonQuery(mySqlStatement, parameters);
     }
-    #endregion
 }

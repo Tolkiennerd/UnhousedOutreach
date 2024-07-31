@@ -1,4 +1,3 @@
-using UnhousedOutreach.Core.Mapping;
 using UnhousedOutreach.Core.SiteManagement;
 using UnhousedOutreach.Database.MySql;
 
@@ -6,7 +5,6 @@ namespace UnhousedOutreach.Database.OutreachTeams;
 
 public class OutreachTeamsMySqlRepository(string connectionString) : Repository(connectionString)
 {
-    #region Get Methods
     public async Task<IEnumerable<OutreachTeam>> GetOutreachTeams()
     {
         // GET NEIGHBORS.
@@ -22,9 +20,7 @@ public class OutreachTeamsMySqlRepository(string connectionString) : Repository(
         }
         return outreachTeams.AsEnumerable();
     }
-    #endregion
-
-    #region Set Methods
+    
     public async Task SetOutreachTeam(OutreachTeam outreachTeam)
     {
         Dictionary<string, object?> parameters = new()
@@ -34,5 +30,4 @@ public class OutreachTeamsMySqlRepository(string connectionString) : Repository(
         };
         await ExecuteNonQuery(OutreachTeamsMySqlQueries.SetOutreachTeam, parameters);
     }
-    #endregion
 }

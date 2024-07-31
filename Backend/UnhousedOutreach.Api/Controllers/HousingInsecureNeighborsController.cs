@@ -8,20 +8,15 @@ namespace UnhousedOutreach.Api;
 [ApiController]
 public class HousingInsecureNeighborsController : ControllerBase
 {
-    #region Private Fields
     private readonly HousingInsecureNeighborsMySqlRepository repository;
-    #endregion
 
-    #region Constructor
     public HousingInsecureNeighborsController(IConfiguration configuration)
     {
         var connectionStrings = configuration.GetSection("ConnectionStrings").Get<ConnectionStrings>();
         var unhousedOutreachConnectionString = connectionStrings?.UnhousedOutreachConnectionString ?? string.Empty;
         repository = new(unhousedOutreachConnectionString);
     }
-    #endregion
 
-    #region Public Methods
     [HttpGet("housing-insecure-neighbors")]
     public async Task<IEnumerable<HousingInsecureNeighbor>> GetHousingInsecureNeighbors(
         [FromQuery(Name = "otid")]int outreachTeamId)
@@ -98,5 +93,4 @@ public class HousingInsecureNeighborsController : ControllerBase
     {
         await repository.SetHousingInsecureNeighborTent(housingInsecureNeighborId, tentId, outreachTeamId);
     }  
-    #endregion
 }

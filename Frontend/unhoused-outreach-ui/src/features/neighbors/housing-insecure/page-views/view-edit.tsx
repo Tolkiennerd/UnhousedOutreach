@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControl, FormControlLabel, InputLabel, ListItemText, MenuItem, MenuList, Paper, Select, Switch, TextField, Typography } from "@mui/material";
+import { Box, FormControl, FormControlLabel, InputLabel, MenuItem, MenuList, Paper, Select, Switch, TextField, Typography } from "@mui/material";
 import { HousingInsecureNeighbor } from "../models/housing-insecure-neighbor";
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -7,12 +7,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import './view-edit.css';
 import { useContext, useState } from "react";
-import { LookupsContext } from "../../../../App";
-import { Lookups } from "../../../lookups";
+import { LookupsContext } from "App";
+import { Lookups } from "features/lookups";
 import dayjs from "dayjs";
-import { Location, State } from "../../../mapping";
+import { Location, State } from "features/mapping";
 import axios from 'axios';
-import { CaseManager } from "../../../support-services";
+import { CaseManager } from "features/support-services";
 
 
 export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor: HousingInsecureNeighbor, onClose: () => void}) {
@@ -44,6 +44,8 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
         setShowComments(false);
     }
 
+    const [selectedEthnicities, setSelectedEthnicities] = useState(neighbor.ethnicityIds)
+
     const updateNeighborInDb = (neighbor: HousingInsecureNeighbor) => {
         // TODO: Get OTID from user data.
         axios
@@ -62,8 +64,11 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
             .put(`${process.env.REACT_APP_API_URL}/case-manager?otid=1`, caseManager)
             .catch(error => console.log(error));
     };
-    const setEthnicity = (neighborId: number, ethnicityId: number) => {
+    const updateEthnicityInDb = (neighborId: number, ethnicityId: number) => {
         // TODO: Get OTID from user data.
+        if (!ethnicityId || Number.isNaN(ethnicityId)) {
+            return;
+        }
         axios
             .put(`${process.env.REACT_APP_API_URL}/housing-insecure-neighbor-ethnicity?nid=${neighborId}&otid=1`, ethnicityId, {
                 headers: {
@@ -73,24 +78,31 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
             })
             .catch(error => console.log(error));
     }
-    const deleteEthnicity = (neighborId: number, ethnicityId: number) => {
+    const deleteEthnicityFromDb = (neighborId: number, ethnicityId: number) => {
         // TODO: Get OTID from user data.
         axios
             .delete(`${process.env.REACT_APP_API_URL}/housing-insecure-neighbor-ethnicity?id=${ethnicityId}&nid=${neighborId}&otid=1`)
             .catch(error => console.log(error));
     }
-    const setIds = (event: any, ids: number[], setMethod: any, deleteMethod: any): number[] => {
-        console.log(event);
-        console.log(event.explicitOriginalTarget.dataset.value);
-        const selectedId = Number(event.explicitOriginalTarget.dataset.value);
+    // const setIds = (event: any, ids: number[], setMethod: any, deleteMethod: any): number[] => {
+    const setIds = (event: any, ids: number[], setIdsMethod: any, setMethod: any, deleteMethod: any): number[] => {
+        const target = event.explicitOriginalTarget;
+        const dataForCurrentElement = Number(target.dataset.value);
+        const dataForParentElement = Number(target.parentElement.dataset.value);
+        const dataForGrandparentElement = Number(target.parentElement.parentElement.dataset.value);
+        const selectedId = !Number.isNaN(dataForCurrentElement) ?
+            dataForCurrentElement :
+            !Number.isNaN(dataForParentElement) ? 
+                dataForParentElement : 
+                dataForGrandparentElement;
         const selectedIdIndexInExistingList = ids.indexOf(selectedId);
-        console.log(selectedId);
         if (selectedIdIndexInExistingList === -1) {
-            ids.push(selectedId);
+            setIdsMethod(...ids, selectedId);
             setMethod(neighbor.housingInsecureNeighborId, selectedId);
         }
         else {
-            ids.splice(selectedIdIndexInExistingList, 1);
+            const removedIds = ids.splice(selectedIdIndexInExistingList, 1);
+            setIdsMethod(removedIds);
             deleteMethod(neighbor.housingInsecureNeighborId, selectedId);
         }
         return ids;
@@ -210,23 +222,14 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
                                 <Select
                                     label="Ethnicity"
                                     multiple
-                                    defaultValue={neighbor.ethnicityIds}
+                                    // defaultValue={neighbor.ethnicityIds}
+                                    value={selectedEthnicities}
                                     renderValue={(ids) => ids.map(id => lookups.ethnicity[Number(id)]).join(', ')}
-                                    onChange={(event) => neighbor.ethnicityIds = setIds(event, neighbor.ethnicityIds, setEthnicity, deleteEthnicity)}
-                                    onBlur={() => updateNeighborInDb(neighbor)}
+                                    onChange={(event) => neighbor.ethnicityIds = setIds(event, selectedEthnicities, setSelectedEthnicities, updateEthnicityInDb, deleteEthnicityFromDb)}
                                 >
-                                    {Object.keys(lookups.ethnicity).map(id => 
+                                    {Object.keys(lookups.ethnicity).map(id =>
                                         <MenuItem key={`Ethnicity-${id}`} value={id}>
-                                            {/* <FormControlLabel
-                                                control={<Checkbox defaultChecked={neighbor.ethnicityIds.includes(Number(id))} />}
-                                                label={lookups.ethnicity[Number(id)]}
-                                            /> */}
-                                            <Checkbox id={`ethnicity-checkbox-${id}`} defaultChecked={neighbor.ethnicityIds.includes(Number(id))} />
-                                            <div onClick={() => (document.getElementById(`ethnicity-checkbox-${id}`) as HTMLInputElement).checked = !(document.getElementById(`ethnicity-checkbox-${id}`) as HTMLInputElement).checked}>
-                                                {lookups.ethnicity[Number(id)]}
-                                            </div>
-                                            {/* TODO: clean this up and use checkboxes */}
-                                            {/* {lookups.ethnicity[Number(id)]} */}
+                                            {lookups.ethnicity[Number(id)]}
                                         </MenuItem>
                                     )}
                                 </Select>

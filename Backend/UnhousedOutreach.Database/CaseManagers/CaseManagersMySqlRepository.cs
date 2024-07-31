@@ -5,7 +5,6 @@ namespace UnhousedOutreach.Database.CaseManagers;
 
 public class CaseManagersMySqlRepository(string connectionString) : Repository(connectionString)
 {
-    #region Get Methods
     public async Task<IEnumerable<CaseManager>> GetCaseManagers(int outreachTeamId)
     {
         // GET NEIGHBORS.
@@ -33,9 +32,7 @@ public class CaseManagersMySqlRepository(string connectionString) : Repository(c
         }
         return caseManagers.AsEnumerable();
     }
-    #endregion
-
-    #region Set Methods
+    
     public async Task SetCaseManager(CaseManager caseManager, int outreachTeamId)
     {
         Dictionary<string, object?> parameters = new()
@@ -53,5 +50,4 @@ public class CaseManagersMySqlRepository(string connectionString) : Repository(c
         };
         await ExecuteNonQuery(CaseManagersMySqlQueries.SetCaseManager, parameters);
     }
-    #endregion
 }
