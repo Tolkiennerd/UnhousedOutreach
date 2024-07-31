@@ -45,9 +45,9 @@ public class LookupsMySqlRepository(string connectionString) : Repository(connec
         return await GetLookup(LookupsMySqlQueries.GetPantsSizes, outreachTeamId);
     }
 
-    public async Task<Dictionary<int, string>> GetRequests(int outreachTeamId)
+    public async Task<Dictionary<int, string>> GetNeeds(int outreachTeamId)
     {
-        return await GetLookup(LookupsMySqlQueries.GetRequests, outreachTeamId);
+        return await GetLookup(LookupsMySqlQueries.GetNeeds, outreachTeamId);
     }
 
     public async Task<Dictionary<int, string>> GetShirtSizes(int outreachTeamId)
@@ -102,7 +102,7 @@ public class LookupsMySqlRepository(string connectionString) : Repository(connec
         reader.NextResult();
         lookups.PantsSize = GetLookupFromReader(reader);
         reader.NextResult();
-        lookups.Request = GetLookupFromReader(reader);
+        lookups.Need = GetLookupFromReader(reader);
         reader.NextResult();
         lookups.ShirtSize = GetLookupFromReader(reader);
         reader.NextResult();
@@ -159,9 +159,9 @@ public class LookupsMySqlRepository(string connectionString) : Repository(connec
         await SetLookup(LookupsMySqlQueries.SetPantsSize, "@PantsSizeId", "@PantsSize", id, value, outreachTeamId);
     }
 
-    public async Task SetRequest(int? id, string value, int outreachTeamId)
+    public async Task SetNeed(int? id, string value, int outreachTeamId)
     {
-        await SetLookup(LookupsMySqlQueries.SetRequest, "@RequestId", "@Request", id, value, outreachTeamId);
+        await SetLookup(LookupsMySqlQueries.SetNeed, "@NeedId", "@Need", id, value, outreachTeamId);
     }
 
     public async Task SetShirtSize(int? id, string value, int outreachTeamId)

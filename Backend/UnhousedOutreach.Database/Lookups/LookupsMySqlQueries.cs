@@ -10,7 +10,7 @@ internal static class LookupsMySqlQueries
     internal static readonly string GetHousingStatuses = "SELECT HousingStatusId, HousingStatus FROM HousingStatus WHERE OutreachTeamId=@OutreachTeamId";
     internal static readonly string GetLocationTypes = "SELECT LocationTypeId, LocationType FROM LocationType WHERE OutreachTeamId=@OutreachTeamId";
     internal static readonly string GetPantsSizes = "SELECT PantsSizeId, PantsSize FROM PantsSize WHERE OutreachTeamId=@OutreachTeamId";
-    internal static readonly string GetRequests = "SELECT RequestId, Request FROM Request WHERE OutreachTeamId=@OutreachTeamId";
+    internal static readonly string GetNeeds = "SELECT NeedId, Need FROM Need WHERE OutreachTeamId=@OutreachTeamId";
     internal static readonly string GetShirtSizes = "SELECT ShirtSizeId, ShirtSize FROM ShirtSize WHERE OutreachTeamId=@OutreachTeamId";
     internal static readonly string GetShoeSizes = "SELECT ShoeSizeId, ShoeSize FROM ShoeSize WHERE OutreachTeamId=@OutreachTeamId";
     internal static readonly string GetSkills = "SELECT SkillId, Skill FROM Skill WHERE OutreachTeamId=@OutreachTeamId";
@@ -26,7 +26,7 @@ internal static class LookupsMySqlQueries
         GetHousingStatuses,
         GetLocationTypes,
         GetPantsSizes,
-        GetRequests,
+        GetNeeds,
         GetShirtSizes,
         GetShoeSizes,
         GetSkills,
@@ -90,12 +90,12 @@ ON DUPLICATE KEY UPDATE
     PantsSizeId = @PantsSizeId,
     PantsSize = @PantsSize,
     OutreachTeamId = @OutreachTeamId";
-    internal static readonly string SetRequest = @"
-INSERT INTO Request
-VALUES (@RequestId, @Request, @OutreachTeamId)
+    internal static readonly string SetNeed = @"
+INSERT INTO Need
+VALUES (@NeedId, @Need, @OutreachTeamId)
 ON DUPLICATE KEY UPDATE
-    RequestId = @RequestId,
-    Request = @Request,
+    NeedId = @NeedId,
+    Need = @Need,
     OutreachTeamId = @OutreachTeamId";
     internal static readonly string SetShirtSize = @"
 INSERT INTO ShirtSize

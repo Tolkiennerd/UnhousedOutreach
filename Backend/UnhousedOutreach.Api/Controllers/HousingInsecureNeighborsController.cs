@@ -67,22 +67,22 @@ public class HousingInsecureNeighborsController : ControllerBase
         await repository.SetHousingInsecureNeighborFamilyMember(familyMember, outreachTeamId);
     }
 
-    [HttpPut("housing-insecure-neighbor-request")]
-    public async Task SetHousingInsecureNeighborRequest(
-        [FromBody]int requestId, 
+    [HttpPut("housing-insecure-neighbor-need")]
+    public async Task SetHousingInsecureNeighborNeed(
+        [FromBody]int needId, 
         [FromQuery(Name = "nid")]int housingInsecureNeighborId, 
         [FromQuery(Name = "otid")]int outreachTeamId)
     {
-        await repository.SetHousingInsecureNeighborRequest(housingInsecureNeighborId, requestId, outreachTeamId);
+        await repository.SetHousingInsecureNeighborNeed(housingInsecureNeighborId, needId, outreachTeamId);
     }
 
-    [HttpDelete("housing-insecure-neighbor-request")]
-    public async Task DeleteHousingInsecureNeighborRequest(
-        [FromQuery(Name = "id")]int requestId, 
+    [HttpDelete("housing-insecure-neighbor-need")]
+    public async Task DeleteHousingInsecureNeighborNeed(
+        [FromQuery(Name = "id")]int needId, 
         [FromQuery(Name = "nid")]int housingInsecureNeighborId, 
         [FromQuery(Name = "otid")]int outreachTeamId)
     {
-        await repository.DeleteHousingInsecureNeighborRequest(housingInsecureNeighborId, requestId, outreachTeamId);
+        await repository.DeleteHousingInsecureNeighborNeed(housingInsecureNeighborId, needId, outreachTeamId);
     }
 
     [HttpPut("housing-insecure-neighbor-tent")]

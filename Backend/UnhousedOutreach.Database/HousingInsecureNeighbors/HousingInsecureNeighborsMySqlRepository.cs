@@ -125,13 +125,13 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
             });
         }
 
-        // GET REQUESTS.
+        // GET NEEDS.
         reader.NextResult();
         while (reader.Read())
         {
             var housingInsecureNeighborId = (int)reader["HousingInsecureNeighborId"];
-            var requestId = (int)reader["RequestId"];
-            idsToNeighborsMap[housingInsecureNeighborId].RequestIds.Add(requestId);
+            var needId = (int)reader["NeedId"];
+            idsToNeighborsMap[housingInsecureNeighborId].NeedIds.Add(needId);
         }
 
         // GET SKILLS.
@@ -254,15 +254,15 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
         await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.SetHousingInsecureNeighborFamilyMember, parameters);
     }
 
-    public async Task SetHousingInsecureNeighborRequest(int housingInsecureNeighborId, int requestId, int outreachTeamId)
+    public async Task SetHousingInsecureNeighborNeed(int housingInsecureNeighborId, int needId, int outreachTeamId)
     {
         Dictionary<string, object?> parameters = new()
         {
             {"@HousingInsecureNeighborId", housingInsecureNeighborId},
-            {"@RequestId", requestId},
+            {"@NeedId", needId},
             {"@OutreachTeamId", outreachTeamId}
         };
-        await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.SetHousingInsecureNeighborRequest, parameters);
+        await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.SetHousingInsecureNeighborNeed, parameters);
     }
 
     public async Task SetHousingInsecureNeighborSkill(int housingInsecureNeighborId, int skillId, int outreachTeamId)
@@ -298,14 +298,14 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
         await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.DeleteHousingInsecureNeighborEthnicity, parameters);
     }
 
-    public async Task DeleteHousingInsecureNeighborRequest(int housingInsecureNeighborId, int requestId, int outreachTeamId)
+    public async Task DeleteHousingInsecureNeighborNeed(int housingInsecureNeighborId, int needId, int outreachTeamId)
     {
         Dictionary<string, object?> parameters = new()
         {
             {"@HousingInsecureNeighborId", housingInsecureNeighborId},
-            {"@RequestId", requestId},
+            {"@NeedId", needId},
             {"@OutreachTeamId", outreachTeamId}
         };
-        await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.DeleteHousingInsecureNeighborRequest, parameters);
+        await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.DeleteHousingInsecureNeighborNeed, parameters);
     }
 }

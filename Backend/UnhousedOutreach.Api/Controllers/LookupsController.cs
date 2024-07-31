@@ -118,16 +118,17 @@ public class LookupsController : ControllerBase
         await repository.SetPantsSize(pantsSize.Key, pantsSize.Value, outreachTeamId);
     }
 
-    [HttpGet("requests")]
-    public async Task<Dictionary<int, string>> GetRequestsLookup([FromQuery(Name = "otid")]int outreachTeamId)
+
+    [HttpGet("needs")]
+    public async Task<Dictionary<int, string>> GetNeedsLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
-        return await repository.GetRequests(outreachTeamId);
+        return await repository.GetNeeds(outreachTeamId);
     }
 
-    [HttpPost("request")]
-    public async Task SetRequest([FromBody]KeyValuePair<int?, string> request, [FromQuery(Name = "otid")]int outreachTeamId)
+    [HttpPost("need")]
+    public async Task SetNeed([FromBody]KeyValuePair<int?, string> need, [FromQuery(Name = "otid")]int outreachTeamId)
     {
-        await repository.SetRequest(request.Key, request.Value, outreachTeamId);
+        await repository.SetNeed(need.Key, need.Value, outreachTeamId);
     }
 
     [HttpGet("shirt-sizes")]

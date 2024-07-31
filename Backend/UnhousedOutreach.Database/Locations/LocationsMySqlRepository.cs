@@ -190,15 +190,15 @@ public class LocationsMySqlRepository(string connectionString) : Repository(conn
             }
         }
 
-        // GET REQUESTS.
+        // GET NEEDS.
         reader.NextResult();
         while (reader.Read())
         {
             var housingInsecureNeighborId = (int)reader["HousingInsecureNeighborId"];
             if (idsToNeighborsMap.ContainsKey(housingInsecureNeighborId))
             {
-                var requestId = (int)reader["RequestId"];
-                idsToNeighborsMap[housingInsecureNeighborId].RequestIds.Add(requestId);
+                var needId = (int)reader["NeedId"];
+                idsToNeighborsMap[housingInsecureNeighborId].NeedIds.Add(needId);
             }
         }
         

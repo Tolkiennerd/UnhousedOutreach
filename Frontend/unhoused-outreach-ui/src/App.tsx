@@ -21,7 +21,7 @@ function App() {
     housingStatus: {},
     locationType: {},
     pantsSize: {},
-    request: {},
+    need: {},
     shirtSize: {},
     shoeSize: {},
     skill: {},

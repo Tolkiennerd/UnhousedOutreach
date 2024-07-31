@@ -9,7 +9,7 @@ public class HousingInsecureNeighbor : Neighbor
     public List<int> EthnicityIds {get; set;} = [];
     public List<int> DisabilityIds {get; set;} = [];
     public List<FamilyMember> FamilyMembers {get; set;} = [];
-    public List<int> RequestIds {get; set;} = [];
+    public List<int> NeedIds {get; set;} = [];
     public List<int> SkillIds {get; set;} = [];
     public int? HousingStatusId {get; set;}
     public bool? IsHoused {get; set;}
