@@ -74,6 +74,7 @@ SELECT
     HousingInsecureNeighbor.PreferredName,
     HousingInsecureNeighbor.DateOfBirth,
     HousingInsecureNeighbor.GenderId,
+    HousingInsecureNeighbor.EnglishLevel,
     HousingInsecureNeighbor.PhoneNumber,
     HousingInsecureNeighbor.EmailAddress,
     HousingInsecureNeighbor.HousingStatusId,

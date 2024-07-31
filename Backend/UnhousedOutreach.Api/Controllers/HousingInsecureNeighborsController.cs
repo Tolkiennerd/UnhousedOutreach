@@ -45,6 +45,15 @@ public class HousingInsecureNeighborsController : ControllerBase
     {
         await repository.SetHousingInsecureNeighborDisability(housingInsecureNeighborId, disabilityId, outreachTeamId);
     }
+    
+    [HttpPut("housing-insecure-neighbor-english-level")]
+    public async Task SetHousingInsecureNeighborEnglishLevel(
+        [FromBody]int englishLevel, 
+        [FromQuery(Name = "nid")]int housingInsecureNeighborId, 
+        [FromQuery(Name = "otid")]int outreachTeamId)
+    {
+        await repository.SetHousingInsecureNeighborEnglishLevel(housingInsecureNeighborId, englishLevel, outreachTeamId);
+    }
 
     [HttpPut("housing-insecure-neighbor-ethnicity")]
     public async Task SetHousingInsecureNeighborEthnicity(

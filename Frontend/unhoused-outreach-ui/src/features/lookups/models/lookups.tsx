@@ -3,6 +3,7 @@ export interface Lookups
   cushionCondition: Record<number, string>;
   cushionType: Record<number, string>;
   disability: Record<number, string>;
+  englishLevel: Record<number, string>;
   ethnicity: Record<number, string>;
   gender: Record<number, string>;
   housingStatus: Record<number, string>;

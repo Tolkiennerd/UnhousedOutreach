@@ -213,6 +213,10 @@ VALUES (
 INSERT INTO HousingInsecureNeighborDisability
 VALUES (@HousingInsecureNeighborId, @DisabilityId, @OutreachTeamId)
 ";
+    internal static readonly string SetHousingInsecureNeighborEnglishLevel = @"
+INSERT INTO HousingInsecureNeighborEnglishLevel
+VALUES (@HousingInsecureNeighborId, @EnglishLevel, @OutreachTeamId)
+";
     internal static readonly string SetHousingInsecureNeighborEthnicity = @"
 INSERT INTO HousingInsecureNeighborEthnicity
 VALUES (@HousingInsecureNeighborId, @EthnicityId, @OutreachTeamId)

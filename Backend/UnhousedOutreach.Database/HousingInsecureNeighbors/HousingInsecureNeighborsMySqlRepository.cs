@@ -96,6 +96,15 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
             idsToNeighborsMap[housingInsecureNeighborId].DisabilityIds.Add(disabilityId);
         }
 
+        // GET ENGLISH LEVELS.
+        reader.NextResult();
+        while( reader.Read())
+        {
+            var housingInsecureNeighborId = (int)reader["HousingInsecureNeighborId"];
+            var englishLevel = (int)reader["EnglishLevel"];
+            idsToNeighborsMap[housingInsecureNeighborId].EnglishLevels.Add(englishLevel);
+        }
+
         // GET ETHNICITIES.
         reader.NextResult();
         while (reader.Read())
@@ -224,6 +233,17 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
             {"@OutreachTeamId", outreachTeamId}
         };
         await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.SetHousingInsecureNeighborDisability, parameters);
+    }
+
+    public async Task SetHousingInsecureNeighborEnglishLevel(int housingInsecureNeighborId, int englishLevel, int outreachTeamId)
+    {
+        Dictionary<string, object?> parameters = new()
+        {
+            {"@HousingInsecureNeighborId", housingInsecureNeighborId},
+            {"@englishLevel", englishLevel},
+            {"@OutreachTeamId", outreachTeamId}
+        };
+        await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.SetHousingInsecureNeighborEnglishLevel, parameters);
     }
 
     public async Task SetHousingInsecureNeighborEthnicity(int housingInsecureNeighborId, int ethnicityId, int outreachTeamId)

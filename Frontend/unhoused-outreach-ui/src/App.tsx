@@ -16,6 +16,7 @@ function App() {
     cushionCondition: {},
     cushionType: {},
     disability: {},
+    englishLevel: {},
     ethnicity: {},
     gender: {},
     housingStatus: {},

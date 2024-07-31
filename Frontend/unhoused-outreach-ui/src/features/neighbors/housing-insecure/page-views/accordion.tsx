@@ -46,6 +46,9 @@ export function HousingInsecureNeighborsAccordionView({ housingInsecureNeighbors
                             <div style={{flex: 1}}>
                                 Disabilities: {getCsvList(neighbor.disabilityIds, lookups.disability)}
                             </div>
+                            <div style={{flex: 1}}>
+                                English Levels: {getCsvList(neighbor.englishLevels, lookups.englishLevel)}
+                            </div>
                         </div>
                     </AccordionDetails>
                 </Accordion>

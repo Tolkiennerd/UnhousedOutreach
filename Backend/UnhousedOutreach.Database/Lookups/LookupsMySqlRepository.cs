@@ -21,6 +21,11 @@ public class LookupsMySqlRepository(string connectionString) : Repository(connec
         return await GetLookup(LookupsMySqlQueries.GetDisabilities, outreachTeamId);
     }
 
+    public async Task<Dictionary<int, string>> GetEnglishLevels(int outreachTeamId)
+    {
+        return await GetLookup(LookupsMySqlQueries.GetEnglishLevels, outreachTeamId);
+    }
+
     public async Task<Dictionary<int, string>> GetEthnicities(int outreachTeamId)
     {
         return await GetLookup(LookupsMySqlQueries.GetEthnicities, outreachTeamId);
@@ -135,6 +140,11 @@ public class LookupsMySqlRepository(string connectionString) : Repository(connec
     public async Task SetDisability(int? id, string value, int outreachTeamId)
     {
         await SetLookup(LookupsMySqlQueries.SetDisability, "@DisabilityId", "@Disability", id, value, outreachTeamId);
+    }
+
+    public async Task SetEnglishLevel(int? id, string value, int outreachTeamId)
+    {
+        await SetLookup(LookupsMySqlQueries.SetDisability, "@EnglishLevelId", "@EnglishLevel", id, value, outreachTeamId);
     }
 
     public async Task SetEthnicity(int? id, string value, int outreachTeamId)

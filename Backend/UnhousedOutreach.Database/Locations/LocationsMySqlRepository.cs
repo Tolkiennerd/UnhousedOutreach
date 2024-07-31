@@ -155,6 +155,18 @@ public class LocationsMySqlRepository(string connectionString) : Repository(conn
             }
         }
 
+        // GET ENGLISH LEVELS
+        reader.NextResult();
+        while (reader.Read())
+        {
+            var housingInsecureNeighborId = (int)reader["HousingInsecureNeighborId"];
+            var englishLevel = (int)reader["EnglishLevel"];
+            if (idsToNeighborsMap.ContainsKey(housingInsecureNeighborId))
+            {
+                idsToNeighborsMap[housingInsecureNeighborId].EnglishLevels.Add(englishLevel);
+            }
+        }
+
         // GET ETHNICITIES.
         reader.NextResult();
         while (reader.Read())

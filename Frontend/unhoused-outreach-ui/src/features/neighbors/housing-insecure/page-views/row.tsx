@@ -153,6 +153,15 @@ export function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
                                 })}
                             />
                             <InfoCard
+                                title='English Level'
+                                hide={neighbor.englishLevels.length === 0}
+                                backgroundColor='var(--englishLevel-color)'
+                                className='box-card'
+                                chips={neighbor.englishLevels.map(englishLevel => {
+                                    return {label: lookups.englishLevel[englishLevel]}
+                                })}
+                            />
+                            <InfoCard
                                 title='Clothing'
                                 hide={!neighbor.shoeSizeId}
                                 backgroundColor='var(--clothing-color)'

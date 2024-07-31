@@ -70,6 +70,20 @@ public class LookupsController : ControllerBase
     }
     #endregion
 
+    #region English Level
+    [HttpGet("english-levels")]
+    public async Task<Dictionary<int, string>> GetEnglishLevelLookup([FromQuery(Name = "otid")]int outreachTeamId)
+    {
+        return await repository.GetEnglishLevels(outreachTeamId);
+    }
+
+    [HttpPost("english-level")]
+    public async Task SetEnglishLevel([FromBody]KeyValuePair<int?, string> englishLevel, [FromQuery(Name = "otid")]int outreachTeamId)
+    {
+        await repository.SetEnglishLevel(englishLevel.Key, englishLevel.Value, outreachTeamId);
+    }
+    #endregion
+
     #region Ethnicity
     [HttpGet("ethnicities")]
     public async Task<Dictionary<int, string>> GetEthnicitiesLookup([FromQuery(Name = "otid")]int outreachTeamId)

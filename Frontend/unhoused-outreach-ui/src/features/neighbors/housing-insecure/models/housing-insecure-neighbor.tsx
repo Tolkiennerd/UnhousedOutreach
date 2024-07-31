@@ -8,6 +8,7 @@ export class HousingInsecureNeighbor extends Neighbor
     housingInsecureNeighborId: number = 0;
     ethnicityIds: number[] = [];
     disabilityIds: number[] = [];
+    englishLevels: number[] = [];
     familyMembers: FamilyMember[] = [];
     needIds: number[] = [];
     skillIds: number[] = [];
