@@ -76,7 +76,7 @@ export function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
                 <Cell text={neighbor.getAge()} className='small-screen' onClick={expandRow} />
                 <Cell text={getCsvList(neighbor.ethnicityIds, lookups.ethnicity)} className='medium-screen' onClick={expandRow} />
                 <Cell text={getLookupString(neighbor.genderId, lookups.gender)} className='medium-screen' onClick={expandRow} />
-                <Cell text='TODO: English Level' className='large-screen' onClick={expandRow} />
+                <Cell text={neighbor.englishLevel} className='large-screen' onClick={expandRow} />
                 <Cell text={displayNullableBoolean(neighbor.isHoused)} className='large-screen' onClick={expandRow} />
                 <Cell text={displayNullableBoolean(neighbor.isCitizen)} className='large-screen' onClick={expandRow} />
                 <Cell text={displayNullableBoolean(neighbor.hasIdentification)} className='extra-large-screen' onClick={expandRow} />
@@ -150,15 +150,6 @@ export function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
                                 className='box-card'
                                 chips={neighbor.disabilityIds.map(disabilityId => {
                                     return {label: lookups.disability[disabilityId]}
-                                })}
-                            />
-                            <InfoCard
-                                title='English Level'
-                                hide={neighbor.englishLevels.length === 0}
-                                backgroundColor='var(--englishLevel-color)'
-                                className='box-card'
-                                chips={neighbor.englishLevels.map(englishLevel => {
-                                    return {label: lookups.englishLevel[englishLevel]}
                                 })}
                             />
                             <InfoCard

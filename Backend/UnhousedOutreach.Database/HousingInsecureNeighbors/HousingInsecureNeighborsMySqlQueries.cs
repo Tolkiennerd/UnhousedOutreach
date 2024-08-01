@@ -24,6 +24,7 @@ SELECT
     HousingInsecureNeighbor.CushionTypeId,
     HousingInsecureNeighbor.CushionConditionId,
     HousingInsecureNeighbor.BlanketCount,
+    HousingInsecureNeighbor.EnglishLevel,
     HousingInsecureNeighbor.HasSleepingBag,
     HousingInsecureNeighbor.SleepingBagConditionId,
     HousingInsecureNeighbor.SleepingBagTemperatureThresholdFahrenheit,

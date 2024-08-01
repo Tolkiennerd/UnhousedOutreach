@@ -106,6 +106,7 @@ public class LocationsMySqlRepository(string connectionString) : Repository(conn
                 CushionTypeId = Parser.GetNullableValue<int?>(reader, "CushionTypeId"),
                 CushionConditionId = Parser.GetNullableValue<int?>(reader, "CushionConditionId"),
                 BlanketCount = Parser.GetNullableValue<int?>(reader, "BlanketCount"),
+                EnglishLevel = Parser.GetNullableValue<int?>(reader, "EnglishLevel"),
                 HasSleepingBag = Parser.GetNullableBooleanValue(reader, "HasSleepingBag"),
                 SleepingBagConditionId = Parser.GetNullableValue<int?>(reader, "SleepingBagConditionId"),
                 SleepingBagTemperatureThresholdFahrenheit = Parser.GetNullableValue<int?>(reader, "SleepingBagTemperatureThresholdFahrenheit"),
@@ -152,18 +153,6 @@ public class LocationsMySqlRepository(string connectionString) : Repository(conn
             if (idsToNeighborsMap.ContainsKey(housingInsecureNeighborId))
             {
                 idsToNeighborsMap[housingInsecureNeighborId].DisabilityIds.Add(disabilityId);
-            }
-        }
-
-        // GET ENGLISH LEVELS
-        reader.NextResult();
-        while (reader.Read())
-        {
-            var housingInsecureNeighborId = (int)reader["HousingInsecureNeighborId"];
-            var englishLevel = (int)reader["EnglishLevel"];
-            if (idsToNeighborsMap.ContainsKey(housingInsecureNeighborId))
-            {
-                idsToNeighborsMap[housingInsecureNeighborId].EnglishLevels.Add(englishLevel);
             }
         }
 
