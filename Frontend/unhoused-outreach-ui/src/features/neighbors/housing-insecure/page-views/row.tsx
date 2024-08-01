@@ -1,15 +1,18 @@
 import { useContext, useState } from 'react';
 import { TableRow, TableCell, Box, Collapse, Chip, Drawer, } from '@mui/material';
 import { Edit } from '@mui/icons-material';
-import { HousingInsecureNeighbor, InfoCard, ViewEditHousingInsecureNeighbor } from '../../../neighbors/housing-insecure';
-import { LookupsContext } from '../../../../App';
-import { Lookups, getCsvList, getLookupString, getLookupValue } from '../../../lookups';
-import tentIcon from '../../../../assets/tent.png';
-import supportServicesIcon from '../../../../assets/cornerstones.png';
-import shoeIcon from '../../../../assets/shoe.png';
-import shirtIcon from '../../../../assets/shirt.png';
-import pantsIcon from '../../../../assets/pants.png';
+import { HousingInsecureNeighbor, InfoCard, ViewEditHousingInsecureNeighbor } from 'features/neighbors/housing-insecure';
+import { LookupsContext } from 'App';
+import { Lookups, getCsvList, getLookupString, getLookupValue } from 'features/lookups';
+import tentIcon from 'assets/tent.png';
+import supportServicesIcon from 'assets/cornerstones.png';
+import shoeIcon from 'assets/shoe.png';
+import shirtIcon from 'assets/shirt.png';
+import pantsIcon from 'assets/pants.png';
 import './table.css';
+import { getAge, getContact, getFullName } from 'features/neighbors/functions/formatting';
+import { getLocationLink } from 'features/mapping/functions/formatting';
+import axios from 'axios';
 
 
 interface CellProps {
@@ -29,15 +32,27 @@ function Cell({ text, underText, className, onClick }: CellProps) {
 }
 
 // FIELD FORMATTING FUNCTIONS.
-export function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
+export function Row({ initialNeighbor }: { initialNeighbor: HousingInsecureNeighbor }) {
     // GET THE DATA.
+    const [neighbor, setNeighbor] = useState(initialNeighbor);
     const lookups = useContext(LookupsContext) as Lookups;
     const [rowExpanded, setRowExpanded] = useState(false);
     const [editPanelOpen, setEditPanelOpen] = useState(false);
 
+    const updateNeighborInDb = () => {
+        // TODO: Get OTID from user data.
+        axios
+            .put(`${process.env.REACT_APP_API_URL}/housing-insecure-neighbor?otid=1`, neighbor)
+            .catch(error => console.log(error));
+    };
+
     // CELL CLICK FUNCTIONS.
-    const expandRow = () => {setRowExpanded(!rowExpanded)};
+    const expandRow = () => setRowExpanded(!rowExpanded);
     const openDrawer = () => setEditPanelOpen(true);
+    const closeDrawer = () => {
+        setEditPanelOpen(false);
+        updateNeighborInDb();
+    }
 
     // DATA FORMATTING.
     const displayNullableBoolean = (nullableBoolean: boolean | undefined): string => {
@@ -59,21 +74,21 @@ export function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
         <>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
                 <Cell text={<Edit />} className='extra-small-screen edit' onClick={openDrawer} />
-                <Cell text={neighbor.getFullName()} underText={neighbor.getContact()} className='extra-small-screen' onClick={expandRow} />
+                <Cell text={getFullName(neighbor)} underText={getContact(neighbor)} className='extra-small-screen' onClick={expandRow} />
                 <Cell 
-                    text={neighbor.location?.getLocationLink(tentIcon, lookups.locationType) ?? 'Unknown'}
+                    text={getLocationLink(tentIcon, lookups.locationType, neighbor.location) ?? 'Unknown'}
                     underText={neighbor.location?.arrivalDate?.toLocaleDateString() ?? ''}
                     className='small-screen'
                     onClick={expandRow} 
                 />
                 <Cell
                     text={getLookupString(neighbor.housingStatusId, lookups.housingStatus)}
-                    underText={neighbor?.caseManager?.getFullName() ?? ''}
+                    underText={getFullName(neighbor?.caseManager)}
                     className='small-screen'
                     onClick={expandRow} 
                 />
                 <Cell text={getNumberChip(neighbor.needIds.length, 'var(--needs-color)')} className='small-screen' onClick={expandRow} />
-                <Cell text={neighbor.getAge()} className='small-screen' onClick={expandRow} />
+                <Cell text={getAge(neighbor)} className='small-screen' onClick={expandRow} />
                 <Cell text={getCsvList(neighbor.ethnicityIds, lookups.ethnicity)} className='medium-screen' onClick={expandRow} />
                 <Cell text={getLookupString(neighbor.genderId, lookups.gender)} className='medium-screen' onClick={expandRow} />
                 <Cell text='TODO: English Level' className='large-screen' onClick={expandRow} />
@@ -108,8 +123,8 @@ export function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
                                 className='box-card extra-small-screen'
                                 chips={[
                                     {label: getLookupValue(neighbor.housingStatusId, lookups.housingStatus), icon: supportServicesIcon},
-                                    {label: neighbor.caseManager?.getFullName()},
-                                    {label: neighbor.caseManager?.getContact()}
+                                    {label: getFullName(neighbor.caseManager)},
+                                    {label: getContact(neighbor.caseManager)}
                                 ]}
                             />
                             <InfoCard
@@ -118,7 +133,7 @@ export function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
                                 backgroundColor='var(--demographics-color)' 
                                 className='box-card small-screen'
                                 chips={[
-                                    {label: neighbor.dateOfBirth ? neighbor.getAge() : undefined},
+                                    {label: neighbor.dateOfBirth ? getAge(neighbor) : undefined},
                                     {label: getLookupValue(neighbor.genderId, lookups.gender)},
                                     {label: neighbor.ethnicityIds.length > 0 ? getCsvList(neighbor.ethnicityIds, lookups.ethnicity) : undefined}
                                 ]}
@@ -188,8 +203,11 @@ export function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
                 </TableCell>
             </TableRow>
 
-            <Drawer open={editPanelOpen} onClose={() => setEditPanelOpen(false)} anchor='right'>
-                <ViewEditHousingInsecureNeighbor neighbor={neighbor} onClose={() => setEditPanelOpen(false)} />
+            <Drawer open={editPanelOpen} anchor='right' onClose={() => closeDrawer()}>
+                <ViewEditHousingInsecureNeighbor 
+                    neighbor={neighbor} 
+                    setNeighbor={setNeighbor} 
+                    onClose={() => closeDrawer()} />
             </Drawer>
         </>
     )

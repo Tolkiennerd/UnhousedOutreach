@@ -10,13 +10,9 @@ const HousingInsecureNeighbors = () => {
     const [housingInsecureNeighborsData, setHousingInsecureNeighborsData] = useState([] as HousingInsecureNeighbor[]);
     useEffect(() => {
         // TODO: Get OTID from user data.
-        axios.get(`${process.env.REACT_APP_API_URL}/housing-insecure-neighbors?otid=1`)
-            .then(response => {
-                let housingInsecureNeighbors: HousingInsecureNeighbor[] = [];
-                const housingInsecureNeighborsJson: any[] = response.data;
-                housingInsecureNeighborsJson.forEach(neighborJson => housingInsecureNeighbors.push(new HousingInsecureNeighbor(neighborJson)));
-                setHousingInsecureNeighborsData(housingInsecureNeighbors);
-            })
+        axios
+            .get(`${process.env.REACT_APP_API_URL}/housing-insecure-neighbors?otid=1`)
+            .then(response => setHousingInsecureNeighborsData(response.data))
             .catch(error => console.log(error));
     }, []);
 

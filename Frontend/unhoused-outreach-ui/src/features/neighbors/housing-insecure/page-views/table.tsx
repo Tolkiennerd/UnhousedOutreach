@@ -29,7 +29,7 @@ export function HousingInsecureNeighborsTableView({ housingInsecureNeighbors }: 
                     </TableHead>
                     <TableBody>
                     {housingInsecureNeighbors.map((neighbor) => (
-                        <Row key={neighbor.housingInsecureNeighborId} neighbor={neighbor} />
+                        <Row key={neighbor.housingInsecureNeighborId} initialNeighbor={neighbor} />
                     ))}
                     </TableBody>
                 </Table>

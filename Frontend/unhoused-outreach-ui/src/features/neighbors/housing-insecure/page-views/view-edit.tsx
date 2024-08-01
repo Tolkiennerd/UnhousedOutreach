@@ -13,9 +13,11 @@ import dayjs from "dayjs";
 import { Location, State } from "features/mapping";
 import axios from 'axios';
 import { CaseManager } from "features/support-services";
+import { getFullName } from "features/neighbors/functions/formatting";
 
 
-export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor: HousingInsecureNeighbor, onClose: () => void}) {
+export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose} : {neighbor: HousingInsecureNeighbor, setNeighbor: React.Dispatch<React.SetStateAction<HousingInsecureNeighbor>>, onClose: () => void}) {
+
     const lookups = useContext(LookupsContext) as Lookups;
     const [showName, setShowName] = useState(true);
     const [showContact, setShowContact] = useState(false);
@@ -44,14 +46,6 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
         setShowComments(false);
     }
 
-    const [selectedEthnicities, setSelectedEthnicities] = useState(neighbor.ethnicityIds)
-
-    const updateNeighborInDb = (neighbor: HousingInsecureNeighbor) => {
-        // TODO: Get OTID from user data.
-        axios
-            .put(`${process.env.REACT_APP_API_URL}/housing-insecure-neighbor?otid=1`, neighbor)
-            .catch(error => console.log(error));
-    };
     const updateLocationInDb = (location: Location) => {
         // TODO: Get OTID from user data.
         axios
@@ -66,9 +60,6 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
     };
     const updateEthnicityInDb = (neighborId: number, ethnicityId: number) => {
         // TODO: Get OTID from user data.
-        if (!ethnicityId || Number.isNaN(ethnicityId)) {
-            return;
-        }
         axios
             .put(`${process.env.REACT_APP_API_URL}/housing-insecure-neighbor-ethnicity?nid=${neighborId}&otid=1`, ethnicityId, {
                 headers: {
@@ -84,8 +75,8 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
             .delete(`${process.env.REACT_APP_API_URL}/housing-insecure-neighbor-ethnicity?id=${ethnicityId}&nid=${neighborId}&otid=1`)
             .catch(error => console.log(error));
     }
-    // const setIds = (event: any, ids: number[], setMethod: any, deleteMethod: any): number[] => {
-    const setIds = (event: any, ids: number[], setIdsMethod: any, setMethod: any, deleteMethod: any): number[] => {
+
+    const getSelectedId = (event: any): number => {
         const target = event.explicitOriginalTarget;
         const dataForCurrentElement = Number(target.dataset.value);
         const dataForParentElement = Number(target.parentElement.dataset.value);
@@ -95,17 +86,21 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
             !Number.isNaN(dataForParentElement) ? 
                 dataForParentElement : 
                 dataForGrandparentElement;
+        return selectedId;
+    }
+    const setIds = (event: any, ids: number[], setMethod: any, deleteMethod: any): number[] => {
+        const selectedId = getSelectedId(event);
         const selectedIdIndexInExistingList = ids.indexOf(selectedId);
+        let returnedIds = [];
         if (selectedIdIndexInExistingList === -1) {
-            setIdsMethod(...ids, selectedId);
+            returnedIds = [...ids, selectedId];
             setMethod(neighbor.housingInsecureNeighborId, selectedId);
         }
         else {
-            const removedIds = ids.splice(selectedIdIndexInExistingList, 1);
-            setIdsMethod(removedIds);
+            returnedIds = ids.splice(selectedIdIndexInExistingList, 1);
             deleteMethod(neighbor.housingInsecureNeighborId, selectedId);
         }
-        return ids;
+        return returnedIds;
     }
 
     const style = {
@@ -124,7 +119,7 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
 
             {/* TITLE */}
             <Typography id="modal-modal-title" variant="h6" component="h2" style={{paddingTop: '10px'}}>
-                Edit {neighbor.getFullName()}
+                Edit {getFullName(neighbor)}
             </Typography>
 
             <div className="menu-and-edit">
@@ -150,23 +145,20 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
                         <h3 style={{textAlign: 'left'}}>Name</h3>
                         <TextField
                             label="First Name" 
-                            defaultValue={neighbor.firstName ?? ''} 
-                            onChange={(event) => neighbor.firstName = event.target.value}
-                            onBlur={() => updateNeighborInDb(neighbor)}
+                            value={neighbor.firstName} 
+                            onChange={(event) => setNeighbor({...neighbor, firstName: event.target.value})}
                             variant="outlined" 
                         />
                         <TextField 
                             label="Preferred Name" 
-                            defaultValue={neighbor.preferredName ?? ''} 
-                            onChange={(event) => neighbor.preferredName = event.target.value}
-                            onBlur={() => updateNeighborInDb(neighbor)}
+                            value={neighbor.preferredName} 
+                            onChange={(event) => setNeighbor({...neighbor, preferredName: event.target.value})}
                             variant="outlined" 
                         />
                         <TextField 
                             label="Last Name" 
-                            defaultValue={neighbor.lastName ?? ''} 
-                            onChange={(event) => neighbor.lastName = event.target.value}
-                            onBlur={() => updateNeighborInDb(neighbor)}
+                            value={neighbor.lastName} 
+                            onChange={(event) => setNeighbor({...neighbor, lastName: event.target.value})}
                             variant="outlined" 
                         />
                     </div> : null}
@@ -175,16 +167,14 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
                         <h3 style={{textAlign: 'left'}}>Contact</h3>
                         <TextField
                             label="Phone Number" 
-                            defaultValue={neighbor.phoneNumber ?? ''} 
-                            onChange={(event) => neighbor.phoneNumber = event.target.value}
-                            onBlur={() => updateNeighborInDb(neighbor)}
+                            value={neighbor.phoneNumber} 
+                            onChange={(event) => setNeighbor({...neighbor, phoneNumber: event.target.value})}
                             variant="outlined" 
                         />
                         <TextField
                             label="Email Address"
-                            defaultValue={neighbor.emailAddress ?? ''}
-                            onChange={(event) => neighbor.emailAddress = event.target.value}
-                            onBlur={() => updateNeighborInDb(neighbor)}
+                            value={neighbor.emailAddress} 
+                            onChange={(event) => setNeighbor({...neighbor, emailAddress: event.target.value})}
                             variant="outlined"
                         />
                     </div> : null }
@@ -194,11 +184,9 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker 
                                 label="Date of Birth" 
-                                defaultValue={dayjs(neighbor.dateOfBirth)}
-                                onChange={(event) => {
-                                    neighbor.dateOfBirth = event?.toDate();
-                                    updateNeighborInDb(neighbor);
-                                }}
+                                value={dayjs(neighbor.dateOfBirth)}
+                                onChange={(event) => setNeighbor({...neighbor, dateOfBirth: event?.toDate()})}
+
                             />
                         </LocalizationProvider>
                         <div className='dropdown'>
@@ -206,9 +194,8 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
                                 <InputLabel>Gender</InputLabel>
                                 <Select
                                     label="Gender"
-                                    defaultValue={neighbor.genderId}
-                                    onChange={(event) => neighbor.genderId = Number(event.target.value)}
-                                    onBlur={() => updateNeighborInDb(neighbor)}
+                                    value={neighbor.genderId}
+                                    onChange={(event) => setNeighbor({...neighbor, genderId: Number(event.target.value)})}
                                 >
                                     {Object.keys(lookups.gender).map(id => 
                                         <MenuItem id={`Gender-${id}`} key={`Gender-${id}`} value={id}>{lookups.gender[Number(id)]}</MenuItem>
@@ -222,10 +209,9 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
                                 <Select
                                     label="Ethnicity"
                                     multiple
-                                    // defaultValue={neighbor.ethnicityIds}
-                                    value={selectedEthnicities}
+                                    value={neighbor.ethnicityIds}
                                     renderValue={(ids) => ids.map(id => lookups.ethnicity[Number(id)]).join(', ')}
-                                    onChange={(event) => neighbor.ethnicityIds = setIds(event, selectedEthnicities, setSelectedEthnicities, updateEthnicityInDb, deleteEthnicityFromDb)}
+                                    onChange={(event) => setNeighbor({...neighbor, ethnicityIds: setIds(event, neighbor.ethnicityIds, updateEthnicityInDb, deleteEthnicityFromDb)})}
                                 >
                                     {Object.keys(lookups.ethnicity).map(id =>
                                         <MenuItem key={`Ethnicity-${id}`} value={id}>
@@ -323,7 +309,6 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
                                     multiple
                                     defaultValue={neighbor.needIds} 
                                     onChange={(event) => neighbor.needIds = event.target.value as number[]}
-                                    onBlur={() => updateNeighborInDb(neighbor)}
                                 >
                                     {Object.keys(lookups.need).map(id => 
                                         <MenuItem key={`Needs-${id}`} value={id}>{lookups.need[Number(id)]}</MenuItem>
@@ -343,7 +328,6 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
                                     multiple
                                     defaultValue={neighbor.disabilityIds}
                                     onChange={(event) => neighbor.disabilityIds = event.target.value as number[]}
-                                    onBlur={() => updateNeighborInDb(neighbor)}
                                 >
                                     {Object.keys(lookups.disability).map(id => 
                                         <MenuItem key={`Disability-${id}`} value={id}>{lookups.disability[Number(id)]}</MenuItem>
@@ -363,7 +347,6 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
                                     multiple
                                     defaultValue={neighbor.housingStatusId}
                                     onChange={(event) => neighbor.housingStatusId = event.target.value as number}
-                                    onBlur={() => updateNeighborInDb(neighbor)}
                                 >
                                     {Object.keys(lookups.housingStatus).map(id => 
                                         <MenuItem key={`Housing Status-${id}`} value={id}>{lookups.housingStatus[Number(id)]}</MenuItem>
@@ -419,7 +402,6 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
                                     label="Shoe Size"
                                     defaultValue={neighbor.shoeSizeId}
                                     onChange={(event) => neighbor.shoeSizeId = event.target.value as number}
-                                    onBlur={() => updateNeighborInDb(neighbor)}
                                 >
                                     {Object.keys(lookups.shoeSize).map(id => 
                                         <MenuItem key={`Shoes-${id}`} value={id}>{lookups.shoeSize[Number(id)]}</MenuItem>
@@ -434,7 +416,6 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
                                     label="Pants Size"
                                     defaultValue={neighbor.pantsSizeId}
                                     onChange={(event) => neighbor.pantsSizeId = event.target.value as number}
-                                    onBlur={() => updateNeighborInDb(neighbor)}
                                 >
                                     {Object.keys(lookups.pantsSize).map(id => 
                                         <MenuItem key={`Pants-${id}`} value={id}>{lookups.pantsSize[Number(id)]}</MenuItem>
@@ -450,7 +431,6 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
                                     multiple
                                     defaultValue={neighbor.shirtSizeId}
                                     onChange={(event) => neighbor.shirtSizeId = event.target.value as number}
-                                    onBlur={() => updateNeighborInDb(neighbor)}
                                 >
                                     {Object.keys(lookups.shirtSize).map(id => 
                                         <MenuItem key={`Shirt-${id}`} value={id}>{lookups.shirtSize[Number(id)]}</MenuItem>
@@ -466,7 +446,6 @@ export function ViewEditHousingInsecureNeighbor({neighbor, onClose} : {neighbor:
                             value={neighbor.comments}
                             placeholder="Comments"
                             onChange={(event) => neighbor.comments = event.target.value as string}
-                            onBlur={() => updateNeighborInDb(neighbor)}
                         />
                     </div> : null }
                 </div>
