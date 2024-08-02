@@ -24,7 +24,7 @@ export class HousingInsecureNeighbor extends Neighbor
     location?: Location;
     desiredLocation?: Location;
     tents: Tent[] = [];
-    englishLevel?: number;
+    englishLevelId?: number;
     cushionTypeId?: number;
     cushionConditionId?: number;
     blanketCount?: number;

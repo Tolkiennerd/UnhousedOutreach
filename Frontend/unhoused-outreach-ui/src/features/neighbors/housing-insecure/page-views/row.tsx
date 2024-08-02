@@ -76,7 +76,7 @@ export function Row({ neighbor }: { neighbor: HousingInsecureNeighbor }) {
                 <Cell text={neighbor.getAge()} className='small-screen' onClick={expandRow} />
                 <Cell text={getCsvList(neighbor.ethnicityIds, lookups.ethnicity)} className='medium-screen' onClick={expandRow} />
                 <Cell text={getLookupString(neighbor.genderId, lookups.gender)} className='medium-screen' onClick={expandRow} />
-                <Cell text={neighbor.englishLevel} className='large-screen' onClick={expandRow} />
+                <Cell text={getLookupString(neighbor.englishLevelId, lookups.englishLevel)} className='large-screen' onClick={expandRow} />
                 <Cell text={displayNullableBoolean(neighbor.isHoused)} className='large-screen' onClick={expandRow} />
                 <Cell text={displayNullableBoolean(neighbor.isCitizen)} className='large-screen' onClick={expandRow} />
                 <Cell text={displayNullableBoolean(neighbor.hasIdentification)} className='extra-large-screen' onClick={expandRow} />

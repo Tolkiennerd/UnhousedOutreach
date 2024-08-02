@@ -38,7 +38,7 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
                 CushionTypeId = Parser.GetNullableValue<int?>(reader, "CushionTypeId"),
                 CushionConditionId = Parser.GetNullableValue<int?>(reader, "CushionConditionId"),
                 BlanketCount = Parser.GetNullableValue<int?>(reader, "BlanketCount"),
-                EnglishLevel = Parser.GetNullableValue<int?>(reader, "EnglishLevel"),
+                EnglishLevelId = Parser.GetNullableValue<int?>(reader, "EnglishLevel"),
                 HasSleepingBag = Parser.GetNullableBooleanValue(reader, "HasSleepingBag"),
                 SleepingBagConditionId = Parser.GetNullableValue<int?>(reader, "SleepingBagConditionId"),
                 SleepingBagTemperatureThresholdFahrenheit = Parser.GetNullableValue<int?>(reader, "SleepingBagTemperatureThresholdFahrenheit"),

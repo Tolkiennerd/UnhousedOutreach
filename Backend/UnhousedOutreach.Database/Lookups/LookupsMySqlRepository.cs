@@ -21,9 +21,9 @@ public class LookupsMySqlRepository(string connectionString) : Repository(connec
         return await GetLookup(LookupsMySqlQueries.GetDisabilities, outreachTeamId);
     }
 
-    public async Task<Dictionary<int, string>> GetEnglishLevels(int outreachTeamId)
+    public async Task<Dictionary<int, string>> GetEnglishLevel(int outreachTeamId)
     {
-        return await GetLookup(LookupsMySqlQueries.GetEnglishLevels, outreachTeamId);
+        return await GetLookup(LookupsMySqlQueries.GetEnglishLevel, outreachTeamId);
     }
 
     public async Task<Dictionary<int, string>> GetEthnicities(int outreachTeamId)
