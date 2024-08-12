@@ -1,10 +1,6 @@
-export class Organization
+export interface Organization
 {
-    supportServiceOrganizationId: number = 0;
+    supportServiceOrganizationId: number;
     name?: string;
     comments?: string;
-
-    constructor(json: any) {
-        Object.assign(this, json);
-    }
 }

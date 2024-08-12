@@ -5,11 +5,8 @@ namespace UnhousedOutreach.Database.MySql;
 
 public class Repository(string connectionString)
 {
-    #region Private Fields
     private readonly string connectionString = connectionString;
-    #endregion
 
-    #region Public Methods
     public async Task ExecuteNonQuery(string mySqlStatement) => await ExecuteNonQuery(mySqlStatement, []);
 
     public async Task ExecuteNonQuery(string mySqlStatement, Dictionary<string, object?> parameterNamesAndValues)
@@ -25,9 +22,7 @@ public class Repository(string connectionString)
         var command = GetCommand(mySqlStatement, parameterNamesAndValues);
         return await command.ExecuteReaderAsync();
     }
-    #endregion
-
-    #region Private Methods
+    
     private MySqlCommand GetCommand(string mySqlStatement, Dictionary<string, object?> parameterNamesAndValues)
     {
         // OPEN CONNECTION.
@@ -46,6 +41,4 @@ public class Repository(string connectionString)
         }
         return cmd;
     }
-    #endregion
-
 }

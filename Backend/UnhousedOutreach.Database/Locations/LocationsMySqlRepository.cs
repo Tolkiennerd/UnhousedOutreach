@@ -6,7 +6,6 @@ namespace UnhousedOutreach.Database.Locations;
 
 public class LocationsMySqlRepository(string connectionString) : Repository(connectionString)
 {
-    #region Get Methods
     public async Task<IEnumerable<Location>> GetLocations(int outreachTeamId)
     {
         // GET NEIGHBORS.
@@ -229,9 +228,7 @@ public class LocationsMySqlRepository(string connectionString) : Repository(conn
         var locationsWithNeighbors = locationsToNeighborIds.Keys.AsEnumerable();
         return locationsWithNeighbors;
     }
-    #endregion
-
-    #region Set Methods
+    
     public async Task SetLocation(Location location, int outreachTeamId)
     {
         Dictionary<string, object?> parameters = new()
@@ -252,5 +249,4 @@ public class LocationsMySqlRepository(string connectionString) : Repository(conn
         };
         await ExecuteNonQuery(LocationsMySqlQueries.SetLocation, parameters);
     }
-    #endregion
 }

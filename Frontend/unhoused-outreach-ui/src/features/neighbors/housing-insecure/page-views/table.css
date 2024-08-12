@@ -8,6 +8,14 @@ body {
     --clothing-color: rgb(24, 174, 104);
 }
 
+h3 {
+    text-align: center;
+}
+
+.edit-field h3 {
+    text-align: left;
+}
+
 .table-container > .MuiPaper-root {
     margin-left: auto !important;
     margin-right: auto !important;

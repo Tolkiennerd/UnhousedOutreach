@@ -8,20 +8,15 @@ namespace UnhousedOutreach.Api;
 [ApiController]
 public class LocationsController : ControllerBase
 {
-    #region Private Fields
     private readonly LocationsMySqlRepository repository;
-    #endregion
 
-    #region Constructor
     public LocationsController(IConfiguration configuration)
     {
         var connectionStrings = configuration.GetSection("ConnectionStrings").Get<ConnectionStrings>();
         var unhousedOutreachConnectionString = connectionStrings?.UnhousedOutreachConnectionString ?? string.Empty;
         repository = new(unhousedOutreachConnectionString);
     }
-    #endregion
 
-    #region Public Methods
     [HttpGet("locations")]
     public async Task<IEnumerable<Location>> GetLocations([FromQuery(Name = "otid")]int outreachTeamId)
     {
@@ -39,5 +34,4 @@ public class LocationsController : ControllerBase
     {
         await repository.SetLocation(location, outreachTeamId);
     }
-    #endregion
 }

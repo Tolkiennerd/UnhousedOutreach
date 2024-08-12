@@ -6,6 +6,7 @@ interface ChipProps
     label?: string;
     icon?: string;
     link?: string;
+    type?: string;
 }
 
 interface InfoCardProps
@@ -24,7 +25,7 @@ interface InfoCardProps
 export function InfoCard({hide = false, backgroundColor, border, className, title, titleColor = 'white', text, chips, elements}: InfoCardProps) {
     const getChip = (chip: ChipProps) => (
         <Chip
-            key={`${chip.label}-Chip`}
+            key={`${chip.label}-${chip.type ?? ''}-Chip`}
             avatar={chip.icon ? <Avatar src={chip.icon} /> : undefined}
             label={chip.label}
             sx={{
@@ -39,7 +40,7 @@ export function InfoCard({hide = false, backgroundColor, border, className, titl
 
     return (
         <>
-            {!hide ?
+            {hide ? null :
             <Card
                 style={{backgroundColor: backgroundColor ?? 'inherit', border: border ?? 'inherit'}}
                 className={className ?? ''} 
@@ -58,7 +59,6 @@ export function InfoCard({hide = false, backgroundColor, border, className, titl
                 )}
                 {elements?.map(element => element)}
             </Card>
-            : null
             }
         </>
     )

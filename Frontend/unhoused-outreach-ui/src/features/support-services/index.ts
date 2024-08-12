@@ -1,2 +1,2 @@
-export { CaseManager } from './models/case-manager';
-export { Organization } from './models/organization';
+export type { CaseManager } from './models/case-manager';
+export type { Organization } from './models/organization';

@@ -8,20 +8,15 @@ namespace UnhousedOutreach.Api;
 [ApiController]
 public class OutreachTeamsController : ControllerBase
 {
-    #region Private Fields
     private readonly OutreachTeamsMySqlRepository repository;
-    #endregion
 
-    #region Constructor
     public OutreachTeamsController(IConfiguration configuration)
     {
         var connectionStrings = configuration.GetSection("ConnectionStrings").Get<ConnectionStrings>();
         var unhousedOutreachConnectionString = connectionStrings?.UnhousedOutreachConnectionString ?? string.Empty;
         repository = new(unhousedOutreachConnectionString);
     }
-    #endregion
 
-    #region Public Methods
     [HttpGet("outreach-teams")]
     public async Task<IEnumerable<OutreachTeam>> GetOutreachTeams()
     {
@@ -33,5 +28,4 @@ public class OutreachTeamsController : ControllerBase
     {
         await repository.SetOutreachTeam(outreachTeam);
     }
-    #endregion
 }

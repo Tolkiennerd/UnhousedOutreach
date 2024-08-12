@@ -7,28 +7,21 @@ namespace UnhousedOutreach.Api;
 [ApiController]
 public class LookupsController : ControllerBase
 {
-    #region Private Fields
     private readonly LookupsMySqlRepository repository;
-    #endregion
 
-    #region Constructor
     public LookupsController(IConfiguration configuration)
     {
         var connectionStrings = configuration.GetSection("ConnectionStrings").Get<ConnectionStrings>();
         var unhousedOutreachConnectionString = connectionStrings?.UnhousedOutreachConnectionString ?? string.Empty;
         repository = new(unhousedOutreachConnectionString);
     }
-    #endregion
 
-    #region All
     [HttpGet("all")]
     public async Task<Core.Lookups.Lookups> GetLookups([FromQuery(Name = "otid")]int outreachTeamId)
     {
         return await repository.GetLookups(outreachTeamId);
     }
-    #endregion
 
-    #region Cushion Condition
     [HttpGet("cushion-conditions")]
     public async Task<Dictionary<int, string>> GetCushionConditionsLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
@@ -40,9 +33,7 @@ public class LookupsController : ControllerBase
     {
         await repository.SetCushionCondition(cushionCondition.Key, cushionCondition.Value, outreachTeamId);
     }
-    #endregion
 
-    #region Cushion Type
     [HttpGet("cushion-types")]
     public async Task<Dictionary<int, string>> GetCushionTypesLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
@@ -54,9 +45,7 @@ public class LookupsController : ControllerBase
     {
         await repository.SetCushionType(cushionType.Key, cushionType.Value, outreachTeamId);
     }
-    #endregion
 
-    #region Disability
     [HttpGet("disabilities")]
     public async Task<Dictionary<int, string>> GetDisabilitiesLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
@@ -68,9 +57,7 @@ public class LookupsController : ControllerBase
     {
         await repository.SetDisability(disability.Key, disability.Value, outreachTeamId);
     }
-    #endregion
 
-    #region Ethnicity
     [HttpGet("ethnicities")]
     public async Task<Dictionary<int, string>> GetEthnicitiesLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
@@ -82,9 +69,7 @@ public class LookupsController : ControllerBase
     {
         await repository.SetEthnicity(ethnicity.Key, ethnicity.Value, outreachTeamId);
     }
-    #endregion
 
-    #region Gender
     [HttpGet("genders")]
     public async Task<Dictionary<int, string>> GetGendersLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
@@ -96,9 +81,7 @@ public class LookupsController : ControllerBase
     {
         await repository.SetGender(gender.Key, gender.Value, outreachTeamId);
     }
-    #endregion
 
-    #region Housing Status
     [HttpGet("housing-statuses")]
     public async Task<Dictionary<int, string>> GetHousingStatusesLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
@@ -110,9 +93,7 @@ public class LookupsController : ControllerBase
     {
         await repository.SetHousingStatus(housingStatus.Key, housingStatus.Value, outreachTeamId);
     }
-    #endregion
 
-    #region Location Type
     [HttpGet("location-types")]
     public async Task<Dictionary<int, string>> GetLocationTypesLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
@@ -124,9 +105,7 @@ public class LookupsController : ControllerBase
     {
         await repository.SetLocationType(locationType.Key, locationType.Value, outreachTeamId);
     }
-    #endregion
 
-    #region Pants Size
     [HttpGet("pants-sizes")]
     public async Task<Dictionary<int, string>> GetPantsSizesLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
@@ -138,9 +117,8 @@ public class LookupsController : ControllerBase
     {
         await repository.SetPantsSize(pantsSize.Key, pantsSize.Value, outreachTeamId);
     }
-    #endregion
 
-    #region Needs
+
     [HttpGet("needs")]
     public async Task<Dictionary<int, string>> GetNeedsLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
@@ -152,9 +130,7 @@ public class LookupsController : ControllerBase
     {
         await repository.SetNeed(need.Key, need.Value, outreachTeamId);
     }
-    #endregion
 
-    #region Shirt Size
     [HttpGet("shirt-sizes")]
     public async Task<Dictionary<int, string>> GetShirtSizesLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
@@ -166,9 +142,7 @@ public class LookupsController : ControllerBase
     {
         await repository.SetShirtSize(shirtSize.Key, shirtSize.Value, outreachTeamId);
     }
-    #endregion
 
-    #region Shoe Size
     [HttpGet("shoe-sizes")]
     public async Task<Dictionary<int, string>> GetShoeSizesLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
@@ -180,9 +154,7 @@ public class LookupsController : ControllerBase
     {
         await repository.SetShoeSize(shoeSize.Key, shoeSize.Value, outreachTeamId);
     }
-    #endregion
 
-    #region Skill
     [HttpGet("skills")]
     public async Task<Dictionary<int, string>> GetSkillsLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
@@ -194,9 +166,7 @@ public class LookupsController : ControllerBase
     {
         await repository.SetSkill(skill.Key, skill.Value, outreachTeamId);
     }
-    #endregion
 
-    #region Sleeping Bag Condition
     [HttpGet("sleeping-bag-conditions")]
     public async Task<Dictionary<int, string>> GetSleepingBagConditionsLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
@@ -208,9 +178,7 @@ public class LookupsController : ControllerBase
     {
         await repository.SetSleepingBagCondition(sleepingBagCondition.Key, sleepingBagCondition.Value, outreachTeamId);
     }
-    #endregion
 
-    #region Tent Condition
     [HttpGet("tent-conditions")]
     public async Task<Dictionary<int, string>> GetTentConditionsLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
@@ -222,9 +190,7 @@ public class LookupsController : ControllerBase
     {
         await repository.SetTentCondition(tentCondition.Key, tentCondition.Value, outreachTeamId);
     }
-    #endregion
 
-    #region Tent Usage
     [HttpGet("tent-usages")]
     public async Task<Dictionary<int, string>> GetTentUsagesLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
@@ -236,5 +202,4 @@ public class LookupsController : ControllerBase
     {
         await repository.SetTentUsage(tentUsage.Key, tentUsage.Value, outreachTeamId);
     }
-    #endregion
 }

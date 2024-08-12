@@ -6,7 +6,6 @@ namespace UnhousedOutreach.Database.HousingInsecureNeighbors;
 
 public class HousingInsecureNeighborsMySqlRepository(string connectionString) : Repository(connectionString)
 {
-    #region Get Methods
     public async Task<IEnumerable<HousingInsecureNeighbor>> GetHousingInsecureNeighbors(int outreachTeamId)
     {
         // GET NEIGHBORS.
@@ -52,6 +51,7 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
                     City = (string)reader["NeighborLocationCity"],
                     State = Parser.GetEnumValue<State>(reader, "NeighborLocationState"),
                     ZipCode = Parser.GetNullableValue<string?>(reader, "NeighborLocationZipCode"),
+                    ArrivalDate = Parser.GetNullableValue<DateTime?>(reader, "NeighborLocationArrivalDate"),
                     IsLegal = Parser.GetNullableBooleanValue(reader, "NeighborLocationIsLegal"),
                     Comments = Parser.GetNullableStringValueFromByteArray(reader, "NeighborLocationComments"),
                 },
@@ -65,6 +65,7 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
                     City = (string)reader["DesiredLocationCity"],
                     State = Parser.GetEnumValue<State>(reader, "DesiredLocationState"),
                     ZipCode = Parser.GetNullableValue<string?>(reader, "DesiredLocationZipCode"),
+                    ArrivalDate = Parser.GetNullableValue<DateTime?>(reader, "DesiredLocationArrivalDate"),
                     IsLegal = Parser.GetNullableBooleanValue(reader, "DesiredLocationIsLegal"),
                     Comments = Parser.GetNullableStringValueFromByteArray(reader, "DesiredLocationComments"),
                 },
@@ -176,9 +177,7 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
         var housingInsecureNeighbors = idsToNeighborsMap.Values.AsEnumerable();
         return housingInsecureNeighbors;
     }
-    #endregion
-
-    #region Set Methods
+    
     public async Task SetHousingInsecureNeighbor(HousingInsecureNeighbor housingInsecureNeighbor, int outreachTeamId)
     {
         Dictionary<string, object?> parameters = new()
@@ -289,9 +288,7 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
         };
         await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.SetHousingInsecureNeighborTent, parameters);
     }
-    #endregion
-
-    #region Delete Methods
+    
     public async Task DeleteHousingInsecureNeighborEthnicity(int housingInsecureNeighborId, int ethnicityId, int outreachTeamId)
     {
         Dictionary<string, object?> parameters = new()
@@ -313,5 +310,4 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
         };
         await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.DeleteHousingInsecureNeighborNeed, parameters);
     }
-    #endregion
 }
