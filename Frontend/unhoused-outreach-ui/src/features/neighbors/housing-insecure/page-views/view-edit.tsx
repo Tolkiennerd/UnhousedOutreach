@@ -10,14 +10,12 @@ import { useContext, useState } from "react";
 import { LookupsContext } from "App";
 import { Lookups } from "features/lookups";
 import dayjs from "dayjs";
-import { Location, State } from "features/mapping";
+import { State } from "features/mapping";
 import axios from 'axios';
-import { CaseManager } from "features/support-services";
 import { getFullName } from "features/neighbors/functions/formatting";
 
 
 export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose} : {neighbor: HousingInsecureNeighbor, setNeighbor: React.Dispatch<React.SetStateAction<HousingInsecureNeighbor>>, onClose: () => void}) {
-
     const lookups = useContext(LookupsContext) as Lookups;
     const [showName, setShowName] = useState(true);
     const [showContact, setShowContact] = useState(false);
@@ -46,22 +44,28 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
         setShowComments(false);
     }
 
-    const updateLocationInDb = (location: Location) => {
+    const updateEthnicityInDb = (ethnicityId: number) => {
+        updateLookupInDb(ethnicityId, 'housing-insecure-neighbor-ethnicity');
+    }
+    const deleteEthnicityFromDb = (ethnicityId: number) => {
+        deleteLookupFromDb(ethnicityId, 'housing-insecure-neighbor-ethnicity');
+    }
+    const updateNeedInDb = (ethnicityId: number) => {
+        updateLookupInDb(ethnicityId, 'housing-insecure-neighbor-need');
+    }
+    const deleteNeedFromDb = (ethnicityId: number) => {
+        deleteLookupFromDb(ethnicityId, 'housing-insecure-neighbor-need');
+    }
+    const updateDisabilityInDb = (ethnicityId: number) => {
+        updateLookupInDb(ethnicityId, 'housing-insecure-neighbor-disability');
+    }
+    const deleteDisabilityFromDb = (ethnicityId: number) => {
+        deleteLookupFromDb(ethnicityId, 'housing-insecure-neighbor-disability');
+    }
+    const updateLookupInDb = (lookupId: number, endpoint: string) => {
         // TODO: Get OTID from user data.
         axios
-            .put(`${process.env.REACT_APP_API_URL}/location?otid=1`, location)
-            .catch(error => console.log(error));
-    };
-    const updateCaseManagerInDb = (caseManager: CaseManager) => {
-        // TODO: Get OTID from user data.
-        axios
-            .put(`${process.env.REACT_APP_API_URL}/case-manager?otid=1`, caseManager)
-            .catch(error => console.log(error));
-    };
-    const updateEthnicityInDb = (neighborId: number, ethnicityId: number) => {
-        // TODO: Get OTID from user data.
-        axios
-            .put(`${process.env.REACT_APP_API_URL}/housing-insecure-neighbor-ethnicity?nid=${neighborId}&otid=1`, ethnicityId, {
+            .put(`${process.env.REACT_APP_API_URL}/${endpoint}?nid=${neighbor.housingInsecureNeighborId}&otid=1`, lookupId, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -69,10 +73,10 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
             })
             .catch(error => console.log(error));
     }
-    const deleteEthnicityFromDb = (neighborId: number, ethnicityId: number) => {
+    const deleteLookupFromDb = (lookupId: number, endpoint: string) => {
         // TODO: Get OTID from user data.
         axios
-            .delete(`${process.env.REACT_APP_API_URL}/housing-insecure-neighbor-ethnicity?id=${ethnicityId}&nid=${neighborId}&otid=1`)
+            .delete(`${process.env.REACT_APP_API_URL}/${endpoint}?id=${lookupId}&nid=${neighbor.housingInsecureNeighborId}&otid=1`)
             .catch(error => console.log(error));
     }
 
@@ -88,17 +92,17 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                 dataForGrandparentElement;
         return selectedId;
     }
-    const setIds = (event: any, ids: number[], setMethod: any, deleteMethod: any): number[] => {
+    const setIds = (event: any, ids: number[], setMethod: (id: number) => void, deleteMethod: (id: number) => void): number[] => {
         const selectedId = getSelectedId(event);
-        const selectedIdIndexInExistingList = ids.indexOf(selectedId);
+        const shouldAddNewId = !ids.includes(selectedId);
         let returnedIds = [];
-        if (selectedIdIndexInExistingList === -1) {
+        if (shouldAddNewId) {
             returnedIds = [...ids, selectedId];
-            setMethod(neighbor.housingInsecureNeighborId, selectedId);
+            setMethod(selectedId);
         }
         else {
-            returnedIds = ids.splice(selectedIdIndexInExistingList, 1);
-            deleteMethod(neighbor.housingInsecureNeighborId, selectedId);
+            returnedIds = ids.filter(id => id !== selectedId);
+            deleteMethod(selectedId);
         }
         return returnedIds;
     }
@@ -142,7 +146,7 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                     </Paper>
                     {showName ? 
                     <div className="edit-field">
-                        <h3 style={{textAlign: 'left'}}>Name</h3>
+                        <h3>Name</h3>
                         <TextField
                             label="First Name" 
                             value={neighbor.firstName} 
@@ -164,7 +168,7 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                     </div> : null}
                     {showContact ? 
                     <div className="edit-field">
-                        <h3 style={{textAlign: 'left'}}>Contact</h3>
+                        <h3>Contact</h3>
                         <TextField
                             label="Phone Number" 
                             value={neighbor.phoneNumber} 
@@ -180,13 +184,12 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                     </div> : null }
                     {showDemographics ? 
                     <div className="edit-field">
-                        <h3 style={{textAlign: 'left'}}>Demographics</h3>
+                        <h3>Demographics</h3>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker 
                                 label="Date of Birth" 
                                 value={dayjs(neighbor.dateOfBirth)}
                                 onChange={(event) => setNeighbor({...neighbor, dateOfBirth: event?.toDate()})}
-
                             />
                         </LocalizationProvider>
                         <div className='dropdown'>
@@ -217,51 +220,47 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                                         <MenuItem key={`Ethnicity-${id}`} value={id}>
                                             {lookups.ethnicity[Number(id)]}
                                         </MenuItem>
-                                    )}
+                                    ).sort((a, b) => lookups.ethnicity[Number(a.props.value)].localeCompare(lookups.ethnicity[Number(b.props.value)]))}
                                 </Select>
                             </FormControl>
                         </div>
                     </div> : null }
                     {showLocation ?
                     <div className="edit-field">
-                        <h3 style={{textAlign: 'left'}}>Location</h3>
+                        <h3>Location</h3>
                         <div className='dropdown'>
                             <FormControl fullWidth id='location-type-form'>
                                 <InputLabel>Type</InputLabel>
                                 <Select
                                     label="Type"
-                                    defaultValue={neighbor.location?.locationTypeId} 
-                                    onChange={(event) => { if (neighbor.location) neighbor.location.locationTypeId = event.target.value as number }}
-                                    onBlur={() => { if (neighbor.location) updateLocationInDb(neighbor.location)}}
+                                    value={neighbor.location?.locationTypeId}
+                                    onChange={(event) => setNeighbor({...neighbor, location: {...neighbor.location, locationTypeId: Number(event.target.value)}})}
                                 >
                                     {Object.keys(lookups.locationType).map(id => 
-                                        <MenuItem key={`Type-${id}`} value={id}>{lookups.locationType[Number(id)]}</MenuItem>
-                                    ).sort((a, b) => lookups.locationType[Number(a.props.value)].localeCompare(lookups.locationType[Number(b.props.value)]))}
+                                        <MenuItem id={`Type-${id}`} key={`Type-${id}`} value={id}>{lookups.locationType[Number(id)]}</MenuItem>
+                                    )}
                                 </Select>
                             </FormControl>
                         </div>
                         <TextField
-                            label="Address" 
-                            defaultValue={neighbor.location?.address} 
-                            onChange={(event) => { if (neighbor.location) neighbor.location.address = event.target.value as string }}
-                            onBlur={() => { if (neighbor.location) updateLocationInDb(neighbor.location)}}
-                            variant="outlined" 
+                            label="Address"
+                            value={neighbor.location?.address} 
+                            onChange={(event) => setNeighbor({...neighbor, location: {...neighbor.location, address: event.target.value}})}
+                            variant="outlined"
                         />
                         <TextField
                             label="City"
-                            defaultValue={neighbor.location?.city}
-                            onChange={(event) => { if (neighbor.location) neighbor.location.city = event.target.value as string }}
-                            onBlur={() => { if (neighbor.location) updateLocationInDb(neighbor.location)}}
-                            variant="outlined" 
+                            value={neighbor.location?.city} 
+                            onChange={(event) => setNeighbor({...neighbor, location: {...neighbor.location, city: event.target.value}})}
+                            variant="outlined"
                         />
                         <div className='dropdown'>
                             <FormControl fullWidth id='state-form'>
                                 <InputLabel>State</InputLabel>
                                 <Select
                                     label="State"
-                                    defaultValue={neighbor.location?.state}
-                                    onChange={(event) => { if (neighbor.location) neighbor.location.state = event.target.value as number }}
-                                    onBlur={() => { if (neighbor.location) updateLocationInDb(neighbor.location)}}
+                                    value={neighbor.location?.state}
+                                    onChange={(event) => setNeighbor({...neighbor, location: {...neighbor.location, state: Number(event.target.value)}})}
                                 >
                                     {Object.entries(State).filter(([key, value]) => !isNaN(+key)).map(([key, value]) => 
                                         <MenuItem key={key} value={Number(key)}>{value}</MenuItem>
@@ -270,48 +269,44 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                             </FormControl>
                         </div>
                         <TextField
-                            label="Zip Code" 
-                            defaultValue={neighbor.location?.zipCode} 
-                            onChange={(event) => { if (neighbor.location) neighbor.location.zipCode = event.target.value as string }}
-                            onBlur={() => { if (neighbor.location) updateLocationInDb(neighbor.location)}}
-                            variant="outlined" 
+                            label="Zip Code"
+                            value={neighbor.location?.zipCode} 
+                            onChange={(event) => setNeighbor({...neighbor, location: {...neighbor.location, zipCode: event.target.value}})}
+                            variant="outlined"
                         />
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker
+                            <DatePicker 
                                 label="Arrival Date" 
-                                defaultValue={dayjs(neighbor.location?.arrivalDate)} 
-                                onChange={(event) => { if (neighbor.location) neighbor.location.arrivalDate = event?.toDate() }}
-                                onClose={() => { if (neighbor.location) updateLocationInDb(neighbor.location)}}
+                                value={dayjs(neighbor.location?.arrivalDate)}
+                                onChange={(event) => setNeighbor({...neighbor, location: {...neighbor.location, arrivalDate: event?.toDate()}})}
                             />
                         </LocalizationProvider>
                         <FormControlLabel 
                             control=
                             {<Switch
-                                defaultChecked={neighbor.location?.isLegal} 
-                                onChange={(event) => { 
-                                    if (neighbor.location) {
-                                        neighbor.location.isLegal = !Boolean(event.target.value);
-                                        updateLocationInDb(neighbor.location);
-                                    }
-                                }}
+                                checked={neighbor.location?.isLegal}
+                                onChange={(event) => setNeighbor({...neighbor, location: {...neighbor.location, isLegal: event.target.checked}})}
                             />}
                             label="Is Legal"
                         />
                     </div> : null }
                     {showNeeds ? 
                     <div className="edit-field">
-                        <h3 style={{textAlign: 'left'}}>Needs</h3>
+                        <h3>Needs</h3>
                         <div className='dropdown'>
                             <FormControl fullWidth id='needs-form'>
                                 <InputLabel>Needs</InputLabel>
-                                <Select 
+                                <Select
                                     label="Needs"
                                     multiple
-                                    defaultValue={neighbor.needIds} 
-                                    onChange={(event) => neighbor.needIds = event.target.value as number[]}
+                                    value={neighbor.needIds}
+                                    renderValue={(ids) => ids.map(id => lookups.need[Number(id)]).join(', ')}
+                                    onChange={(event) => setNeighbor({...neighbor, needIds: setIds(event, neighbor.needIds, updateNeedInDb, deleteNeedFromDb)})}
                                 >
-                                    {Object.keys(lookups.need).map(id => 
-                                        <MenuItem key={`Needs-${id}`} value={id}>{lookups.need[Number(id)]}</MenuItem>
+                                    {Object.keys(lookups.need).map(id =>
+                                        <MenuItem key={`Need-${id}`} value={id}>
+                                            {lookups.need[Number(id)]}
+                                        </MenuItem>
                                     ).sort((a, b) => lookups.need[Number(a.props.value)].localeCompare(lookups.need[Number(b.props.value)]))}
                                 </Select>
                             </FormControl>
@@ -319,18 +314,21 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                     </div>: null }
                     {showDisabilities ?
                     <div className='edit-field'>
-                        <h3 style={{textAlign: 'left'}}>Disabilities</h3>
+                        <h3>Disabilities</h3>
                         <div className='dropdown'>
                             <FormControl fullWidth id='disability-form'>
                                 <InputLabel>Disabilities</InputLabel>
-                                <Select 
+                                <Select
                                     label="Disabilities"
                                     multiple
-                                    defaultValue={neighbor.disabilityIds}
-                                    onChange={(event) => neighbor.disabilityIds = event.target.value as number[]}
+                                    value={neighbor.disabilityIds}
+                                    renderValue={(ids) => ids.map(id => lookups.disability[Number(id)]).join(', ')}
+                                    onChange={(event) => setNeighbor({...neighbor, disabilityIds: setIds(event, neighbor.disabilityIds, updateDisabilityInDb, deleteDisabilityFromDb)})}
                                 >
-                                    {Object.keys(lookups.disability).map(id => 
-                                        <MenuItem key={`Disability-${id}`} value={id}>{lookups.disability[Number(id)]}</MenuItem>
+                                    {Object.keys(lookups.disability).map(id =>
+                                        <MenuItem key={`Disability-${id}`} value={id}>
+                                            {lookups.disability[Number(id)]}
+                                        </MenuItem>
                                     ).sort((a, b) => lookups.disability[Number(a.props.value)].localeCompare(lookups.disability[Number(b.props.value)]))}
                                 </Select>
                             </FormControl>
@@ -338,15 +336,14 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                     </div> : null }
                     {showHousingStatus ?
                     <div className="edit-field">
-                    <h3 style={{textAlign: 'left'}}>Housing Status</h3>
+                        <h3>Housing Status</h3>
                         <div className='dropdown'>
                             <FormControl fullWidth id='housing-status-form'>
                                 <InputLabel>Housing Status</InputLabel>
                                 <Select 
                                     label="Housing Status"
-                                    multiple
-                                    defaultValue={neighbor.housingStatusId}
-                                    onChange={(event) => neighbor.housingStatusId = event.target.value as number}
+                                    value={neighbor.housingStatusId}
+                                    onChange={(event) => setNeighbor({...neighbor, housingStatusId: Number(event.target.value)})}
                                 >
                                     {Object.keys(lookups.housingStatus).map(id => 
                                         <MenuItem key={`Housing Status-${id}`} value={id}>{lookups.housingStatus[Number(id)]}</MenuItem>
@@ -354,54 +351,88 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                                 </Select>
                             </FormControl>
                         </div>
+                        <h4>Case Manager</h4>
                         <TextField
-                            label="First Name" 
-                            defaultValue={neighbor.caseManager?.firstName}
-                            onChange={(event) => { if (neighbor.caseManager) neighbor.caseManager.firstName = event.target.value as string}}
-                            onBlur={() => { if (neighbor.caseManager) updateCaseManagerInDb(neighbor.caseManager) }}
+                            label="First Name"
+                            value={neighbor.caseManager?.firstName}
+                            onChange={(event) => setNeighbor({...neighbor, caseManager: {...neighbor.caseManager, firstName: event.target.value}})}
                             variant="outlined"
                         />
                         <TextField
                             label="Last Name" 
-                            defaultValue={neighbor.caseManager?.lastName}
-                            onChange={(event) => { if (neighbor.caseManager) neighbor.caseManager.lastName = event.target.value as string}}
-                            onBlur={() => { if (neighbor.caseManager) updateCaseManagerInDb(neighbor.caseManager) }}
+                            value={neighbor.caseManager?.lastName}
+                            onChange={(event) => setNeighbor({...neighbor, caseManager: {...neighbor.caseManager, lastName: event.target.value}})}
                             variant="outlined"
                         />
                         <TextField
                             label="Phone Number" 
-                            defaultValue={neighbor.caseManager?.phoneNumber}
-                            onChange={(event) => { if (neighbor.caseManager) neighbor.caseManager.phoneNumber = event.target.value as string}}
-                            onBlur={() => { if (neighbor.caseManager) updateCaseManagerInDb(neighbor.caseManager) }}
+                            value={neighbor.caseManager?.phoneNumber}
+                            onChange={(event) => setNeighbor({...neighbor, caseManager: {...neighbor.caseManager, phoneNumber: event.target.value}})}
                             variant="outlined"
                         />
-                        <TextField defaultValue={neighbor.caseManager?.emailAddress} label="Email Address" variant="outlined" />
+                        <TextField 
+                            label="Email Address" 
+                            value={neighbor.caseManager?.emailAddress}
+                            onChange={(event) => setNeighbor({...neighbor, caseManager: {...neighbor.caseManager, emailAddress: event.target.value}})}
+                            variant="outlined"
+                        />
                     </div> : null}
                     {showCircumstances ? 
                     <div className="edit-field">
-                        <h3 style={{textAlign: 'left'}}>Circumstances</h3>
-                        TODO
+                        <h3>Circumstances</h3>
+                        <FormControlLabel 
+                            control=
+                            {<Switch
+                                checked={neighbor.isHoused}
+                                onChange={(event) => setNeighbor({...neighbor, isHoused: event.target.checked})}
+                            />}
+                            label="Is Housed"
+                        />
+                        <FormControlLabel 
+                            control=
+                            {<Switch
+                                checked={neighbor.isVeteran}
+                                onChange={(event) => setNeighbor({...neighbor, isVeteran: event.target.checked})}
+                            />}
+                            label="Is Veteran"
+                        />
+                        <FormControlLabel 
+                            control=
+                            {<Switch
+                                checked={neighbor.isCitizen}
+                                onChange={(event) => setNeighbor({...neighbor, isCitizen: event.target.checked})}
+                            />}
+                            label="Is Citizen"
+                        />
+                        <FormControlLabel 
+                            control=
+                            {<Switch
+                                checked={neighbor.hasIdentification}
+                                onChange={(event) => setNeighbor({...neighbor, hasIdentification: event.target.checked})}
+                            />}
+                            label="Has Identification"
+                        />
                     </div> : null }
                     {showSkillsIncome ? 
                     <div className="edit-field">
-                        <h3 style={{textAlign: 'left'}}>Skills & Income</h3>
+                        <h3>Skills & Income</h3>
                         TODO
                     </div> : null }
                     {showLanguage ? 
                     <div className="edit-field">
-                        <h3 style={{textAlign: 'left'}}>Language</h3>
+                        <h3>Language</h3>
                         TODO
                     </div> : null }
                     {showClothing ? 
                     <div className="edit-field">
-                        <h3 style={{textAlign: 'left'}}>Clothing</h3>
+                        <h3>Clothing</h3>
                         <div className='dropdown'>
                             <FormControl fullWidth id='shoes-form'>
                                 <InputLabel>Shoe Size</InputLabel>
                                 <Select
                                     label="Shoe Size"
-                                    defaultValue={neighbor.shoeSizeId}
-                                    onChange={(event) => neighbor.shoeSizeId = event.target.value as number}
+                                    value={neighbor.shoeSizeId}
+                                    onChange={(event) => setNeighbor({...neighbor, shoeSizeId: event.target.value as number })}
                                 >
                                     {Object.keys(lookups.shoeSize).map(id => 
                                         <MenuItem key={`Shoes-${id}`} value={id}>{lookups.shoeSize[Number(id)]}</MenuItem>
@@ -414,8 +445,8 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                                 <InputLabel>Pants Size</InputLabel>
                                 <Select
                                     label="Pants Size"
-                                    defaultValue={neighbor.pantsSizeId}
-                                    onChange={(event) => neighbor.pantsSizeId = event.target.value as number}
+                                    value={neighbor.pantsSizeId}
+                                    onChange={(event) => setNeighbor({...neighbor, pantsSizeId:  event.target.value as number})}
                                 >
                                     {Object.keys(lookups.pantsSize).map(id => 
                                         <MenuItem key={`Pants-${id}`} value={id}>{lookups.pantsSize[Number(id)]}</MenuItem>
@@ -424,13 +455,12 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                             </FormControl>
                         </div>
                         <div className='dropdown'>
-                            <FormControl fullWidth id='pants-form'>
+                            <FormControl fullWidth id='shirt-form'>
                                 <InputLabel>Shirt Size</InputLabel>
                                 <Select
                                     label="Shirt Size"
-                                    multiple
-                                    defaultValue={neighbor.shirtSizeId}
-                                    onChange={(event) => neighbor.shirtSizeId = event.target.value as number}
+                                    value={neighbor.shirtSizeId}
+                                    onChange={(event) => setNeighbor({...neighbor, shirtSizeId:  event.target.value as number})}
                                 >
                                     {Object.keys(lookups.shirtSize).map(id => 
                                         <MenuItem key={`Shirt-${id}`} value={id}>{lookups.shirtSize[Number(id)]}</MenuItem>
@@ -441,11 +471,11 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                     </div> : null }
                     {showComments ?
                     <div className="edit-field">
-                        <h3 style={{textAlign: 'left'}}>Comments</h3>
+                        <h3>Comments</h3>
                         <textarea
                             value={neighbor.comments}
                             placeholder="Comments"
-                            onChange={(event) => neighbor.comments = event.target.value as string}
+                            onChange={(event) => setNeighbor({...neighbor, comments: event.target.value})}
                         />
                     </div> : null }
                 </div>

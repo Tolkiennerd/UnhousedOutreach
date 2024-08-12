@@ -13,6 +13,8 @@ import './table.css';
 import { getAge, getContact, getFullName } from 'features/neighbors/functions/formatting';
 import { getLocationLink } from 'features/mapping/functions/formatting';
 import axios from 'axios';
+import { CaseManager } from 'features/support-services';
+import { Location } from 'features/mapping';
 
 
 interface CellProps {
@@ -45,6 +47,18 @@ export function Row({ initialNeighbor }: { initialNeighbor: HousingInsecureNeigh
             .put(`${process.env.REACT_APP_API_URL}/housing-insecure-neighbor?otid=1`, neighbor)
             .catch(error => console.log(error));
     };
+    const updateLocationInDb = (location: Location) => {
+        // TODO: Get OTID from user data.
+        axios
+            .put(`${process.env.REACT_APP_API_URL}/location?otid=1`, location)
+            .catch(error => console.log(error));
+    };
+    const updateCaseManagerInDb = (caseManager: CaseManager) => {
+        // TODO: Get OTID from user data.
+        axios
+            .put(`${process.env.REACT_APP_API_URL}/case-manager?otid=1`, caseManager)
+            .catch(error => console.log(error));
+    };
 
     // CELL CLICK FUNCTIONS.
     const expandRow = () => setRowExpanded(!rowExpanded);
@@ -52,6 +66,12 @@ export function Row({ initialNeighbor }: { initialNeighbor: HousingInsecureNeigh
     const closeDrawer = () => {
         setEditPanelOpen(false);
         updateNeighborInDb();
+        if (neighbor.location) {
+            updateLocationInDb(neighbor.location);
+        }
+        if (neighbor.caseManager) {
+            updateCaseManagerInDb(neighbor.caseManager);
+        }
     }
 
     // DATA FORMATTING.
@@ -77,7 +97,7 @@ export function Row({ initialNeighbor }: { initialNeighbor: HousingInsecureNeigh
                 <Cell text={getFullName(neighbor)} underText={getContact(neighbor)} className='extra-small-screen' onClick={expandRow} />
                 <Cell 
                     text={getLocationLink(tentIcon, lookups.locationType, neighbor.location) ?? 'Unknown'}
-                    underText={neighbor.location?.arrivalDate?.toLocaleDateString() ?? ''}
+                    underText={neighbor.location?.arrivalDate ? new Date(neighbor.location?.arrivalDate).toLocaleDateString() : ''}
                     className='small-screen'
                     onClick={expandRow} 
                 />
@@ -113,7 +133,7 @@ export function Row({ initialNeighbor }: { initialNeighbor: HousingInsecureNeigh
                                         icon: tentIcon, 
                                         link: `/map/${neighbor.location?.latitude}/${neighbor.location?.longitude}`
                                     },
-                                    {label: neighbor.location?.arrivalDate ? neighbor.location.arrivalDate.toLocaleDateString() : undefined}
+                                    {label: neighbor.location?.arrivalDate ? new Date(neighbor.location.arrivalDate).toLocaleDateString() : undefined}
                                 ]}
                             />
                             <InfoCard
@@ -173,9 +193,9 @@ export function Row({ initialNeighbor }: { initialNeighbor: HousingInsecureNeigh
                                 backgroundColor='var(--clothing-color)'
                                 className='box-card'
                                 chips={[
-                                    {label: getLookupValue(neighbor.shoeSizeId, lookups.shoeSize), icon: shoeIcon},
-                                    {label: getLookupValue(neighbor.shirtSizeId, lookups.shirtSize), icon: shirtIcon},
-                                    {label: getLookupValue(neighbor.pantsSizeId, lookups.pantsSize), icon: pantsIcon}
+                                    {label: getLookupValue(neighbor.shoeSizeId, lookups.shoeSize), icon: shoeIcon, type: 'shoe'},
+                                    {label: getLookupValue(neighbor.shirtSizeId, lookups.shirtSize), icon: shirtIcon, type: 'shirt'},
+                                    {label: getLookupValue(neighbor.pantsSizeId, lookups.pantsSize), icon: pantsIcon, type: 'pants'}
                                 ]}
                             />
                             <InfoCard

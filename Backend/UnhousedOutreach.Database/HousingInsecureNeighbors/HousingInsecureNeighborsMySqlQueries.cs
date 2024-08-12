@@ -37,6 +37,7 @@ SELECT
     NeighborLocation.State AS NeighborLocationState,
     NeighborLocation.ZipCode AS NeighborLocationZipCode,
     NeighborLocation.IsLegal AS NeighborLocationIsLegal,
+    NeighborLocation.ArrivalDate AS NeighborLocationArrivalDate,
     NeighborLocation.Comments AS NeighborLocationComments,
     CaseManager.CaseManagerId,
     SupportServiceOrganization.SupportServiceOrganizationId,
@@ -57,6 +58,7 @@ SELECT
     DesiredLocation.State AS DesiredLocationState,
     DesiredLocation.ZipCode AS DesiredLocationZipCode,
     DesiredLocation.IsLegal AS DesiredLocationIsLegal,
+    DesiredLocation.ArrivalDate AS DesiredLocationArrivalDate,
     DesiredLocation.Comments AS DesiredLocationComments
 FROM HousingInsecureNeighbor
     LEFT JOIN Location AS NeighborLocation
