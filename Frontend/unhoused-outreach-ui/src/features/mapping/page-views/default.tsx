@@ -1,8 +1,8 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { Lookups } from '../../lookups';
-import { LookupsContext } from '../../../App';
+import { Lookups } from 'features/lookups';
+import { LookupsContext } from 'App';
 import { useContext, useEffect, useState } from 'react';
-import tentIcon from "../../../assets/tent.png"
+import tentIcon from "assets/tent.png"
 import { Icon, LatLngExpression } from 'leaflet'
 import axios from 'axios';
 import { LocationWithNeighbor } from '../models/location-with-neighbor';

@@ -12,10 +12,6 @@ h3 {
     text-align: center;
 }
 
-.edit-field h3 {
-    text-align: left;
-}
-
 .table-container > .MuiPaper-root {
     margin-left: auto !important;
     margin-right: auto !important;

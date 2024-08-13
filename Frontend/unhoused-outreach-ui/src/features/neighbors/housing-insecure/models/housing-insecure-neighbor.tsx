@@ -1,6 +1,6 @@
 import { Location } from "features/mapping";
 import { CaseManager } from "features/support-services";
-import { Neighbor } from "../..";
+import { Neighbor } from "features/neighbors"
 import { FamilyMember, Tent } from "..";
 
 export interface HousingInsecureNeighbor extends Neighbor
