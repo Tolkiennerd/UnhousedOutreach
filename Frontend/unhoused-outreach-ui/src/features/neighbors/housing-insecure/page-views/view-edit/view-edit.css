@@ -40,6 +40,19 @@
     color: inherit !important;
 }
 
+.back-arrow {
+    margin-left: -20px;
+    bottom: 0;
+}
+
+.back-arrow span {
+    padding-left: 10px;
+}
+
+#modal-title {
+    padding-top: 10px;
+}
+
 textarea {
     box-sizing: border-box;
     width: 16.5rem;
@@ -96,6 +109,7 @@ textarea {
     background-color: #001 !important;
     color: white !important;
     height: fit-content;
+    display: flex;
 }
 
 .MuiDayCalendar-weekContainer > *{
@@ -123,6 +137,10 @@ textarea {
     margin-top: 1rem;
 }
 
+.menu-and-edit-container .menu-and-edit {
+    display: flex;
+}
+
 .menu {
     margin-left: 0 !important;
     margin-top: 1rem !important;
@@ -148,4 +166,8 @@ textarea {
 
 .edit-field .MuiFormControlLabel-root {
     width: 17.2rem !important;
+}
+
+.edit-field h3 {
+    text-align: left;
 }

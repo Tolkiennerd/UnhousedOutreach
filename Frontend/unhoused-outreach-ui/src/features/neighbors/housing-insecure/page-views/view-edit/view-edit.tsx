@@ -1,22 +1,33 @@
 import { Box, FormControl, FormControlLabel, InputLabel, MenuItem, MenuList, Paper, Select, Switch, TextField, Typography } from "@mui/material";
-import { HousingInsecureNeighbor } from "../models/housing-insecure-neighbor";
+import { HousingInsecureNeighbor } from "../..";
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import './view-edit.css';
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LookupsContext } from "App";
 import { Lookups } from "features/lookups";
 import dayjs from "dayjs";
-import { State } from "features/mapping";
+import { getLocationLabel, Location, State } from "features/mapping";
 import axios from 'axios';
 import { getFullName } from "features/neighbors/functions/formatting";
+import { ViewEditName } from "./name";
+import { ViewEditContact } from "./contact";
+import { ViewEditDemographics } from "./demographics";
 
 
-export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose} : {neighbor: HousingInsecureNeighbor, setNeighbor: React.Dispatch<React.SetStateAction<HousingInsecureNeighbor>>, onClose: () => void}) {
+interface ViewEditHousingInsecureNeighborProps {
+    neighbor: HousingInsecureNeighbor;
+    setNeighbor: React.Dispatch<React.SetStateAction<HousingInsecureNeighbor>>;
+    onClose: () => void;
+};
+
+export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose} : ViewEditHousingInsecureNeighborProps) {
+
     const lookups = useContext(LookupsContext) as Lookups;
+
     const [showName, setShowName] = useState(true);
     const [showContact, setShowContact] = useState(false);
     const [showDemographics, setShowDemographics] = useState(false);
@@ -29,7 +40,7 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
     const [showLanguage, setShowLanguage] = useState(false);
     const [showClothing, setShowClothing] = useState(false);
     const [showComments, setShowComments] = useState(false);
-    const hideAll = () => {
+    const switchView = (showView: React.Dispatch<React.SetStateAction<boolean>>): void => {
         setShowName(false);
         setShowContact(false);
         setShowDemographics(false);
@@ -42,26 +53,21 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
         setShowLanguage(false);
         setShowClothing(false);
         setShowComments(false);
-    }
+        showView(true);
+    };
 
-    const updateEthnicityInDb = (ethnicityId: number) => {
-        updateLookupInDb(ethnicityId, 'housing-insecure-neighbor-ethnicity');
-    }
-    const deleteEthnicityFromDb = (ethnicityId: number) => {
-        deleteLookupFromDb(ethnicityId, 'housing-insecure-neighbor-ethnicity');
-    }
     const updateNeedInDb = (ethnicityId: number) => {
         updateLookupInDb(ethnicityId, 'housing-insecure-neighbor-need');
-    }
+    };
     const deleteNeedFromDb = (ethnicityId: number) => {
         deleteLookupFromDb(ethnicityId, 'housing-insecure-neighbor-need');
-    }
+    };
     const updateDisabilityInDb = (ethnicityId: number) => {
         updateLookupInDb(ethnicityId, 'housing-insecure-neighbor-disability');
-    }
+    };
     const deleteDisabilityFromDb = (ethnicityId: number) => {
         deleteLookupFromDb(ethnicityId, 'housing-insecure-neighbor-disability');
-    }
+    };
     const updateLookupInDb = (lookupId: number, endpoint: string) => {
         // TODO: Get OTID from user data.
         axios
@@ -72,13 +78,13 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                 }
             })
             .catch(error => console.log(error));
-    }
+    };
     const deleteLookupFromDb = (lookupId: number, endpoint: string) => {
         // TODO: Get OTID from user data.
         axios
             .delete(`${process.env.REACT_APP_API_URL}/${endpoint}?id=${lookupId}&nid=${neighbor.housingInsecureNeighborId}&otid=1`)
             .catch(error => console.log(error));
-    }
+    };
 
     const getSelectedId = (event: any): number => {
         const target = event.explicitOriginalTarget;
@@ -91,7 +97,7 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                 dataForParentElement : 
                 dataForGrandparentElement;
         return selectedId;
-    }
+    };
     const setIds = (event: any, ids: number[], setMethod: (id: number) => void, deleteMethod: (id: number) => void): number[] => {
         const selectedId = getSelectedId(event);
         const shouldAddNewId = !ids.includes(selectedId);
@@ -105,7 +111,29 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
             deleteMethod(selectedId);
         }
         return returnedIds;
-    }
+    };
+
+    const [locationIdsToLocations, setLocationIdsToLocations] = useState({} as {[locationId: number]: Location});
+    useEffect(() => {
+        // TODO: Get OTID from user data.
+        axios
+            .get(`${process.env.REACT_APP_API_URL}/locations?otid=1`)
+            .then(response => {
+                const newLocation: Location = {
+                    locationId: 0,
+                    locationTypeId: 0,
+                    city: '',
+                    state: 0,
+                };            
+                setLocationIdsToLocations({0: newLocation});
+                
+                const locations: Location[] = response.data;
+                locations.forEach(location => {
+                    setLocationIdsToLocations(l => ({...l, [location.locationId]: location}));
+                });
+            })
+            .catch(error => console.log(error));
+    }, []);
 
     const style = {
         bgcolor: '#223',
@@ -115,119 +143,75 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
 
     return (
         <Box sx={style}>
-            {/* BACK BUTTON */}
-            <Button style={{marginLeft: '-20px', bottom: 0}} onClick={onClose}>
-                <ArrowBackIcon id='back-arrow' />
-                <span style={{paddingLeft: '10px'}}>Back to Neighbors</span>
+            <Button className="back-arrow" onClick={onClose}>
+                <ArrowBackIcon id="back-arrow" />
+                <span>Back to Neighbors</span>
             </Button>
 
-            {/* TITLE */}
-            <Typography id="modal-modal-title" variant="h6" component="h2" style={{paddingTop: '10px'}}>
+            <Typography id="modal-title" variant="h6" component="h2">
                 Edit {getFullName(neighbor)}
             </Typography>
 
-            <div className="menu-and-edit">
-                <div className="menu-and-edit" style={{display: 'flex'}}>
-                    <Paper className="menu" style={{flex: 1}}>
+            <div className="menu-and-edit-container">
+                <div className="menu-and-edit">
+
+                    <Paper className="menu">
                         <MenuList>
-                            <MenuItem onClick={() => {hideAll(); setShowName(true);}}>Name</MenuItem>
-                            <MenuItem onClick={() => {hideAll(); setShowContact(true);}}>Contact</MenuItem>
-                            <MenuItem onClick={() => {hideAll(); setShowDemographics(true);}}>Demographics</MenuItem>
-                            <MenuItem onClick={() => {hideAll(); setShowLocation(true);}}>Location</MenuItem>
-                            <MenuItem onClick={() => {hideAll(); setShowNeeds(true);}}>Needs</MenuItem>
-                            <MenuItem onClick={() => {hideAll(); setShowDisabilities(true);}}>Disabilities</MenuItem>
-                            <MenuItem onClick={() => {hideAll(); setShowHousingStatus(true);}}>Housing Status</MenuItem>
-                            <MenuItem onClick={() => {hideAll(); setShowCircumstances(true);}}>Circumstances</MenuItem>
-                            <MenuItem onClick={() => {hideAll(); setShowSkillsIncome(true);}}>Skills and Income</MenuItem>
-                            <MenuItem onClick={() => {hideAll(); setShowLanguage(true);}}>Language</MenuItem>
-                            <MenuItem onClick={() => {hideAll(); setShowClothing(true);}}>Clothing</MenuItem>
-                            <MenuItem onClick={() => {hideAll(); setShowComments(true);}}>Comments</MenuItem>
+                            <MenuItem onClick={() => switchView(setShowName)}>Name</MenuItem>
+                            <MenuItem onClick={() => switchView(setShowContact)}>Contact</MenuItem>
+                            <MenuItem onClick={() => switchView(setShowDemographics)}>Demographics</MenuItem>
+                            <MenuItem onClick={() => switchView(setShowLocation)}>Location</MenuItem>
+                            <MenuItem onClick={() => switchView(setShowNeeds)}>Needs</MenuItem>
+                            <MenuItem onClick={() => switchView(setShowDisabilities)}>Disabilities</MenuItem>
+                            <MenuItem onClick={() => switchView(setShowHousingStatus)}>Housing Status</MenuItem>
+                            <MenuItem onClick={() => switchView(setShowCircumstances)}>Circumstances</MenuItem>
+                            <MenuItem onClick={() => switchView(setShowSkillsIncome)}>Skills and Income</MenuItem>
+                            <MenuItem onClick={() => switchView(setShowLanguage)}>Language</MenuItem>
+                            <MenuItem onClick={() => switchView(setShowClothing)}>Clothing</MenuItem>
+                            <MenuItem onClick={() => switchView(setShowComments)}>Comments</MenuItem>
                         </MenuList>
                     </Paper>
+
                     {showName ? 
+                        <ViewEditName neighbor={neighbor} setNeighbor={setNeighbor}></ViewEditName> : 
+                        null
+                    }
+                    {showContact ?
+                        <ViewEditContact neighbor={neighbor} setNeighbor={setNeighbor}></ViewEditContact> : 
+                        null
+                    }
+                    {showDemographics ?
+                        <ViewEditDemographics neighbor={neighbor} setNeighbor={setNeighbor}></ViewEditDemographics> :
+                        null
+                    }
+                    {!showLocation ? null :
                     <div className="edit-field">
-                        <h3>Name</h3>
-                        <TextField
-                            label="First Name" 
-                            value={neighbor.firstName} 
-                            onChange={(event) => setNeighbor({...neighbor, firstName: event.target.value})}
-                            variant="outlined" 
-                        />
-                        <TextField 
-                            label="Preferred Name" 
-                            value={neighbor.preferredName} 
-                            onChange={(event) => setNeighbor({...neighbor, preferredName: event.target.value})}
-                            variant="outlined" 
-                        />
-                        <TextField 
-                            label="Last Name" 
-                            value={neighbor.lastName} 
-                            onChange={(event) => setNeighbor({...neighbor, lastName: event.target.value})}
-                            variant="outlined" 
-                        />
-                    </div> : null}
-                    {showContact ? 
-                    <div className="edit-field">
-                        <h3>Contact</h3>
-                        <TextField
-                            label="Phone Number" 
-                            value={neighbor.phoneNumber} 
-                            onChange={(event) => setNeighbor({...neighbor, phoneNumber: event.target.value})}
-                            variant="outlined" 
-                        />
-                        <TextField
-                            label="Email Address"
-                            value={neighbor.emailAddress} 
-                            onChange={(event) => setNeighbor({...neighbor, emailAddress: event.target.value})}
-                            variant="outlined"
-                        />
-                    </div> : null }
-                    {showDemographics ? 
-                    <div className="edit-field">
-                        <h3>Demographics</h3>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker 
-                                label="Date of Birth" 
-                                value={dayjs(neighbor.dateOfBirth)}
-                                onChange={(event) => setNeighbor({...neighbor, dateOfBirth: event?.toDate()})}
-                            />
-                        </LocalizationProvider>
+                        <h3>Location</h3>
                         <div className='dropdown'>
-                            <FormControl fullWidth id='gender-form'>
-                                <InputLabel>Gender</InputLabel>
+                            <FormControl fullWidth id='location-form'>
+                                <InputLabel>Location</InputLabel>
                                 <Select
-                                    label="Gender"
-                                    value={neighbor.genderId}
-                                    onChange={(event) => setNeighbor({...neighbor, genderId: Number(event.target.value)})}
+                                    label="Location"
+                                    value={neighbor.location}
+                                    renderValue={(location) => getLocationLabel(location, lookups.locationType)}
+                                    onChange={(event) => setNeighbor({...neighbor, location: locationIdsToLocations[Number(event.target.value)]})}
                                 >
-                                    {Object.keys(lookups.gender).map(id => 
-                                        <MenuItem id={`Gender-${id}`} key={`Gender-${id}`} value={id}>{lookups.gender[Number(id)]}</MenuItem>
+                                    {Object.keys(locationIdsToLocations).map(id => 
+                                        <MenuItem 
+                                            id={`Location-${id}`}
+                                            key={`Location-${id}`}
+                                            value={id}
+                                        >
+                                            {(Number(id) === 0) ? 
+                                                '+ Add New Location' : 
+                                                getLocationLabel(locationIdsToLocations[Number(id)], lookups.locationType)
+                                            }
+                                        </MenuItem>
                                     )}
                                 </Select>
                             </FormControl>
                         </div>
-                        <div className='dropdown'>
-                            <FormControl fullWidth id='ethnicity-form'>
-                                <InputLabel>Ethnicity</InputLabel>
-                                <Select
-                                    label="Ethnicity"
-                                    multiple
-                                    value={neighbor.ethnicityIds}
-                                    renderValue={(ids) => ids.map(id => lookups.ethnicity[Number(id)]).join(', ')}
-                                    onChange={(event) => setNeighbor({...neighbor, ethnicityIds: setIds(event, neighbor.ethnicityIds, updateEthnicityInDb, deleteEthnicityFromDb)})}
-                                >
-                                    {Object.keys(lookups.ethnicity).map(id =>
-                                        <MenuItem key={`Ethnicity-${id}`} value={id}>
-                                            {lookups.ethnicity[Number(id)]}
-                                        </MenuItem>
-                                    ).sort((a, b) => lookups.ethnicity[Number(a.props.value)].localeCompare(lookups.ethnicity[Number(b.props.value)]))}
-                                </Select>
-                            </FormControl>
-                        </div>
-                    </div> : null }
-                    {showLocation ?
-                    <div className="edit-field">
-                        <h3>Location</h3>
+                        <h4>{neighbor.location ? getLocationLabel(neighbor.location, lookups.locationType) : 'New Location'}</h4>
                         <div className='dropdown'>
                             <FormControl fullWidth id='location-type-form'>
                                 <InputLabel>Type</InputLabel>
@@ -289,8 +273,9 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                             />}
                             label="Is Legal"
                         />
-                    </div> : null }
-                    {showNeeds ? 
+                    </div>}
+
+                    {!showNeeds ? null :
                     <div className="edit-field">
                         <h3>Needs</h3>
                         <div className='dropdown'>
@@ -311,8 +296,9 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                                 </Select>
                             </FormControl>
                         </div> 
-                    </div>: null }
-                    {showDisabilities ?
+                    </div>}
+
+                    {!showDisabilities ? null :
                     <div className='edit-field'>
                         <h3>Disabilities</h3>
                         <div className='dropdown'>
@@ -333,8 +319,9 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                                 </Select>
                             </FormControl>
                         </div>
-                    </div> : null }
-                    {showHousingStatus ?
+                    </div>}
+
+                    {!showHousingStatus ? null :
                     <div className="edit-field">
                         <h3>Housing Status</h3>
                         <div className='dropdown'>
@@ -376,54 +363,62 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                             onChange={(event) => setNeighbor({...neighbor, caseManager: {...neighbor.caseManager, emailAddress: event.target.value}})}
                             variant="outlined"
                         />
-                    </div> : null}
-                    {showCircumstances ? 
+                    </div>}
+
+                    {!showCircumstances ? null :
                     <div className="edit-field">
                         <h3>Circumstances</h3>
                         <FormControlLabel 
-                            control=
-                            {<Switch
-                                checked={neighbor.isHoused}
-                                onChange={(event) => setNeighbor({...neighbor, isHoused: event.target.checked})}
-                            />}
+                            control={
+                                <Switch
+                                    checked={neighbor.isHoused}
+                                    onChange={(event) => setNeighbor({...neighbor, isHoused: event.target.checked})}
+                                />
+                            }
                             label="Is Housed"
                         />
                         <FormControlLabel 
-                            control=
-                            {<Switch
-                                checked={neighbor.isVeteran}
-                                onChange={(event) => setNeighbor({...neighbor, isVeteran: event.target.checked})}
-                            />}
+                            control={
+                                <Switch
+                                    checked={neighbor.isVeteran}
+                                    onChange={(event) => setNeighbor({...neighbor, isVeteran: event.target.checked})}
+                                />
+                            }
                             label="Is Veteran"
                         />
                         <FormControlLabel 
-                            control=
-                            {<Switch
-                                checked={neighbor.isCitizen}
-                                onChange={(event) => setNeighbor({...neighbor, isCitizen: event.target.checked})}
-                            />}
+                            control={
+                                <Switch
+                                    checked={neighbor.isCitizen}
+                                    onChange={(event) => setNeighbor({...neighbor, isCitizen: event.target.checked})}
+                                />
+                            }
                             label="Is Citizen"
                         />
                         <FormControlLabel 
-                            control=
-                            {<Switch
-                                checked={neighbor.hasIdentification}
-                                onChange={(event) => setNeighbor({...neighbor, hasIdentification: event.target.checked})}
-                            />}
+                            control={
+                                <Switch
+                                    checked={neighbor.hasIdentification}
+                                    onChange={(event) => setNeighbor({...neighbor, hasIdentification: event.target.checked})}
+                                />
+                            }
                             label="Has Identification"
                         />
-                    </div> : null }
-                    {showSkillsIncome ? 
+                    </div>}
+
+                    {!showSkillsIncome ? null :
                     <div className="edit-field">
                         <h3>Skills & Income</h3>
                         TODO
-                    </div> : null }
-                    {showLanguage ? 
+                    </div>}
+
+                    {!showLanguage ? null :
                     <div className="edit-field">
                         <h3>Language</h3>
                         TODO
-                    </div> : null }
-                    {showClothing ? 
+                    </div>}
+
+                    {!showClothing ? null :
                     <div className="edit-field">
                         <h3>Clothing</h3>
                         <div className='dropdown'>
@@ -468,8 +463,9 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                                 </Select>
                             </FormControl>
                         </div>
-                    </div> : null }
-                    {showComments ?
+                    </div>}
+
+                    {!showComments ? null :
                     <div className="edit-field">
                         <h3>Comments</h3>
                         <textarea
@@ -477,7 +473,7 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                             placeholder="Comments"
                             onChange={(event) => setNeighbor({...neighbor, comments: event.target.value})}
                         />
-                    </div> : null }
+                    </div>}
                 </div>
             </div>
         </Box>

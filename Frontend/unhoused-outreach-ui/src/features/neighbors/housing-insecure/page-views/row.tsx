@@ -10,8 +10,8 @@ import shoeIcon from 'assets/shoe.png';
 import shirtIcon from 'assets/shirt.png';
 import pantsIcon from 'assets/pants.png';
 import './table.css';
-import { getAge, getContact, getFullName } from 'features/neighbors/functions/formatting';
-import { getLocationLink } from 'features/mapping/functions/formatting';
+import { getAge, getContact, getFullName } from 'features/neighbors';
+import { getLocationLink } from 'features/mapping';
 import axios from 'axios';
 import { CaseManager } from 'features/support-services';
 import { Location } from 'features/mapping';
@@ -47,6 +47,12 @@ export function Row({ initialNeighbor }: { initialNeighbor: HousingInsecureNeigh
             .put(`${process.env.REACT_APP_API_URL}/housing-insecure-neighbor?otid=1`, neighbor)
             .catch(error => console.log(error));
     };
+    const updateEthnicitiesInDb = () => {
+        // TODO: Get OTID from user data.
+        axios
+            .put(`${process.env.REACT_APP_API_URL}/housing-insecure-neighbor-ethnicities?otid=1`, neighbor.ethnicityIds)
+            .catch(error => console.log(error));
+    };
     const updateLocationInDb = (location: Location) => {
         // TODO: Get OTID from user data.
         axios
@@ -66,6 +72,7 @@ export function Row({ initialNeighbor }: { initialNeighbor: HousingInsecureNeigh
     const closeDrawer = () => {
         setEditPanelOpen(false);
         updateNeighborInDb();
+        updateEthnicitiesInDb();
         if (neighbor.location) {
             updateLocationInDb(neighbor.location);
         }

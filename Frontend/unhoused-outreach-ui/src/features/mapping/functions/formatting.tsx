@@ -12,7 +12,7 @@ export const getLocationLink = (iconPath: string, locationTypeLookup: Record<num
         <Link to={mapLink}>
             <Chip
                 avatar={<Avatar src={iconPath} />}
-                label={location.name ?? locationTypeLookup[location.locationTypeId]}
+                label={getLocationLabel(location, locationTypeLookup)}
                 clickable={true}
                 className='location-link'
                 sx={{
@@ -25,4 +25,8 @@ export const getLocationLink = (iconPath: string, locationTypeLookup: Record<num
             />
         </Link>
     );
+};
+
+export const getLocationLabel = (location: Location, locationTypeLookup: Record<number, string>) => {
+    return location.name ?? locationTypeLookup[location.locationTypeId];
 };
