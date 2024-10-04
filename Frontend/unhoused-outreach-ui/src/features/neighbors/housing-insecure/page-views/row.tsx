@@ -47,6 +47,12 @@ export function Row({ initialNeighbor }: { initialNeighbor: HousingInsecureNeigh
             .put(`${process.env.REACT_APP_API_URL}/housing-insecure-neighbor?otid=1`, neighbor)
             .catch(error => console.log(error));
     };
+    const updateEthnicitiesInDb = () => {
+        // TODO: Get OTID from user data.
+        axios
+            .put(`${process.env.REACT_APP_API_URL}/housing-insecure-neighbor-ethnicities?otid=1`, neighbor.ethnicityIds)
+            .catch(error => console.log(error));
+    };
     const updateLocationInDb = (location: Location) => {
         // TODO: Get OTID from user data.
         axios
@@ -66,6 +72,7 @@ export function Row({ initialNeighbor }: { initialNeighbor: HousingInsecureNeigh
     const closeDrawer = () => {
         setEditPanelOpen(false);
         updateNeighborInDb();
+        updateEthnicitiesInDb();
         if (neighbor.location) {
             updateLocationInDb(neighbor.location);
         }

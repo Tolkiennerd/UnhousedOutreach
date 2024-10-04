@@ -12,14 +12,17 @@ import { Lookups } from "features/lookups";
 interface ViewEditDemographicsProps {
     neighbor: HousingInsecureNeighbor;
     setNeighbor: React.Dispatch<React.SetStateAction<HousingInsecureNeighbor>>;
-    setIds: (event: any, ids: number[], setMethod: (id: number) => void, deleteMethod: (id: number) => void) => number[];
-    updateEthnicityInDb: (ethnicityId: number) => void;
-    deleteEthnicityFromDb: (ethnicityId: number) => void;
 };
 
-export function ViewEditDemographics({neighbor, setNeighbor, setIds, updateEthnicityInDb, deleteEthnicityFromDb} : ViewEditDemographicsProps) {
+export function ViewEditDemographics({neighbor, setNeighbor} : ViewEditDemographicsProps) {
 
     const lookups = useContext(LookupsContext) as Lookups;
+
+    const sortEthnicities = (a: JSX.Element, b: JSX.Element) => {
+        const firstEthnicity = lookups.ethnicity[Number(a.props.value)];
+        const secondEthnicity = lookups.ethnicity[Number(b.props.value)];
+        return firstEthnicity.localeCompare(secondEthnicity);
+    };
 
     return(
         <div className="edit-field">
@@ -53,13 +56,13 @@ export function ViewEditDemographics({neighbor, setNeighbor, setIds, updateEthni
                         multiple
                         value={neighbor.ethnicityIds}
                         renderValue={(ids) => ids.map(id => lookups.ethnicity[Number(id)]).join(', ')}
-                        onChange={(event) => setNeighbor({...neighbor, ethnicityIds: setIds(event, neighbor.ethnicityIds, updateEthnicityInDb, deleteEthnicityFromDb)})}
+                        onChange={() => setNeighbor({...neighbor, ethnicityIds: neighbor.ethnicityIds})}
                     >
                         {Object.keys(lookups.ethnicity).map(id =>
                             <MenuItem key={`Ethnicity-${id}`} value={id}>
                                 {lookups.ethnicity[Number(id)]}
                             </MenuItem>
-                        ).sort((a, b) => lookups.ethnicity[Number(a.props.value)].localeCompare(lookups.ethnicity[Number(b.props.value)]))}
+                        ).sort(sortEthnicities)}
                     </Select>
                 </FormControl>
             </div>

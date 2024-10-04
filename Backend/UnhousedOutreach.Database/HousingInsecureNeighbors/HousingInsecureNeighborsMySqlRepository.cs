@@ -1,6 +1,7 @@
 using UnhousedOutreach.Core.Mapping;
 using UnhousedOutreach.Core.Neighbors.HousingInsecure;
 using UnhousedOutreach.Database.MySql;
+using System.Text;
 
 namespace UnhousedOutreach.Database.HousingInsecureNeighbors;
 
@@ -234,6 +235,24 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
             {"@OutreachTeamId", outreachTeamId}
         };
         await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.SetHousingInsecureNeighborEthnicity, parameters);
+    }
+
+    public async Task SetHousingInsecureNeighborEthnicities(int housingInsecureNeighborId, List<int> ethnicityIds, int outreachTeamId)
+    {
+        Dictionary<string, object?> parameters = new()
+        {
+            {"@HousingInsecureNeighborId", housingInsecureNeighborId},
+            {"@OutreachTeamId", outreachTeamId}
+        };
+        StringBuilder query = new();
+        query.AppendLine("DELETE FROM HousingInsecureNeighborNeed");
+        query.AppendLine("WHERE HousingInsecureNeighborId = @HousingInsecureNeighborId AND OutreachTeamId = @OutreachTeamId;");
+        query.AppendLine("INSERT INTO HousingInsecureNeighborNeed");
+        foreach (var ethnicityId in ethnicityIds)
+        {
+            query.AppendLine($"VALUES (@HousingInsecureNeighborId, {ethnicityId}, @OutreachTeamId)");
+        }
+        await ExecuteNonQuery(query.ToString(), parameters);
     }
 
     public async Task SetHousingInsecureNeighborFamilyMember(FamilyMember familyMember, int outreachTeamId)

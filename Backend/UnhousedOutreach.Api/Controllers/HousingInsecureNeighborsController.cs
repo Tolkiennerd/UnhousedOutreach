@@ -50,6 +50,15 @@ public class HousingInsecureNeighborsController : ControllerBase
         await repository.SetHousingInsecureNeighborEthnicity(housingInsecureNeighborId, ethnicityId, outreachTeamId);
     }
 
+    [HttpPut("housing-insecure-neighbor-ethnicities")]
+    public async Task SetHousingInsecureNeighborEthnicities(
+        [FromBody]List<int> ethnicityIds,
+        [FromQuery(Name = "nid")]int housingInsecureNeighborId, 
+        [FromQuery(Name = "otid")]int outreachTeamId)
+    {
+        await repository.SetHousingInsecureNeighborEthnicities(housingInsecureNeighborId, ethnicityIds, outreachTeamId);
+    }
+
     [HttpDelete("housing-insecure-neighbor-ethnicity")]
     public async Task DeleteHousingInsecureNeighborEthnicity(
         [FromQuery(Name = "id")]int ethnicityId,

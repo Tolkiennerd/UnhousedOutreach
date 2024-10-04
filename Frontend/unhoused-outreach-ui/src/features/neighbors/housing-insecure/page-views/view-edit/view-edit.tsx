@@ -56,12 +56,6 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
         showView(true);
     };
 
-    const updateEthnicityInDb = (ethnicityId: number) => {
-        updateLookupInDb(ethnicityId, 'housing-insecure-neighbor-ethnicity');
-    };
-    const deleteEthnicityFromDb = (ethnicityId: number) => {
-        deleteLookupFromDb(ethnicityId, 'housing-insecure-neighbor-ethnicity');
-    };
     const updateNeedInDb = (ethnicityId: number) => {
         updateLookupInDb(ethnicityId, 'housing-insecure-neighbor-need');
     };
@@ -186,19 +180,10 @@ export function ViewEditHousingInsecureNeighbor({neighbor, setNeighbor, onClose}
                         <ViewEditContact neighbor={neighbor} setNeighbor={setNeighbor}></ViewEditContact> : 
                         null
                     }
-
                     {showDemographics ?
-                        <ViewEditDemographics
-                            neighbor={neighbor}
-                            setNeighbor={setNeighbor}
-                            setIds={setIds}
-                            updateEthnicityInDb={updateEthnicityInDb}
-                            deleteEthnicityFromDb={deleteEthnicityFromDb}
-                        >
-                        </ViewEditDemographics> :
+                        <ViewEditDemographics neighbor={neighbor} setNeighbor={setNeighbor}></ViewEditDemographics> :
                         null
                     }
-
                     {!showLocation ? null :
                     <div className="edit-field">
                         <h3>Location</h3>
