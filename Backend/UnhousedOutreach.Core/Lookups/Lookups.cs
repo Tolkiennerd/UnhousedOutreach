@@ -6,6 +6,7 @@ public class Lookups
     public Dictionary<int, string> CushionType {get; set;} = [];
     public Dictionary<int, string> Disability {get; set;} = [];
     public Dictionary<int, string> Ethnicity {get; set;} = [];
+    public Dictionary<int, string> EnglishLevel {get; set;} = [];
     public Dictionary<int, string> Gender {get; set;} = [];
     public Dictionary<int, string> HousingStatus {get; set;} = [];
     public Dictionary<int, string> LocationType {get; set;} = [];

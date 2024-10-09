@@ -24,6 +24,7 @@ export interface HousingInsecureNeighbor extends Neighbor
     location: Location;
     desiredLocation: Location;
     tents: Tent[];
+    englishLevelId?: number;
     cushionTypeId?: number;
     cushionConditionId?: number;
     blanketCount?: number;
