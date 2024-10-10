@@ -60,9 +60,9 @@ public class LookupsController : ControllerBase
 
 
     [HttpGet("english-levels")]
-    public async Task<Dictionary<int, string>> GetEnglishLevelLookup([FromQuery(Name = "otid")]int outreachTeamId)
+    public async Task<Dictionary<int, string>> GetEnglishLevelsLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {
-        return await repository.GetEnglishLevel(outreachTeamId);
+        return await repository.GetEnglishLevels(outreachTeamId);
     }
 
     [HttpPost("english-level")]
