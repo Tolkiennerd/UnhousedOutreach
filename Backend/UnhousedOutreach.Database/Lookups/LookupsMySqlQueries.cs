@@ -5,6 +5,7 @@ internal static class LookupsMySqlQueries
     internal static readonly string GetCushionConditions = "SELECT CushionConditionId, CushionCondition FROM CushionCondition WHERE OutreachTeamId=@OutreachTeamId";
     internal static readonly string GetCushionTypes = "SELECT CushionTypeId, CushionType FROM CushionType WHERE OutreachTeamId=@OutreachTeamId";
     internal static readonly string GetDisabilities = "SELECT DisabilityId, Disability FROM Disability WHERE OutreachTeamId=@OutreachTeamId";
+    internal static readonly string GetEnglishLevels = "SELECT EnglishLevelId, EnglishLevel FROM EnglishLevel WHERE OutreachTeamID=@OutreachTeamId";
     internal static readonly string GetEthnicities = "SELECT EthnicityId, Ethnicity FROM Ethnicity WHERE OutreachTeamId=@OutreachTeamId";
     internal static readonly string GetGenders = "SELECT GenderId, Gender FROM Gender WHERE OutreachTeamId=@OutreachTeamId";
     internal static readonly string GetHousingStatuses = "SELECT HousingStatusId, HousingStatus FROM HousingStatus WHERE OutreachTeamId=@OutreachTeamId";
@@ -21,6 +22,7 @@ internal static class LookupsMySqlQueries
         GetCushionConditions,
         GetCushionTypes,
         GetDisabilities,
+        GetEnglishLevels,
         GetEthnicities,
         GetGenders,
         GetHousingStatuses,

@@ -105,6 +105,35 @@ INSERT INTO `cushiontype` VALUES (1,'Twin Mattress',1),(2,'Full Mattress',1),(3,
 /*!40000 ALTER TABLE `cushiontype` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+--
+-- Table structure for table `englishlevel`
+--
+
+DROP TABLE IF EXISTS `englishlevel`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `englishlevel` (
+  `EnglishLevelId` int NOT NULL AUTO_INCREMENT,
+  `EnglishLevel` varchar(45) DEFAULT NULL,
+  `OutreachTeamId` int NOT NULL,
+  PRIMARY KEY (`EnglishLevelId`),
+  KEY `fk_EnglishLevel_OutreachTeamId_idx` (`OutreachTeamId`),
+  CONSTRAINT `fk_EnglishLevel_OutreachTeamId` FOREIGN KEY (`OutreachTeamId`) REFERENCES `outreachteam` (`OutreachTeamId`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `englishlevel`
+--
+
+LOCK TABLES `englishlevel` WRITE;
+/*!40000 ALTER TABLE `englishlevel` DISABLE KEYS */;
+INSERT INTO `englishlevel` VALUES (1,'No English',1),(2,'Some Words',1),(3,'Conversational',1),(4,'Fluent/First Language',1);
+/*!40000 ALTER TABLE `englishlevel` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 --
 -- Table structure for table `disability`
 --
@@ -220,6 +249,7 @@ CREATE TABLE `housinginsecureneighbor` (
   `HasSleepingBag` tinyint DEFAULT NULL,
   `SleepingBagConditionId` int DEFAULT NULL,
   `SleepingBagTemperatureThresholdFahrenheit` int DEFAULT NULL,
+  `englishlevel` int DEFAULT NULL,
   `Comments` blob,
   `OutreachTeamId` int NOT NULL,
   PRIMARY KEY (`HousingInsecureNeighborId`),

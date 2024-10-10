@@ -58,6 +58,19 @@ public class LookupsController : ControllerBase
         await repository.SetDisability(disability.Key, disability.Value, outreachTeamId);
     }
 
+
+    [HttpGet("english-levels")]
+    public async Task<Dictionary<int, string>> GetEnglishLevelsLookup([FromQuery(Name = "otid")]int outreachTeamId)
+    {
+        return await repository.GetEnglishLevels(outreachTeamId);
+    }
+
+    [HttpPost("english-level")]
+    public async Task SetEnglishLevel([FromBody]KeyValuePair<int?, string> englishLevel, [FromQuery(Name = "otid")]int outreachTeamId)
+    {
+        await repository.SetEnglishLevel(englishLevel.Key, englishLevel.Value, outreachTeamId);
+    }
+
     [HttpGet("ethnicities")]
     public async Task<Dictionary<int, string>> GetEthnicitiesLookup([FromQuery(Name = "otid")]int outreachTeamId)
     {

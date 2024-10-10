@@ -24,6 +24,7 @@ SELECT
     HousingInsecureNeighbor.CushionTypeId,
     HousingInsecureNeighbor.CushionConditionId,
     HousingInsecureNeighbor.BlanketCount,
+    HousingInsecureNeighbor.EnglishLevel,
     HousingInsecureNeighbor.HasSleepingBag,
     HousingInsecureNeighbor.SleepingBagConditionId,
     HousingInsecureNeighbor.SleepingBagTemperatureThresholdFahrenheit,
@@ -214,6 +215,10 @@ VALUES (
     internal static readonly string SetHousingInsecureNeighborDisability = @"
 INSERT INTO HousingInsecureNeighborDisability
 VALUES (@HousingInsecureNeighborId, @DisabilityId, @OutreachTeamId)
+";
+    internal static readonly string SetHousingInsecureNeighborEnglishLevel = @"
+INSERT INTO HousingInsecureNeighborEnglishLevel
+VALUES (@HousingInsecureNeighborId, @EnglishLevel, @OutreachTeamId)
 ";
     internal static readonly string SetHousingInsecureNeighborEthnicity = @"
 INSERT INTO HousingInsecureNeighborEthnicity

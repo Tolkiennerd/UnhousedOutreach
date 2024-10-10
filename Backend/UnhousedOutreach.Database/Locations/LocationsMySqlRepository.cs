@@ -105,6 +105,7 @@ public class LocationsMySqlRepository(string connectionString) : Repository(conn
                 CushionTypeId = Parser.GetNullableValue<int?>(reader, "CushionTypeId"),
                 CushionConditionId = Parser.GetNullableValue<int?>(reader, "CushionConditionId"),
                 BlanketCount = Parser.GetNullableValue<int?>(reader, "BlanketCount"),
+                EnglishLevelId = Parser.GetNullableValue<int?>(reader, "EnglishLevel"),
                 HasSleepingBag = Parser.GetNullableBooleanValue(reader, "HasSleepingBag"),
                 SleepingBagConditionId = Parser.GetNullableValue<int?>(reader, "SleepingBagConditionId"),
                 SleepingBagTemperatureThresholdFahrenheit = Parser.GetNullableValue<int?>(reader, "SleepingBagTemperatureThresholdFahrenheit"),

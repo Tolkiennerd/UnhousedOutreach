@@ -38,6 +38,7 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
                 CushionTypeId = Parser.GetNullableValue<int?>(reader, "CushionTypeId"),
                 CushionConditionId = Parser.GetNullableValue<int?>(reader, "CushionConditionId"),
                 BlanketCount = Parser.GetNullableValue<int?>(reader, "BlanketCount"),
+                EnglishLevelId = Parser.GetNullableValue<int?>(reader, "EnglishLevel"),
                 HasSleepingBag = Parser.GetNullableBooleanValue(reader, "HasSleepingBag"),
                 SleepingBagConditionId = Parser.GetNullableValue<int?>(reader, "SleepingBagConditionId"),
                 SleepingBagTemperatureThresholdFahrenheit = Parser.GetNullableValue<int?>(reader, "SleepingBagTemperatureThresholdFahrenheit"),
@@ -224,6 +225,17 @@ public class HousingInsecureNeighborsMySqlRepository(string connectionString) : 
             {"@OutreachTeamId", outreachTeamId}
         };
         await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.SetHousingInsecureNeighborDisability, parameters);
+    }
+
+    public async Task SetHousingInsecureNeighborEnglishLevel(int housingInsecureNeighborId, int englishLevel, int outreachTeamId)
+    {
+        Dictionary<string, object?> parameters = new()
+        {
+            {"@HousingInsecureNeighborId", housingInsecureNeighborId},
+            {"@englishLevel", englishLevel},
+            {"@OutreachTeamId", outreachTeamId}
+        };
+        await ExecuteNonQuery(HousingInsecureNeighborsMySqlQueries.SetHousingInsecureNeighborEnglishLevel, parameters);
     }
 
     public async Task SetHousingInsecureNeighborEthnicity(int housingInsecureNeighborId, int ethnicityId, int outreachTeamId)
